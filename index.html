@@ -447,7 +447,7 @@
   </header>
 
   <!-- PROGRESS -->
-  <div class="progress-label" id="progress-label">Question 1 of 12</div>
+  <div class="progress-label" id="progress-label">Question 1 of 15</div>
   <div class="progress-wrap" id="progress-wrap">
     <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
   </div>
@@ -600,79 +600,99 @@ const RIASEC = {
   }
 };
 
-// ---- QUESTIONS (12, covering all 6 types x2) ----
+// ---- QUESTIONS (15 questions, kid-friendly RIASEC) ----
+// Note: Since 15 does not divide evenly across 6 RIASEC types,
+// results are calculated by AVERAGE score per type, not raw total.
 const QUESTIONS = [
   {
     id: 1,
     riasec: "R",
     emoji: "🔨",
-    text: "Do you like to build things with your hands, like blocks or LEGOs?"
+    text: "Do you like to build things with blocks, LEGOs, boxes, or tools?"
   },
   {
     id: 2,
     riasec: "I",
     emoji: "🔭",
-    text: "Do you like to ask lots of \"why?\" questions and find out how things work?"
+    text: "Do you like to ask \"why?\" and find out how things work?"
   },
   {
     id: 3,
     riasec: "A",
     emoji: "🎨",
-    text: "Do you love drawing, painting, making music, or putting on shows?"
+    text: "Do you like drawing, painting, music, dancing, or making art?"
   },
   {
     id: 4,
     riasec: "S",
     emoji: "🤗",
-    text: "Do you like helping your friends when they feel sad or need help?"
+    text: "Do you like helping a friend when they feel sad or stuck?"
   },
   {
     id: 5,
     riasec: "E",
-    emoji: "🏅",
-    text: "Do you like to be in charge and tell your friends what game to play?"
+    emoji: "📣",
+    text: "Do you like sharing your ideas with a group?"
   },
   {
     id: 6,
     riasec: "C",
     emoji: "📐",
-    text: "Do you like things to be neat and in the right place? Like a very tidy desk?"
+    text: "Do you like sorting things, lining things up, or keeping things neat?"
   },
   {
     id: 7,
     riasec: "R",
     emoji: "🌱",
-    text: "Do you like being outside, playing in dirt, or taking care of animals or plants?"
+    text: "Do you like being outside with plants, animals, dirt, or nature?"
   },
   {
     id: 8,
     riasec: "I",
     emoji: "🐛",
-    text: "Do you like looking at bugs, stars, rocks, or other cool things in nature?"
+    text: "Do you like looking closely at bugs, stars, rocks, or weather?"
   },
   {
     id: 9,
     riasec: "A",
     emoji: "🎭",
-    text: "Do you love making up stories, dancing, or doing fun pretend play?"
+    text: "Do you like making up stories, songs, shows, or pretend games?"
   },
   {
     id: 10,
     riasec: "S",
-    emoji: "👶",
-    text: "Do you like working with little kids or teaching others how to do something?"
+    emoji: "🍎",
+    text: "Do you like teaching someone how to do something?"
   },
   {
     id: 11,
     riasec: "E",
-    emoji: "💬",
-    text: "Do you like talking to people and telling them your ideas?"
+    emoji: "🏅",
+    text: "Do you like helping a team choose what to do next?"
   },
   {
     id: 12,
     riasec: "C",
     emoji: "📝",
-    text: "Do you like following steps carefully to make sure things are done just right?"
+    text: "Do you like following steps carefully to finish a job the right way?"
+  },
+  {
+    id: 13,
+    riasec: "R",
+    emoji: "🛠️",
+    text: "Do you like fixing things or figuring out how pieces fit together?"
+  },
+  {
+    id: 14,
+    riasec: "I",
+    emoji: "🧪",
+    text: "Do you like trying experiments or guessing what will happen?"
+  },
+  {
+    id: 15,
+    riasec: "A",
+    emoji: "🌈",
+    text: "Do you like making something look colorful, fun, or beautiful?"
   }
 ];
 
@@ -681,6 +701,7 @@ const SCORE_MAP = { yes: 3, kinda: 2, 'not-really': 1, nope: 0 };
 
 let currentQ = 0;
 let scores = { R:0, I:0, A:0, S:0, E:0, C:0 };
+let counts = { R:0, I:0, A:0, S:0, E:0, C:0 };
 let answered = new Array(QUESTIONS.length).fill(null);
 
 function startQuiz() {
@@ -690,6 +711,7 @@ function startQuiz() {
   document.getElementById('progress-label').style.display = 'block';
   currentQ = 0;
   scores = { R:0, I:0, A:0, S:0, E:0, C:0 };
+  counts = { R:0, I:0, A:0, S:0, E:0, C:0 };
   answered = new Array(QUESTIONS.length).fill(null);
   renderQuestion();
 }
@@ -748,6 +770,7 @@ function nextQuestion() {
   // Tally score
   const q = QUESTIONS[currentQ];
   scores[q.riasec] += SCORE_MAP[answered[currentQ]];
+  counts[q.riasec] += 1;
 
   currentQ++;
   if (currentQ >= QUESTIONS.length) {
@@ -763,9 +786,21 @@ function showResults() {
   document.getElementById('progress-label').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
-  // Sort RIASEC types by score
-  const sorted = Object.entries(scores)
-    .sort((a, b) => b[1] - a[1])
+  // Sort RIASEC types by AVERAGE score.
+  // This keeps results fair because 15 questions cannot be split evenly across 6 types.
+  const priorityOrder = { R: 1, I: 2, A: 3, S: 4, E: 5, C: 6 };
+  const sorted = Object.keys(scores)
+    .map(code => ({
+      code,
+      total: scores[code],
+      count: counts[code],
+      average: counts[code] ? scores[code] / counts[code] : 0
+    }))
+    .sort((a, b) => {
+      if (b.average !== a.average) return b.average - a.average;
+      if (b.total !== a.total) return b.total - a.total;
+      return priorityOrder[a.code] - priorityOrder[b.code];
+    })
     .slice(0, 3);
 
   const ranks = ['🥇 #1 Job Type!', '🥈 #2 Job Type!', '🥉 #3 Job Type!'];
@@ -773,7 +808,8 @@ function showResults() {
   container.innerHTML = '';
 
   // Auto-fill the write lines
-  sorted.forEach(([code], idx) => {
+  sorted.forEach((result, idx) => {
+    const code = result.code;
     const info = RIASEC[code];
     const card = document.createElement('div');
     card.className = 'result-card';
@@ -786,6 +822,7 @@ function showResults() {
       <div class="rc-rank" style="color:${info.textColor}">${ranks[idx]}</div>
       <div class="rc-type" style="color:${info.color}">${info.name}</div>
       <div class="rc-label">(${info.fullName})</div>
+      <div class="rc-label">Match: ${Math.round(result.average * 100 / 3)}%</div>
       <div class="rc-jobs">${info.jobs.map(j => '<div>'+j+'</div>').join('')}</div>
     `;
     container.appendChild(card);
@@ -804,6 +841,7 @@ function resetQuiz() {
   document.getElementById('intro').style.display = 'block';
   currentQ = 0;
   scores = { R:0, I:0, A:0, S:0, E:0, C:0 };
+  counts = { R:0, I:0, A:0, S:0, E:0, C:0 };
   answered = new Array(QUESTIONS.length).fill(null);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
