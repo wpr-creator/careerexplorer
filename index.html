@@ -330,6 +330,100 @@
     padding: 0.6rem 0.8rem;
   }
 
+
+  /* === CAREER DETAILS PANEL === */
+  .career-detail-panel {
+    background: white;
+    border: 4px solid #60A5FA;
+    border-radius: 28px;
+    padding: 1.6rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 6px 0 #60A5FA44;
+    display: none;
+    animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .career-detail-panel.show { display: block; }
+  .career-detail-panel h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: #E91E8C;
+    text-align: center;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
+  .career-detail-intro {
+    text-align: center;
+    font-weight: 800;
+    color: #5C35A0;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+  .career-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .career-info-box {
+    background: #F8FAFC;
+    border: 3px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 0.9rem;
+    font-weight: 800;
+    color: #334155;
+    line-height: 1.4;
+  }
+  .career-info-box strong {
+    color: #7C3AED;
+    display: block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+  }
+  .career-sentence-box {
+    background: #FEF3C7;
+    border: 3px dashed #FBBF24;
+    border-radius: 18px;
+    padding: 1rem;
+    font-weight: 800;
+    color: #78350F;
+    line-height: 1.5;
+  }
+  .career-note {
+    font-size: 0.9rem;
+    color: #64748B;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+  .job-link-btn {
+    width: 100%;
+    display: block;
+    text-align: left;
+    background: rgba(255,255,255,0.75);
+    border: 2px solid rgba(124,58,237,0.18);
+    border-radius: 12px;
+    padding: 0.35rem 0.5rem;
+    margin-bottom: 0.35rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .job-link-btn:hover, .job-link-btn:focus {
+    transform: translateY(-2px);
+    background: white;
+    border-color: #A78BFA;
+    outline: none;
+  }
+  @media (max-width: 650px) {
+    .career-info-grid { grid-template-columns: 1fr; }
+  }
+
+
   /* === WRITE IT DOWN CARD === */
   .write-card {
     background: white;
@@ -427,6 +521,7 @@
   @media print {
     .stars-bg, .action-btns, .answer-btn, .next-btn, .start-btn,
     .progress-wrap, .progress-label, footer { display: none !important; }
+    .job-link-btn { border: none; box-shadow: none; background: white; padding: 0.1rem 0; }
     body { background: white; }
     .results-header, .riasec-result-cards, .write-card { break-inside: avoid; }
   }
@@ -481,6 +576,33 @@
     </div>
 
     <div class="riasec-result-cards" id="result-cards"></div>
+
+
+    <div class="career-detail-panel" id="career-detail-panel">
+      <h3 id="career-title">Pick a job to learn more!</h3>
+      <p class="career-detail-intro" id="career-intro">Click any job above to see the pathway, pay, and learning ideas.</p>
+      <div class="career-info-grid">
+        <div class="career-info-box">
+          <strong>🎓 Learning Pathway</strong>
+          <span id="career-pathway"></span>
+        </div>
+        <div class="career-info-box">
+          <strong>💰 Approx. Income</strong>
+          <span id="career-income"></span>
+        </div>
+        <div class="career-info-box">
+          <strong>🏫 School or Training</strong>
+          <span id="career-school"></span>
+        </div>
+        <div class="career-info-box">
+          <strong>⭐ What They Do</strong>
+          <span id="career-do"></span>
+        </div>
+      </div>
+      <div class="career-sentence-box" id="career-writing"></div>
+      <div class="career-note">Income is approximate and can change by state, experience, and type of workplace.</div>
+    </div>
+
 
     <div class="write-card">
       <h3>✏️ Write It Down!</h3>
@@ -541,7 +663,7 @@ const RIASEC = {
     border: "#FF6B6B",
     shadow: "#FF6B6B55",
     textColor: "#7B1C1C",
-    jobs: ["👷 Construction Worker", "🔧 Mechanic", "🌿 Farmer", "🚒 Firefighter", "🏗️ Engineer"]
+    jobs: ["construction_worker", "mechanic", "farmer", "firefighter", "engineer"]
   },
   I: {
     name: "The Thinker",
@@ -552,7 +674,7 @@ const RIASEC = {
     border: "#A78BFA",
     shadow: "#A78BFA55",
     textColor: "#3B1D8E",
-    jobs: ["👩‍🔬 Scientist", "🩺 Doctor", "🦕 Paleontologist", "💻 Coder", "🌡️ Nurse"]
+    jobs: ["scientist", "doctor", "paleontologist", "coder", "nurse"]
   },
   A: {
     name: "The Creator",
@@ -563,7 +685,7 @@ const RIASEC = {
     border: "#F472B6",
     shadow: "#F472B655",
     textColor: "#831843",
-    jobs: ["🎨 Artist", "🎭 Actor", "✍️ Author", "🎵 Musician", "📸 Photographer"]
+    jobs: ["artist", "actor", "author", "musician", "photographer"]
   },
   S: {
     name: "The Helper",
@@ -574,7 +696,7 @@ const RIASEC = {
     border: "#34D399",
     shadow: "#34D39955",
     textColor: "#064E3B",
-    jobs: ["🍎 Teacher", "🏥 Nurse", "🧑‍🤝‍🧑 Counselor", "🤸 Coach", "🧑‍⚕️ Social Worker"]
+    jobs: ["teacher", "nurse", "counselor", "coach", "social_worker"]
   },
   E: {
     name: "The Leader",
@@ -585,7 +707,7 @@ const RIASEC = {
     border: "#FBBF24",
     shadow: "#FBBF2455",
     textColor: "#78350F",
-    jobs: ["👔 Business Owner", "📢 Salesperson", "🏛️ Politician", "🎬 Movie Director", "🗺️ Adventure Guide"]
+    jobs: ["business_owner", "salesperson", "public_leader", "movie_director", "adventure_guide"]
   },
   C: {
     name: "The Organizer",
@@ -596,9 +718,282 @@ const RIASEC = {
     border: "#60A5FA",
     shadow: "#60A5FA55",
     textColor: "#1E3A8A",
-    jobs: ["🏦 Banker", "📊 Accountant", "📁 Office Manager", "📬 Postal Worker", "💰 Cashier"]
+    jobs: ["banker", "accountant", "office_manager", "postal_worker", "cashier"]
   }
 };
+
+
+// ---- CAREER DETAILS ----
+// These are kid-friendly summaries. Income is approximate and should be updated over time.
+const CAREERS = {
+  construction_worker: {
+    label: "👷 Construction Worker",
+    title: "Construction Worker",
+    pathway: "Trade school, apprenticeship, or learning on the job.",
+    income: "About $40,000–$60,000 a year.",
+    school: "Explore building trades, construction programs, or community college career programs.",
+    does: "Builds and fixes homes, schools, roads, and other important places.",
+    sentence: "A construction worker builds and fixes places people use. This career may be a good fit for me because I like hands-on work."
+  },
+  mechanic: {
+    label: "🔧 Mechanic",
+    title: "Mechanic",
+    pathway: "Trade school, community college, or learning with an experienced mechanic.",
+    income: "About $45,000–$70,000 a year.",
+    school: "Explore auto technology programs, trade schools, or community college certificates.",
+    does: "Checks, fixes, and cares for cars, trucks, machines, or engines.",
+    sentence: "A mechanic solves problems by fixing vehicles or machines. This career may be a good fit for me because I like figuring out how things work."
+  },
+  farmer: {
+    label: "🌿 Farmer",
+    title: "Farmer",
+    pathway: "Hands-on training, agriculture classes, community college, or a 4-year agriculture program.",
+    income: "Income can vary a lot, often about $40,000–$80,000 a year.",
+    school: "Explore agriculture, animal science, plant science, or environmental programs.",
+    does: "Grows food, cares for land, and may work with animals, plants, tools, and weather.",
+    sentence: "A farmer helps grow food and care for land. This career may be a good fit for me because I like nature or animals."
+  },
+  firefighter: {
+    label: "🚒 Firefighter",
+    title: "Firefighter",
+    pathway: "Fire academy, emergency medical training, and physical practice.",
+    income: "About $50,000–$90,000 a year.",
+    school: "Explore fire science programs, EMT training, or a fire academy.",
+    does: "Helps people during fires, accidents, medical emergencies, and dangerous situations.",
+    sentence: "A firefighter protects people during emergencies. This career may be a good fit for me because I like helping others and staying active."
+  },
+  engineer: {
+    label: "🏗️ Engineer",
+    title: "Engineer",
+    pathway: "Usually a 4-year college degree in engineering.",
+    income: "About $75,000–$120,000 a year.",
+    school: "Explore engineering programs at universities, STEM clubs, robotics, or math and science classes.",
+    does: "Designs and improves buildings, bridges, machines, computers, or systems.",
+    sentence: "An engineer designs solutions to real problems. This career may be a good fit for me because I like building and solving puzzles."
+  },
+
+  scientist: {
+    label: "👩‍🔬 Scientist",
+    title: "Scientist",
+    pathway: "Usually college, and sometimes graduate school for advanced research.",
+    income: "About $60,000–$110,000 a year.",
+    school: "Explore biology, chemistry, earth science, physics, or environmental science programs.",
+    does: "Asks questions, tests ideas, studies evidence, and learns new things about the world.",
+    sentence: "A scientist studies questions and evidence. This career may be a good fit for me because I like discovering how things work."
+  },
+  doctor: {
+    label: "🩺 Doctor",
+    title: "Doctor",
+    pathway: "College, medical school, and years of training in a hospital or clinic.",
+    income: "Often more than $150,000 a year.",
+    school: "Explore biology, health science, pre-med, and medical school pathways.",
+    does: "Helps people stay healthy, finds out what is wrong, and gives treatment.",
+    sentence: "A doctor helps people understand and improve their health. This career may be a good fit for me because I like science and helping people."
+  },
+  paleontologist: {
+    label: "🦕 Paleontologist",
+    title: "Paleontologist",
+    pathway: "College and often graduate school in science.",
+    income: "About $55,000–$100,000 a year.",
+    school: "Explore geology, biology, earth science, museum studies, or natural history programs.",
+    does: "Studies fossils to learn about dinosaurs, ancient animals, plants, and Earth’s past.",
+    sentence: "A paleontologist studies fossils and Earth’s history. This career may be a good fit for me because I like science and ancient life."
+  },
+  coder: {
+    label: "💻 Coder",
+    title: "Coder",
+    pathway: "College, coding bootcamp, career program, or lots of practice building projects.",
+    income: "About $70,000–$130,000 a year.",
+    school: "Explore computer science, coding clubs, robotics, or technology programs.",
+    does: "Writes instructions that help apps, websites, games, and computers work.",
+    sentence: "A coder creates instructions for computers. This career may be a good fit for me because I like technology and problem solving."
+  },
+  nurse: {
+    label: "🌡️ Nurse",
+    title: "Nurse",
+    pathway: "Nursing program at a community college or university, plus a nursing license.",
+    income: "About $75,000–$120,000 a year.",
+    school: "Explore nursing, health science, anatomy, and patient care programs.",
+    does: "Cares for patients, checks health signs, gives medicine, and helps doctors and families.",
+    sentence: "A nurse cares for people when they need help. This career may be a good fit for me because I like science and helping others."
+  },
+
+  artist: {
+    label: "🎨 Artist",
+    title: "Artist",
+    pathway: "Art classes, practice, portfolio building, college, or self-training.",
+    income: "Income varies a lot, often about $35,000–$80,000 a year.",
+    school: "Explore art, design, animation, illustration, or community art programs.",
+    does: "Creates pictures, designs, sculptures, digital art, or other visual work.",
+    sentence: "An artist creates work that people can see and feel. This career may be a good fit for me because I like making creative ideas."
+  },
+  actor: {
+    label: "🎭 Actor",
+    title: "Actor",
+    pathway: "Drama classes, theater practice, auditions, and sometimes college or performing arts school.",
+    income: "Income varies a lot because acting jobs can be part-time or project-based.",
+    school: "Explore theater, speech, performing arts, film, or drama programs.",
+    does: "Performs characters in plays, shows, movies, videos, or voice acting.",
+    sentence: "An actor performs stories for an audience. This career may be a good fit for me because I like pretending, speaking, or performing."
+  },
+  author: {
+    label: "✍️ Author",
+    title: "Author",
+    pathway: "Lots of reading and writing practice, writing classes, college, or self-training.",
+    income: "Income varies a lot, often project-based or from book sales.",
+    school: "Explore writing, English, journalism, storytelling, or creative writing programs.",
+    does: "Writes stories, books, poems, articles, scripts, or information for readers.",
+    sentence: "An author uses words to share ideas and stories. This career may be a good fit for me because I like writing or imagining."
+  },
+  musician: {
+    label: "🎵 Musician",
+    title: "Musician",
+    pathway: "Music lessons, practice, performances, and sometimes college or music school.",
+    income: "Income varies a lot, often about $35,000–$80,000 a year.",
+    school: "Explore music, band, choir, orchestra, audio production, or performing arts programs.",
+    does: "Sings, plays instruments, writes music, records songs, or performs for audiences.",
+    sentence: "A musician creates or performs music. This career may be a good fit for me because I like rhythm, sound, and creativity."
+  },
+  photographer: {
+    label: "📸 Photographer",
+    title: "Photographer",
+    pathway: "Practice, photography classes, community college, art school, or building a portfolio.",
+    income: "About $35,000–$70,000 a year.",
+    school: "Explore photography, digital media, graphic design, journalism, or art programs.",
+    does: "Takes photos of people, places, events, products, nature, or news.",
+    sentence: "A photographer uses pictures to tell a story. This career may be a good fit for me because I like noticing details and creating images."
+  },
+
+  teacher: {
+    label: "🍎 Teacher",
+    title: "Teacher",
+    pathway: "Usually a 4-year college degree and a teaching credential.",
+    income: "About $50,000–$90,000 a year.",
+    school: "Explore education, child development, reading, math, science, or teaching programs.",
+    does: "Helps students learn skills, understand ideas, and grow as people.",
+    sentence: "A teacher helps students learn and grow. This career may be a good fit for me because I like explaining things and helping others."
+  },
+  counselor: {
+    label: "🧑‍🤝‍🧑 Counselor",
+    title: "Counselor",
+    pathway: "Usually college and graduate school in counseling, psychology, or social work.",
+    income: "About $50,000–$85,000 a year.",
+    school: "Explore psychology, counseling, human services, or social work programs.",
+    does: "Listens to people, helps them solve problems, and supports feelings and choices.",
+    sentence: "A counselor helps people talk through problems. This career may be a good fit for me because I like listening and helping."
+  },
+  coach: {
+    label: "🤸 Coach",
+    title: "Coach",
+    pathway: "Sports experience, training, certifications, and sometimes college.",
+    income: "Income varies a lot, often about $35,000–$75,000 a year.",
+    school: "Explore kinesiology, sports science, physical education, or coaching programs.",
+    does: "Teaches athletes skills, teamwork, practice habits, and game strategy.",
+    sentence: "A coach helps people improve and work as a team. This career may be a good fit for me because I like sports, teamwork, or teaching."
+  },
+  social_worker: {
+    label: "🧑‍⚕️ Social Worker",
+    title: "Social Worker",
+    pathway: "College and often a social work degree or license.",
+    income: "About $50,000–$80,000 a year.",
+    school: "Explore social work, psychology, counseling, or human services programs.",
+    does: "Helps families and people find support, solve problems, and stay safe.",
+    sentence: "A social worker helps people get support when life is hard. This career may be a good fit for me because I care about helping others."
+  },
+
+  business_owner: {
+    label: "👔 Business Owner",
+    title: "Business Owner",
+    pathway: "Can include college, business classes, career programs, or learning by starting small.",
+    income: "Income varies a lot because owners earn different amounts.",
+    school: "Explore business, entrepreneurship, marketing, money skills, or leadership programs.",
+    does: "Starts or runs a business, makes plans, solves problems, and works with customers.",
+    sentence: "A business owner creates or runs a company. This career may be a good fit for me because I like leading ideas and making plans."
+  },
+  salesperson: {
+    label: "📢 Salesperson",
+    title: "Salesperson",
+    pathway: "High school, job training, business classes, or college depending on the product.",
+    income: "About $35,000–$90,000 a year, depending on the job.",
+    school: "Explore business, communication, marketing, or customer service programs.",
+    does: "Helps people understand products or services and decide what to buy.",
+    sentence: "A salesperson explains ideas to customers. This career may be a good fit for me because I like talking to people and sharing ideas."
+  },
+  public_leader: {
+    label: "🏛️ Public Leader",
+    title: "Public Leader",
+    pathway: "Many study government, law, communication, public service, or leadership.",
+    income: "Income varies a lot by job and city.",
+    school: "Explore government, history, law, debate, leadership, or public service programs.",
+    does: "Makes decisions, listens to people, and helps solve community problems.",
+    sentence: "A public leader helps make choices for a community. This career may be a good fit for me because I like leadership and helping groups."
+  },
+  movie_director: {
+    label: "🎬 Movie Director",
+    title: "Movie Director",
+    pathway: "Film classes, practice making videos, college, or building a creative portfolio.",
+    income: "Income varies a lot because many projects are temporary.",
+    school: "Explore film, theater, media arts, writing, design, or communication programs.",
+    does: "Leads a film or video project and helps actors, cameras, sound, and story work together.",
+    sentence: "A movie director leads people to tell a story on screen. This career may be a good fit for me because I like creativity and leadership."
+  },
+  adventure_guide: {
+    label: "🗺️ Adventure Guide",
+    title: "Adventure Guide",
+    pathway: "Outdoor training, safety certifications, first aid, and experience.",
+    income: "About $30,000–$65,000 a year.",
+    school: "Explore outdoor education, parks, recreation, environmental science, or safety training.",
+    does: "Leads people through outdoor activities like hiking, camping, climbing, or nature trips.",
+    sentence: "An adventure guide helps people explore safely. This career may be a good fit for me because I like nature, movement, and leadership."
+  },
+
+  banker: {
+    label: "🏦 Banker",
+    title: "Banker",
+    pathway: "High school, job training, business classes, or college for advanced roles.",
+    income: "About $40,000–$90,000 a year depending on the role.",
+    school: "Explore business, finance, math, economics, or customer service programs.",
+    does: "Helps people save money, use accounts, understand loans, and make money choices.",
+    sentence: "A banker helps people understand and manage money. This career may be a good fit for me because I like numbers and organization."
+  },
+  accountant: {
+    label: "📊 Accountant",
+    title: "Accountant",
+    pathway: "Usually college in accounting, business, or finance.",
+    income: "About $60,000–$100,000 a year.",
+    school: "Explore accounting, business, finance, economics, or math programs.",
+    does: "Keeps track of money, checks records, and helps people or businesses make careful money choices.",
+    sentence: "An accountant organizes and checks money records. This career may be a good fit for me because I like details, numbers, and careful work."
+  },
+  office_manager: {
+    label: "📁 Office Manager",
+    title: "Office Manager",
+    pathway: "Job training, business classes, community college, or college.",
+    income: "About $45,000–$85,000 a year.",
+    school: "Explore business, office technology, communication, or management programs.",
+    does: "Keeps an office organized, helps people work together, and makes sure tasks get done.",
+    sentence: "An office manager helps a workplace stay organized. This career may be a good fit for me because I like planning and keeping track of details."
+  },
+  postal_worker: {
+    label: "📬 Postal Worker",
+    title: "Postal Worker",
+    pathway: "High school, job training, and postal service requirements.",
+    income: "About $45,000–$70,000 a year.",
+    school: "Explore public service, logistics, transportation, or workplace readiness programs.",
+    does: "Sorts, moves, and delivers mail and packages to homes and businesses.",
+    sentence: "A postal worker helps mail and packages get where they need to go. This career may be a good fit for me because I like routines and responsibility."
+  },
+  cashier: {
+    label: "💰 Cashier",
+    title: "Cashier",
+    pathway: "High school and on-the-job training.",
+    income: "Often about $30,000–$40,000 a year for full-time work.",
+    school: "Explore customer service, money skills, business, or workplace readiness programs.",
+    does: "Helps customers pay, gives receipts, counts money, and keeps checkout moving.",
+    sentence: "A cashier helps customers and handles money carefully. This career may be a good fit for me because I like people, steps, and responsibility."
+  }
+};
+
 
 // ---- QUESTIONS (15 questions, kid-friendly RIASEC) ----
 // Note: Since 15 does not divide evenly across 6 RIASEC types,
@@ -823,7 +1218,10 @@ function showResults() {
       <div class="rc-type" style="color:${info.color}">${info.name}</div>
       <div class="rc-label">(${info.fullName})</div>
       <div class="rc-label">Match: ${Math.round(result.average * 100 / 3)}%</div>
-      <div class="rc-jobs">${info.jobs.map(j => '<div>'+j+'</div>').join('')}</div>
+      <div class="rc-jobs">${info.jobs.map(jobId => {
+        const job = CAREERS[jobId];
+        return `<button class="job-link-btn" onclick="showCareerDetail('${jobId}')">${job.label}</button>`;
+      }).join('')}</div>
     `;
     container.appendChild(card);
 
@@ -834,6 +1232,26 @@ function showResults() {
 
   // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+function showCareerDetail(jobId) {
+  const career = CAREERS[jobId];
+  if (!career) return;
+
+  document.getElementById('career-title').textContent = career.label;
+  document.getElementById('career-intro').textContent = 'Here is a quick career snapshot you can use for your writing.';
+  document.getElementById('career-pathway').textContent = career.pathway;
+  document.getElementById('career-income').textContent = career.income;
+  document.getElementById('career-school').textContent = career.school;
+  document.getElementById('career-do').textContent = career.does;
+  document.getElementById('career-writing').innerHTML =
+    '<strong>Sentence helper:</strong><br>' + career.sentence +
+    '<br><br><strong>Try writing:</strong> I chose this job because _____. I would need to learn _____.';
+
+  const panel = document.getElementById('career-detail-panel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function resetQuiz() {
