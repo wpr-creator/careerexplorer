@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Explorer — Young Explorers (Grades 1–2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --coral: #FF6B6B;
+  --violet: #7C3AED;
+  --teal: #0D9488;
+  --sun: #F59E0B;
+  --bg: #FFFBF0;
+  --card: #FFFFFF;
+  --ink: #1E1B4B;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* floating icons bg */
+.float-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.float-icon {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.18;
+  animation: float-up 7s ease-in-out infinite;
+}
+@keyframes float-up {
+  0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-22px) rotate(5deg)}
+}
+
+/* HEADER */
+.site-header {
+  position: relative; z-index: 1;
+  background: linear-gradient(135deg, #1E1B4B 0%, #4C1D95 50%, #1E3A8A 100%);
+  padding: 2.5rem 1.5rem 3.5rem;
+  text-align: center;
+  clip-path: ellipse(100% 88% at 50% 0%);
+  padding-bottom: 4.5rem;
+}
+.back-link {
+  position: absolute; top: 1rem; left: 1rem;
+  font-size: 0.8rem; font-weight: 900; color: rgba(255,255,255,0.7);
+  text-decoration: none; background: rgba(255,255,255,0.15);
+  padding: 0.35rem 0.85rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.back-link:hover { background: rgba(255,255,255,0.25); }
+.header-badge {
+  display: inline-block; background: rgba(255,255,255,0.15);
+  color: #FDE68A; font-size: 0.72rem; font-weight: 900;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.3rem 1rem; border-radius: 20px; margin-bottom: 0.8rem;
+}
+.header-emoji-row { font-size: 2.2rem; letter-spacing: 0.3rem; margin-bottom: 0.8rem; }
+.site-header h1 {
+  font-family: 'Fredoka', cursive; font-weight: 700;
+  font-size: clamp(2.4rem, 7vw, 3.8rem);
+  color: white; text-shadow: 3px 3px 0 rgba(0,0,0,0.2); line-height: 1.1; margin-bottom: 0.4rem;
+}
+.site-header p {
+  font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 700; color: #C4B5FD;
+}
+
+.main {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: -2rem auto 0; padding: 0 1.2rem 5rem;
+}
+
+/* PROGRESS */
+.progress-area { margin-bottom: 1.5rem; display: none; }
+.progress-label { font-size: 1rem; font-weight: 900; color: var(--violet); text-align: center; margin-bottom: 0.4rem; }
+.progress-track { background: #EDE9FE; border-radius: 50px; height: 22px; border: 3px solid #A78BFA; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #F472B6, #A78BFA); border-radius: 50px; transition: width 0.5s ease; }
+
+/* INTRO */
+#intro { margin-top: 0.5rem; text-align: center; }
+.mascot { font-size: 5.5rem; display: block; margin: 1rem auto; animation: bounce 1.5s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+
+.intro-box {
+  background: white; border-radius: 28px; padding: 2rem 1.8rem;
+  border: 4px solid #60A5FA; box-shadow: 0 8px 0 #60A5FA44; margin-bottom: 1.5rem;
+}
+.intro-box h2 {
+  font-family: 'Fredoka', cursive; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700;
+  color: var(--ink); margin-bottom: 0.8rem;
+}
+.intro-box p {
+  font-size: clamp(1.05rem, 3vw, 1.25rem); font-weight: 700; color: #3D1A8E;
+  line-height: 1.6; margin-bottom: 0.6rem;
+}
+.answer-preview {
+  background: #F5F3FF; border-radius: 16px; padding: 1rem 1.2rem; margin: 0.8rem 0;
+  font-size: 1.05rem; font-weight: 800; color: #4C1D95; line-height: 1.8; text-align: left;
+}
+.start-btn {
+  font-family: 'Fredoka', cursive; font-size: 1.9rem; font-weight: 600;
+  padding: 1rem 3.5rem; background: linear-gradient(135deg, #F472B6, #FBBF24);
+  color: white; border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 7px 0 #C8411A66; transition: all 0.2s;
+}
+.start-btn:hover { transform: translateY(-4px); box-shadow: 0 11px 0 #C8411A66; }
+
+/* QUESTION */
+#quiz { display: none; }
+.question-card {
+  background: white; border-radius: 28px; padding: 2rem 1.5rem;
+  border: 4px solid #E879F9; box-shadow: 0 8px 0 #E879F940;
+  animation: pop-in 0.4s cubic-bezier(0.34,1.56,0.64,1); margin-bottom: 1.5rem;
+}
+@keyframes pop-in {
+  0%{transform:scale(0.85) translateY(20px);opacity:0}
+  100%{transform:scale(1) translateY(0);opacity:1}
+}
+.q-emoji { font-size: 4.5rem; display: block; text-align: center; margin-bottom: 0.8rem; animation: wiggle 1.5s ease-in-out infinite; }
+@keyframes wiggle { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+.q-text {
+  font-family: 'Fredoka', cursive; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600;
+  text-align: center; color: #3D1A8E; line-height: 1.3; margin-bottom: 1.6rem;
+}
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.answer-btn {
+  font-family: 'Nunito', sans-serif; font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 900; padding: 1rem 0.8rem; border-radius: 20px;
+  border: 3px solid transparent; cursor: pointer; transition: all 0.2s; line-height: 1.3; text-align: center;
+}
+.answer-btn:hover { transform: scale(1.06) translateY(-3px); }
+.answer-btn.yes { background:#D1FAE5; color:#065F46; border-color:#34D399; box-shadow:0 5px 0 #34D39966; }
+.answer-btn.yes:hover { background:#A7F3D0; }
+.answer-btn.kinda { background:#FEF3C7; color:#92400E; border-color:#FBBF24; box-shadow:0 5px 0 #FBBF2466; }
+.answer-btn.kinda:hover { background:#FDE68A; }
+.answer-btn.not-really { background:#DBEAFE; color:#1E40AF; border-color:#60A5FA; box-shadow:0 5px 0 #60A5FA66; }
+.answer-btn.not-really:hover { background:#BFDBFE; }
+.answer-btn.nope { background:#FFE4E6; color:#9F1239; border-color:#FB7185; box-shadow:0 5px 0 #FB718566; }
+.answer-btn.nope:hover { background:#FECDD3; }
+.answer-btn.selected { transform: scale(1.04); filter: brightness(0.88); box-shadow: 0 2px 0 transparent !important; }
+
+.next-wrap { text-align: center; margin-top: 1.5rem; }
+.next-btn {
+  font-family: 'Fredoka', cursive; font-size: 1.5rem; font-weight: 600;
+  padding: 0.9rem 3rem; background: linear-gradient(135deg, #E91E8C, #7C3AED);
+  color: white; border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 6px 0 #7C3AED99; transition: all 0.2s; display: none;
+}
+.next-btn:hover { transform: translateY(-3px); box-shadow: 0 9px 0 #7C3AED99; }
+.next-btn.show { display: inline-block; animation: pop-in 0.3s ease; }
+
+/* RESULTS */
+#results { display: none; }
+.results-top {
+  text-align: center; background: linear-gradient(135deg, #FFF0F5, #F0F4FF, #FFFFF0);
+  border-radius: 28px; padding: 1.5rem; border: 4px solid #FFD700; box-shadow: 0 8px 0 #FFD70055;
+  margin-bottom: 2rem;
+}
+.results-top .celebrate { font-size: 3rem; margin-bottom: 0.4rem; }
+.results-top h2 {
+  font-family: 'Fredoka', cursive; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700;
+  color: #E91E8C; text-shadow: 2px 2px 0 #FFD700; margin-bottom: 0.3rem;
+}
+.results-top p { font-size: 1.15rem; font-weight: 700; color: #5C35A0; }
+
+.result-cards-wrap {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem; margin-bottom: 2rem;
+}
+.result-card {
+  border-radius: 24px; padding: 1.5rem 1rem; text-align: center; border: 4px solid;
+  animation: pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.result-card:nth-child(1){animation-delay:0.1s} .result-card:nth-child(2){animation-delay:0.25s} .result-card:nth-child(3){animation-delay:0.4s}
+.rc-emoji { font-size: 3.5rem; display: block; margin-bottom: 0.5rem; }
+.rc-rank { font-family:'Fredoka',cursive; font-size:1rem; font-weight:600; margin-bottom:0.2rem; opacity:0.8; }
+.rc-type { font-family:'Fredoka',cursive; font-size:1.7rem; font-weight:700; margin-bottom:0.3rem; line-height:1.1; }
+.rc-label { font-size:0.95rem; font-weight:800; opacity:0.75; margin-bottom:1rem; }
+.rc-jobs { font-size:0.95rem; font-weight:700; line-height:1.7; text-align:left; background:rgba(255,255,255,0.6); border-radius:12px; padding:0.6rem 0.8rem; }
+.job-link-btn {
+  width:100%; display:block; text-align:left; background:rgba(255,255,255,0.75);
+  border:2px solid rgba(124,58,237,0.18); border-radius:12px; padding:0.35rem 0.5rem;
+  margin-bottom:0.35rem; font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:800;
+  color:inherit; cursor:pointer; transition:all 0.15s;
+}
+.job-link-btn:hover { transform:translateY(-2px); background:white; border-color:#A78BFA; }
+
+/* Career panel */
+.career-panel {
+  background:white; border:4px solid #60A5FA; border-radius:28px; padding:1.6rem;
+  margin-bottom:2rem; box-shadow:0 6px 0 #60A5FA44; display:none;
+  animation: pop-in 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+.career-panel.show { display:block; }
+.career-panel h3 {
+  font-family:'Fredoka',cursive; font-size:1.7rem; font-weight:700;
+  color:#E91E8C; text-align:center; margin-bottom:0.6rem;
+}
+.career-intro { text-align:center; font-weight:800; color:#5C35A0; font-size:1.05rem; margin-bottom:1rem; }
+.career-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; margin-bottom:1rem; }
+.career-box {
+  background:#F8FAFC; border:3px solid #E2E8F0; border-radius:18px;
+  padding:0.9rem; font-weight:800; color:#334155; line-height:1.4;
+}
+.career-box strong {
+  font-family:'Fredoka',cursive; font-size:1.05rem; color:#7C3AED;
+  display:block; margin-bottom:0.25rem;
+}
+.career-sentence-box {
+  background:#FEF3C7; border:3px dashed #FBBF24; border-radius:18px;
+  padding:1rem; font-weight:800; color:#78350F; line-height:1.5;
+}
+.career-note { font-size:0.88rem; color:#64748B; font-weight:700; text-align:center; margin-top:0.8rem; }
+
+/* Write it down */
+.write-card {
+  background:white; border:4px dashed #A78BFA; border-radius:28px;
+  padding:1.8rem; margin-bottom:2rem; box-shadow:0 6px 0 #A78BFA44;
+}
+.write-card h3 {
+  font-family:'Fredoka',cursive; font-size:1.6rem; font-weight:700;
+  color:#7C3AED; margin-bottom:0.5rem; text-align:center;
+}
+.write-card p { text-align:center; font-weight:700; color:#5C35A0; margin-bottom:1rem; font-size:1.05rem; }
+.write-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem; }
+.write-row span { font-size:1.8rem; }
+.write-row label { font-size:1.1rem; font-weight:800; color:#5C35A0; min-width:120px; }
+.write-row input {
+  flex:1; height:38px; border:none; border-bottom:4px solid #C084FC;
+  background:#FAF5FF; border-radius:8px 8px 0 0; padding:0 0.5rem;
+  font-family:'Nunito',sans-serif; font-size:1rem; font-weight:800; color:#3D1A8E;
+}
+.write-row input:focus { outline:none; background:#EDE9FE; }
+
+.action-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+.print-btn {
+  font-family:'Fredoka',cursive; font-size:1.4rem; font-weight:600; padding:0.8rem 2rem;
+  background:linear-gradient(135deg, #60A5FA, #A78BFA); color:white; border:none;
+  border-radius:50px; cursor:pointer; box-shadow:0 5px 0 #1E40AF88; transition:all 0.2s;
+}
+.print-btn:hover { transform:translateY(-3px); }
+.retry-btn {
+  font-family:'Fredoka',cursive; font-size:1.4rem; font-weight:600; padding:0.8rem 2rem;
+  background:linear-gradient(135deg, #34D399, #FBBF24); color:white; border:none;
+  border-radius:50px; cursor:pointer; box-shadow:0 5px 0 #065F4688; transition:all 0.2s;
+}
+.retry-btn:hover { transform:translateY(-3px); }
+
+@media(max-width:600px){
+  .answers{grid-template-columns:1fr}
+  .career-grid{grid-template-columns:1fr}
+}
+@media print {
+  .float-bg,.action-btns,.answer-btn,.next-btn,.start-btn,.progress-area { display:none !important; }
+  body { background:white; }
+}
+</style>
+</head>
+<body>
+<div class="float-bg" id="float-bg"></div>
+
+<header class="site-header">
+  <a class="back-link" href="index.html">← HUB</a>
+  <div class="header-badge">Grades 1–2 · Young Explorers</div>
+  <div class="header-emoji-row">⭐ 🚀 🌈 💡 🎨 🏆</div>
+  <h1>CAREER EXPLORER!</h1>
+  <p>Find out what kinds of jobs YOU might love! 🎉</p>
+</header>
+
+<div class="main">
+  <div id="progress-area" class="progress-area">
+    <div class="progress-label" id="progress-label">Question 1 of 15</div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- INTRO -->
+  <div id="intro">
+    <span class="mascot">🤩</span>
+    <div class="intro-box">
+      <h2>HI, EXPLORER! 👋</h2>
+      <p>This quiz will help you find out <strong>what kinds of jobs</strong> you might love when you grow up!</p>
+      <p>There are no wrong answers. Just pick what sounds like YOU! 😊</p>
+      <p>For each question, pick how you feel:</p>
+      <div class="answer-preview">
+        ✅ <strong>YES!</strong> — I love that!<br>
+        🤔 <strong>Kind of!</strong> — Maybe...<br>
+        😐 <strong>Not really</strong> — Ehh...<br>
+        ❌ <strong>Nope!</strong> — Not for me!
+      </div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">LET'S GO! 🚀</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz"></div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="results-top">
+      <div class="celebrate">🎉🌟🎊</div>
+      <h2>YOU DID IT!</h2>
+      <p>Here are YOUR top 3 job superpower types! ⬇️</p>
+    </div>
+    <div class="result-cards-wrap" id="result-cards"></div>
+
+    <div class="career-panel" id="career-panel">
+      <h3 id="career-title">TAP A JOB TO LEARN MORE!</h3>
+      <p class="career-intro" id="career-intro">Click any job above to see the pathway, pay, and learning ideas.</p>
+      <div class="career-grid">
+        <div class="career-box"><strong>🎓 LEARNING PATHWAY</strong><span id="career-pathway"></span></div>
+        <div class="career-box"><strong>💰 HOW MUCH THEY EARN</strong><span id="career-income"></span></div>
+        <div class="career-box"><strong>🏫 SCHOOL OR TRAINING</strong><span id="career-school"></span></div>
+        <div class="career-box"><strong>⭐ WHAT THEY DO</strong><span id="career-do"></span></div>
+      </div>
+      <div class="career-sentence-box" id="career-writing"></div>
+      <div class="career-note">Income is approximate and can change by state, experience, and type of workplace.</div>
+    </div>
+
+    <div class="write-card">
+      <h3>✏️ WRITE IT DOWN!</h3>
+      <p>Write your 3 job types on the lines below! 📝</p>
+      <div class="write-row"><span>🥇</span><label>My #1 type:</label><input type="text" id="write1" placeholder="Type it here..." /></div>
+      <div class="write-row"><span>🥈</span><label>My #2 type:</label><input type="text" id="write2" placeholder="Type it here..." /></div>
+      <div class="write-row"><span>🥉</span><label>My #3 type:</label><input type="text" id="write3" placeholder="Type it here..." /></div>
+    </div>
+
+    <div class="action-btns">
+      <button class="print-btn" onclick="window.print()">🖨️ PRINT MY RESULTS!</button>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 TRY AGAIN!</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Floating background icons
+(function(){
+  const wrap = document.getElementById('float-bg');
+  const icons = ['⭐','🌟','✨','💫','🌈','🎈','🦋','🌸','🎯','🏅','🍀','🎪'];
+  for(let i=0;i<18;i++){
+    const el = document.createElement('span');
+    el.className = 'float-icon';
+    el.textContent = icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = Math.random()*95+'%';
+    el.style.top = Math.random()*95+'%';
+    el.style.animationDelay = Math.random()*5+'s';
+    el.style.animationDuration = (5+Math.random()*4)+'s';
+    wrap.appendChild(el);
+  }
+})();
+
+const RIASEC = {
+  R:{ name:"THE BUILDER", fullName:"Realistic", emoji:"🔨", color:"#FF6B6B", light:"#FFF0F0", border:"#FF6B6B", shadow:"#FF6B6B55", textColor:"#7B1C1C",
+      jobs:["construction_worker","mechanic","farmer","firefighter","engineer"] },
+  I:{ name:"THE THINKER", fullName:"Investigative", emoji:"🔬", color:"#A78BFA", light:"#F3EEFF", border:"#A78BFA", shadow:"#A78BFA55", textColor:"#3B1D8E",
+      jobs:["scientist","doctor","paleontologist","coder","nurse"] },
+  A:{ name:"THE CREATOR", fullName:"Artistic", emoji:"🎨", color:"#F472B6", light:"#FFF0F8", border:"#F472B6", shadow:"#F472B655", textColor:"#831843",
+      jobs:["artist","actor","author","musician","photographer"] },
+  S:{ name:"THE HELPER", fullName:"Social", emoji:"🤝", color:"#34D399", light:"#EDFDF7", border:"#34D399", shadow:"#34D39955", textColor:"#064E3B",
+      jobs:["teacher","nurse","counselor","coach","social_worker"] },
+  E:{ name:"THE LEADER", fullName:"Enterprising", emoji:"🏆", color:"#FBBF24", light:"#FFFBEB", border:"#FBBF24", shadow:"#FBBF2455", textColor:"#78350F",
+      jobs:["business_owner","salesperson","public_leader","movie_director","adventure_guide"] },
+  C:{ name:"THE ORGANIZER", fullName:"Conventional", emoji:"📋", color:"#60A5FA", light:"#EFF6FF", border:"#60A5FA", shadow:"#60A5FA55", textColor:"#1E3A8A",
+      jobs:["banker","accountant","office_manager","postal_worker","cashier"] }
+};
+
+const CAREERS = {
+  construction_worker:{ label:"👷 Construction Worker", pathway:"Trade school, apprenticeship, or learning on the job.", income:"About $40,000–$60,000 a year.", school:"Explore building trades, construction programs, or community college career programs.", does:"Builds and fixes homes, schools, roads, and other important places.", sentence:"A construction worker builds and fixes places people use. This career may be a good fit for me because I like hands-on work." },
+  mechanic:{ label:"🔧 Mechanic", pathway:"Trade school, community college, or learning with an experienced mechanic.", income:"About $45,000–$70,000 a year.", school:"Explore auto technology programs, trade schools, or community college certificates.", does:"Checks, fixes, and cares for cars, trucks, machines, or engines.", sentence:"A mechanic solves problems by fixing vehicles or machines. This career may be a good fit for me because I like figuring out how things work." },
+  farmer:{ label:"🌿 Farmer", pathway:"Hands-on training, agriculture classes, community college, or a 4-year agriculture program.", income:"Income can vary a lot, often about $40,000–$80,000 a year.", school:"Explore agriculture, animal science, plant science, or environmental programs.", does:"Grows food, cares for land, and may work with animals, plants, tools, and weather.", sentence:"A farmer helps grow food and care for land. This career may be a good fit for me because I like nature or animals." },
+  firefighter:{ label:"🚒 Firefighter", pathway:"Fire academy, emergency medical training, and physical practice.", income:"About $50,000–$90,000 a year.", school:"Explore fire science programs, EMT training, or a fire academy.", does:"Helps people during fires, accidents, medical emergencies, and dangerous situations.", sentence:"A firefighter protects people during emergencies. This career may be a good fit for me because I like helping others and staying active." },
+  engineer:{ label:"🏗️ Engineer", pathway:"Usually a 4-year college degree in engineering.", income:"About $75,000–$120,000 a year.", school:"Explore engineering programs at universities, STEM clubs, robotics, or math and science classes.", does:"Designs and improves buildings, bridges, machines, computers, or systems.", sentence:"An engineer designs solutions to real problems. This career may be a good fit for me because I like building and solving puzzles." },
+  scientist:{ label:"👩‍🔬 Scientist", pathway:"Usually college, and sometimes graduate school for advanced research.", income:"About $60,000–$110,000 a year.", school:"Explore biology, chemistry, earth science, physics, or environmental science programs.", does:"Asks questions, tests ideas, studies evidence, and learns new things about the world.", sentence:"A scientist studies questions and evidence. This career may be a good fit for me because I like discovering how things work." },
+  doctor:{ label:"🩺 Doctor", pathway:"College, medical school, and years of training in a hospital or clinic.", income:"Often more than $150,000 a year.", school:"Explore biology, health science, pre-med, and medical school pathways.", does:"Helps people stay healthy, finds out what is wrong, and gives treatment.", sentence:"A doctor helps people understand and improve their health. This career may be a good fit for me because I like science and helping people." },
+  paleontologist:{ label:"🦕 Paleontologist", pathway:"College and often graduate school in science.", income:"About $55,000–$100,000 a year.", school:"Explore geology, biology, earth science, museum studies, or natural history programs.", does:"Studies fossils to learn about dinosaurs, ancient animals, plants, and Earth's past.", sentence:"A paleontologist studies fossils and Earth's history. This career may be a good fit for me because I like science and ancient life." },
+  coder:{ label:"💻 Coder", pathway:"College, coding bootcamp, career program, or lots of practice building projects.", income:"About $70,000–$130,000 a year.", school:"Explore computer science, coding clubs, robotics, or technology programs.", does:"Writes instructions that help apps, websites, games, and computers work.", sentence:"A coder creates instructions for computers. This career may be a good fit for me because I like technology and problem solving." },
+  nurse:{ label:"🌡️ Nurse", pathway:"Nursing program at a community college or university, plus a nursing license.", income:"About $75,000–$120,000 a year.", school:"Explore nursing, health science, anatomy, and patient care programs.", does:"Cares for patients, checks health signs, gives medicine, and helps doctors and families.", sentence:"A nurse cares for people when they need help. This career may be a good fit for me because I like science and helping others." },
+  artist:{ label:"🎨 Artist", pathway:"Art classes, practice, portfolio building, college, or self-training.", income:"Income varies a lot, often about $35,000–$80,000 a year.", school:"Explore art, design, animation, illustration, or community art programs.", does:"Creates pictures, designs, sculptures, digital art, or other visual work.", sentence:"An artist creates work that people can see and feel. This career may be a good fit for me because I like making creative ideas." },
+  actor:{ label:"🎭 Actor", pathway:"Drama classes, theater practice, auditions, and sometimes college or performing arts school.", income:"Income varies a lot because acting jobs can be part-time or project-based.", school:"Explore theater, speech, performing arts, film, or drama programs.", does:"Performs characters in plays, shows, movies, videos, or voice acting.", sentence:"An actor performs stories for an audience. This career may be a good fit for me because I like pretending, speaking, or performing." },
+  author:{ label:"✍️ Author", pathway:"Lots of reading and writing practice, writing classes, college, or self-training.", income:"Income varies a lot, often project-based or from book sales.", school:"Explore writing, English, journalism, storytelling, or creative writing programs.", does:"Writes stories, books, poems, articles, scripts, or information for readers.", sentence:"An author uses words to share ideas and stories. This career may be a good fit for me because I like writing or imagining." },
+  musician:{ label:"🎵 Musician", pathway:"Music lessons, practice, performances, and sometimes college or music school.", income:"Income varies a lot, often about $35,000–$80,000 a year.", school:"Explore music, band, choir, orchestra, audio production, or performing arts programs.", does:"Sings, plays instruments, writes music, records songs, or performs for audiences.", sentence:"A musician creates or performs music. This career may be a good fit for me because I like rhythm, sound, and creativity." },
+  photographer:{ label:"📸 Photographer", pathway:"Practice, photography classes, community college, art school, or building a portfolio.", income:"About $35,000–$70,000 a year.", school:"Explore photography, digital media, graphic design, journalism, or art programs.", does:"Takes photos of people, places, events, products, nature, or news.", sentence:"A photographer uses pictures to tell a story. This career may be a good fit for me because I like noticing details and creating images." },
+  teacher:{ label:"🍎 Teacher", pathway:"Usually a 4-year college degree and a teaching credential.", income:"About $50,000–$90,000 a year.", school:"Explore education, child development, reading, math, science, or teaching programs.", does:"Helps students learn skills, understand ideas, and grow as people.", sentence:"A teacher helps students learn and grow. This career may be a good fit for me because I like explaining things and helping others." },
+  counselor:{ label:"🧑‍🤝‍🧑 Counselor", pathway:"Usually college and graduate school in counseling, psychology, or social work.", income:"About $50,000–$85,000 a year.", school:"Explore psychology, counseling, human services, or social work programs.", does:"Listens to people, helps them solve problems, and supports feelings and choices.", sentence:"A counselor helps people talk through problems. This career may be a good fit for me because I like listening and helping." },
+  coach:{ label:"🤸 Coach", pathway:"Sports experience, training, certifications, and sometimes college.", income:"Income varies a lot, often about $35,000–$75,000 a year.", school:"Explore kinesiology, sports science, physical education, or coaching programs.", does:"Teaches athletes skills, teamwork, practice habits, and game strategy.", sentence:"A coach helps people improve and work as a team. This career may be a good fit for me because I like sports, teamwork, or teaching." },
+  social_worker:{ label:"🧑‍⚕️ Social Worker", pathway:"College and often a social work degree or license.", income:"About $50,000–$80,000 a year.", school:"Explore social work, psychology, counseling, or human services programs.", does:"Helps families and people find support, solve problems, and stay safe.", sentence:"A social worker helps people get support when life is hard. This career may be a good fit for me because I care about helping others." },
+  business_owner:{ label:"👔 Business Owner", pathway:"Can include college, business classes, career programs, or learning by starting small.", income:"Income varies a lot because owners earn different amounts.", school:"Explore business, entrepreneurship, marketing, money skills, or leadership programs.", does:"Starts or runs a business, makes plans, solves problems, and works with customers.", sentence:"A business owner creates or runs a company. This career may be a good fit for me because I like leading ideas and making plans." },
+  salesperson:{ label:"📢 Salesperson", pathway:"High school, job training, business classes, or college depending on the product.", income:"About $35,000–$90,000 a year, depending on the job.", school:"Explore business, communication, marketing, or customer service programs.", does:"Helps people understand products or services and decide what to buy.", sentence:"A salesperson explains ideas to customers. This career may be a good fit for me because I like talking to people and sharing ideas." },
+  public_leader:{ label:"🏛️ Public Leader", pathway:"Many study government, law, communication, public service, or leadership.", income:"Income varies a lot by job and city.", school:"Explore government, history, law, debate, leadership, or public service programs.", does:"Makes decisions, listens to people, and helps solve community problems.", sentence:"A public leader helps make choices for a community. This career may be a good fit for me because I like leadership and helping groups." },
+  movie_director:{ label:"🎬 Movie Director", pathway:"Film classes, practice making videos, college, or building a creative portfolio.", income:"Income varies a lot because many projects are temporary.", school:"Explore film, theater, media arts, writing, design, or communication programs.", does:"Leads a film or video project and helps actors, cameras, sound, and story work together.", sentence:"A movie director leads people to tell a story on screen. This career may be a good fit for me because I like creativity and leadership." },
+  adventure_guide:{ label:"🗺️ Adventure Guide", pathway:"Outdoor training, safety certifications, first aid, and experience.", income:"About $30,000–$65,000 a year.", school:"Explore outdoor education, parks, recreation, environmental science, or safety training.", does:"Leads people through outdoor activities like hiking, camping, climbing, or nature trips.", sentence:"An adventure guide helps people explore safely. This career may be a good fit for me because I like nature, movement, and leadership." },
+  banker:{ label:"🏦 Banker", pathway:"High school, job training, business classes, or college for advanced roles.", income:"About $40,000–$90,000 a year depending on the role.", school:"Explore business, finance, math, economics, or customer service programs.", does:"Helps people save money, use accounts, understand loans, and make money choices.", sentence:"A banker helps people understand and manage money. This career may be a good fit for me because I like numbers and organization." },
+  accountant:{ label:"📊 Accountant", pathway:"Usually college in accounting, business, or finance.", income:"About $60,000–$100,000 a year.", school:"Explore accounting, business, finance, economics, or math programs.", does:"Keeps track of money, checks records, and helps people or businesses make careful money choices.", sentence:"An accountant organizes and checks money records. This career may be a good fit for me because I like details, numbers, and careful work." },
+  office_manager:{ label:"📁 Office Manager", pathway:"Job training, business classes, community college, or college.", income:"About $45,000–$85,000 a year.", school:"Explore business, office technology, communication, or management programs.", does:"Keeps an office organized, helps people work together, and makes sure tasks get done.", sentence:"An office manager helps a workplace stay organized. This career may be a good fit for me because I like planning and keeping track of details." },
+  postal_worker:{ label:"📬 Postal Worker", pathway:"High school, job training, and postal service requirements.", income:"About $45,000–$70,000 a year.", school:"Explore public service, logistics, transportation, or workplace readiness programs.", does:"Sorts, moves, and delivers mail and packages to homes and businesses.", sentence:"A postal worker helps mail and packages get where they need to go. This career may be a good fit for me because I like routines and responsibility." },
+  cashier:{ label:"💰 Cashier", pathway:"High school and on-the-job training.", income:"Often about $30,000–$40,000 a year for full-time work.", school:"Explore customer service, money skills, business, or workplace readiness programs.", does:"Helps customers pay, gives receipts, counts money, and keeps checkout moving.", sentence:"A cashier helps customers and handles money carefully. This career may be a good fit for me because I like people, steps, and responsibility." }
+};
+
+const QUESTIONS = [
+  {id:1,riasec:"R",emoji:"🔨",text:"Do you like to build things with blocks, LEGOs, boxes, or tools?"},
+  {id:2,riasec:"I",emoji:"🔭",text:'Do you like to ask "why?" and find out how things work?'},
+  {id:3,riasec:"A",emoji:"🎨",text:"Do you like drawing, painting, music, dancing, or making art?"},
+  {id:4,riasec:"S",emoji:"🤗",text:"Do you like helping a friend when they feel sad or stuck?"},
+  {id:5,riasec:"E",emoji:"📣",text:"Do you like sharing your ideas with a group?"},
+  {id:6,riasec:"C",emoji:"📐",text:"Do you like sorting things, lining things up, or keeping things neat?"},
+  {id:7,riasec:"R",emoji:"🌱",text:"Do you like being outside with plants, animals, dirt, or nature?"},
+  {id:8,riasec:"I",emoji:"🐛",text:"Do you like looking closely at bugs, stars, rocks, or weather?"},
+  {id:9,riasec:"A",emoji:"🎭",text:"Do you like making up stories, songs, shows, or pretend games?"},
+  {id:10,riasec:"S",emoji:"🍎",text:"Do you like teaching someone how to do something?"},
+  {id:11,riasec:"E",emoji:"🏅",text:"Do you like helping a team choose what to do next?"},
+  {id:12,riasec:"C",emoji:"📝",text:"Do you like following steps carefully to finish a job the right way?"},
+  {id:13,riasec:"R",emoji:"🛠️",text:"Do you like fixing things or figuring out how pieces fit together?"},
+  {id:14,riasec:"I",emoji:"🧪",text:"Do you like trying experiments or guessing what will happen?"},
+  {id:15,riasec:"A",emoji:"🌈",text:"Do you like making something look colorful, fun, or beautiful?"}
+];
+
+const SCORE_MAP = { yes:3, kinda:2, 'not-really':1, nope:0 };
+let currentQ=0, scores={R:0,I:0,A:0,S:0,E:0,C:0}, counts={R:0,I:0,A:0,S:0,E:0,C:0};
+let answered = new Array(QUESTIONS.length).fill(null);
+
+function startQuiz() {
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  document.getElementById('progress-area').style.display='block';
+  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
+  answered=new Array(QUESTIONS.length).fill(null);
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const quiz=document.getElementById('quiz');
+  quiz.innerHTML='';
+  const q=QUESTIONS[currentQ], total=QUESTIONS.length, pct=Math.round((currentQ/total)*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-label').textContent='Question '+(currentQ+1)+' of '+total;
+  const card=document.createElement('div');
+  card.className='question-card';
+  card.innerHTML=`
+    <span class="q-emoji">${q.emoji}</span>
+    <div class="q-text">${q.text}</div>
+    <div class="answers">
+      <button class="answer-btn yes" onclick="selectAnswer('yes',this)">✅ YES!</button>
+      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)">🤔 Kind of!</button>
+      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)">😐 Not really</button>
+      <button class="answer-btn nope" onclick="selectAnswer('nope',this)">❌ Nope!</button>
+    </div>
+    <div class="next-wrap">
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+        ${currentQ<QUESTIONS.length-1?'NEXT QUESTION ➡️':'SEE MY RESULTS! 🎉'}
+      </button>
+    </div>
+  `;
+  quiz.appendChild(card);
+  if(answered[currentQ]!==null){
+    const prev=card.querySelector('.answer-btn.'+answered[currentQ]);
+    if(prev){prev.classList.add('selected');document.getElementById('next-btn').classList.add('show');}
+  }
+}
+
+function selectAnswer(value,btn){
+  btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected'); answered[currentQ]=value;
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function nextQuestion(){
+  if(answered[currentQ]===null)return;
+  const q=QUESTIONS[currentQ];
+  scores[q.riasec]+=SCORE_MAP[answered[currentQ]]; counts[q.riasec]+=1;
+  currentQ++;
+  if(currentQ>=QUESTIONS.length)showResults(); else renderQuestion();
+}
+
+function showResults(){
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('progress-area').style.display='none';
+  document.getElementById('results').style.display='block';
+  const priorityOrder={R:1,I:2,A:3,S:4,E:5,C:6};
+  const sorted=Object.keys(scores).map(code=>({
+    code,total:scores[code],count:counts[code],average:counts[code]?scores[code]/counts[code]:0
+  })).sort((a,b)=>{
+    if(b.average!==a.average)return b.average-a.average;
+    if(b.total!==a.total)return b.total-a.total;
+    return priorityOrder[a.code]-priorityOrder[b.code];
+  }).slice(0,3);
+
+  const ranks=['🥇 #1 JOB TYPE!','🥈 #2 JOB TYPE!','🥉 #3 JOB TYPE!'];
+  const container=document.getElementById('result-cards');
+  container.innerHTML='';
+  sorted.forEach((result,idx)=>{
+    const info=RIASEC[result.code];
+    const card=document.createElement('div');
+    card.className='result-card';
+    card.style.background=info.light; card.style.borderColor=info.border;
+    card.style.boxShadow='0 6px 0 '+info.shadow; card.style.color=info.textColor;
+    card.innerHTML=`
+      <span class="rc-emoji">${info.emoji}</span>
+      <div class="rc-rank" style="color:${info.textColor}">${ranks[idx]}</div>
+      <div class="rc-type" style="color:${info.color}">${info.name}</div>
+      <div class="rc-label">(${info.fullName})</div>
+      <div class="rc-label">Match: ${Math.round(result.average*100/3)}%</div>
+      <div class="rc-jobs">${info.jobs.map(jobId=>{
+        const job=CAREERS[jobId];
+        return `<button class="job-link-btn" onclick="showCareer('${jobId}')">${job.label}</button>`;
+      }).join('')}</div>
+    `;
+    container.appendChild(card);
+    const input=document.getElementById('write'+(idx+1));
+    if(input)input.value=info.name.replace('THE ','')+' ('+info.fullName+')';
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showCareer(jobId){
+  const c=CAREERS[jobId]; if(!c)return;
+  document.getElementById('career-title').textContent=c.label;
+  document.getElementById('career-intro').textContent='HERE IS A QUICK CAREER SNAPSHOT YOU CAN USE FOR YOUR WRITING.';
+  document.getElementById('career-pathway').textContent=c.pathway;
+  document.getElementById('career-income').textContent=c.income;
+  document.getElementById('career-school').textContent=c.school;
+  document.getElementById('career-do').textContent=c.does;
+  document.getElementById('career-writing').innerHTML=
+    '<strong>SENTENCE HELPER:</strong><br>'+c.sentence+
+    '<br><br><strong>TRY WRITING:</strong> I chose this job because _____. I would need to learn _____.';
+  const panel=document.getElementById('career-panel');
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetQuiz(){
+  document.getElementById('results').style.display='none';
+  document.getElementById('intro').style.display='block';
+  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
+  answered=new Array(QUESTIONS.length).fill(null);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
