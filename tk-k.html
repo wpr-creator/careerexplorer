@@ -351,25 +351,13 @@ body {
 }
 
 /* Write it down */
-.write-card {
-  background:white; border:4px dashed #A78BFA;
-  border-radius:28px; padding:1.8rem;
-  margin-bottom:2rem; box-shadow:0 6px 0 #A78BFA44;
-}
-.write-card h3 {
-  font-family:'Fredoka',cursive; font-size:1.7rem; font-weight:700;
-  color:#7C3AED; margin-bottom:1rem; text-align:center;
-}
-.write-row { display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem; }
-.write-row span { font-size:1.8rem; }
-.write-row label { font-size:1.05rem; font-weight:800; color:#5C35A0; min-width:110px; }
-.write-row input {
-  flex:1; height:38px; border:none;
-  border-bottom:4px solid #C084FC; background:#FAF5FF;
-  border-radius:8px 8px 0 0; padding:0 0.5rem;
-  font-family:'Nunito',sans-serif; font-size:1rem; font-weight:800; color:#3D1A8E;
-}
-.write-row input:focus { outline:none; background:#EDE9FE; }
+
+
+
+
+
+
+
 
 .restart-btn {
   font-family:'Fredoka',cursive; font-size:1.5rem; font-weight:600;
@@ -384,6 +372,22 @@ body {
   .career-grid{grid-template-columns:1fr}
   .answer-key{grid-template-columns:1fr}
 }
+
+/* Day in the life */
+.career-day-box {
+  background:#F0FDF4; border:2px solid #86EFAC; border-radius:12px;
+  padding:1.2rem; margin-bottom:1rem; font-size:0.9rem; color:#14532D; line-height:1.65;
+}
+.career-day-box strong { display:block; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#15803D; margin-bottom:0.5rem; }
+.pathway-section > strong { font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--purple); display:block; margin-bottom:0.8rem; margin-top:1rem; }
+.pathway-steps { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
+.pathway-step { display:flex; gap:0.8rem; background:#F8F9FF; border:1.5px solid #C4B5FD; border-radius:10px; padding:0.8rem; font-size:0.85rem; color:#334155; line-height:1.5; }
+.pathway-step-icon { font-size:1.3rem; flex-shrink:0; }
+.pathway-step-label { font-size:0.68rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#5B21B6; margin-bottom:0.2rem; }
+.colleges-box { background:#FFF7ED; border:2px solid #FCD34D; border-radius:12px; padding:1rem; margin-bottom:1rem; font-size:0.88rem; color:#78350F; line-height:1.65; }
+.colleges-box strong { display:block; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#B45309; margin-bottom:0.5rem; }
+.saved-banner { background:#D1FAE5; border:2px solid #34D399; border-radius:12px; padding:0.8rem 1rem; margin-bottom:1.2rem; font-size:0.85rem; font-weight:700; color:#065F46; display:none; align-items:center; gap:0.5rem; }
+.saved-banner.show { display:flex; }
 </style>
 </head>
 <body>
@@ -430,6 +434,10 @@ body {
 
   <!-- RESULTS -->
   <div id="results">
+    <div class="saved-banner" id="saved-banner">
+      ✅ Your results were saved! Come back anytime — they'll still be here.
+      <button onclick="clearSaved()" style="margin-left:auto;background:none;border:1.5px solid #065F46;color:#065F46;border-radius:6px;padding:0.2rem 0.7rem;font-size:0.75rem;font-weight:800;cursor:pointer;">CLEAR</button>
+    </div>
     <div class="results-top">
       <span class="celebrate">🎉</span>
       <h2>YOU DID IT!</h2>
@@ -441,17 +449,13 @@ body {
       <div class="career-grid">
         <div class="career-box"><strong>📖 WHAT THEY DO</strong><span id="career-does"></span></div>
         <div class="career-box"><strong>💰 HOW MUCH THEY EARN</strong><span id="career-income"></span></div>
-        <div class="career-box"><strong>🎒 HOW TO GET THERE</strong><span id="career-pathway"></span></div>
-        <div class="career-box"><strong>📚 LEARN MORE</strong><span id="career-school"></span></div>
       </div>
-      <div class="career-prompt-box" id="career-prompt"></div>
+      <div class="career-day-box" id="career-day-wrap" style="display:none"><strong>☀️ A DAY IN THE LIFE</strong><span id="career-day"></span></div>
+      <div class="pathway-section" id="career-pathway-wrap" style="display:none"><strong>🗺️ HOW CAN YOU PREPARE?</strong><div class="pathway-steps" id="career-pathway-steps"></div></div>
+      <div class="colleges-box" id="career-colleges-wrap" style="display:none"><strong>🏛️ COLLEGES KNOWN FOR THIS FIELD</strong><span id="career-colleges"></span></div>
     </div>
-    <div class="write-card">
-      <h3>✏️ WRITE IT DOWN!</h3>
-      <div class="write-row"><span>🥇</span><label>My #1 Type:</label><input type="text" id="write1" placeholder="..." /></div>
-      <div class="write-row"><span>🥈</span><label>My #2 Type:</label><input type="text" id="write2" placeholder="..." /></div>
-      <div class="write-row"><span>🥉</span><label>My #3 Type:</label><input type="text" id="write3" placeholder="..." /></div>
-    </div>
+    
+
     <button class="restart-btn" onclick="resetQuiz()">🔄 TRY AGAIN!</button>
   </div>
 </div>
@@ -493,24 +497,78 @@ const RIASEC = {
 };
 
 const CAREERS = {
-  builder:{ label:"🏗️ Builder", pathway:"Learn on the job or go to a trade school.", income:"About $50,000–$90,000 a year.", school:"Look for shop class, woodworking, or building clubs.", does:"Uses tools and materials to make or fix buildings and things.", prompt:"A builder makes things with their hands. I might like this job because I love to build and fix things." },
-  farmer:{ label:"🌾 Farmer", pathway:"Learn on a farm, or study at an agriculture school.", income:"About $40,000–$80,000 a year.", school:"Look for garden clubs, nature programs, or science class.", does:"Grows food, takes care of animals, and works outside.", prompt:"A farmer grows food for people to eat. I might like this job because I love nature and animals." },
-  mechanic:{ label:"🔧 Mechanic", pathway:"Trade school or on-the-job training.", income:"About $45,000–$80,000 a year.", school:"Look for shop class, robotics club, or STEM programs.", does:"Fixes cars, trucks, and machines so they work right.", prompt:"A mechanic fixes machines. I might like this job because I love figuring out how things work." },
-  scientist:{ label:"🔬 Scientist", pathway:"Usually college and graduate school.", income:"About $65,000–$120,000 a year.", school:"Look for science class, nature clubs, or STEM programs.", does:"Asks questions, does experiments, and finds out how things work.", prompt:"A scientist asks questions and finds answers. I might like this job because I love asking why." },
-  doctor:{ label:"🩺 Doctor", pathway:"College and medical school — a long journey worth it!", income:"About $100,000–$250,000+ a year.", school:"Look for health science, biology, or medical programs.", does:"Checks on people, figures out what is wrong, and helps them feel better.", prompt:"A doctor helps people stay healthy. I might like this job because I love science and helping others." },
-  coder:{ label:"💻 Coder", pathway:"College or coding programs.", income:"About $70,000–$130,000 a year.", school:"Look for computer clubs, coding class, or STEM programs.", does:"Writes instructions that make apps, games, and websites work.", prompt:"A coder tells computers what to do. I might like this job because I love solving puzzles." },
-  artist:{ label:"🎨 Artist", pathway:"Art school, practice, or college.", income:"About $35,000–$80,000 a year.", school:"Look for art class, drawing clubs, or design programs.", does:"Makes pictures, paintings, sculptures, and other beautiful things.", prompt:"An artist makes beautiful things. I might like this job because I love to draw and create." },
-  musician:{ label:"🎵 Musician", pathway:"Music lessons, practice, and sometimes music school.", income:"About $35,000–$80,000 a year.", school:"Look for band, choir, music class, or performing arts.", does:"Plays instruments, sings, writes music, and performs for people.", prompt:"A musician makes music for people to enjoy. I might like this job because I love singing and sound." },
-  actor:{ label:"🎭 Actor", pathway:"Drama class, acting practice, and auditions.", income:"Income can change a lot depending on the job.", school:"Look for theater, drama class, or performing arts.", does:"Acts out stories in plays, movies, and shows.", prompt:"An actor tells stories for an audience. I might like this job because I love to pretend and perform." },
-  teacher:{ label:"🍎 Teacher", pathway:"Usually a 4-year college degree.", income:"About $50,000–$90,000 a year.", school:"Look for tutoring, education, or child development programs.", does:"Helps students learn new things every day.", prompt:"A teacher helps students learn and grow. I might like this job because I love helping others." },
-  nurse:{ label:"🌡️ Nurse", pathway:"Nursing college program and a license.", income:"About $75,000–$120,000 a year.", school:"Look for health science, biology, or nursing programs.", does:"Takes care of patients and helps doctors and families.", prompt:"A nurse cares for sick people. I might like this job because I love science and helping others." },
-  counselor:{ label:"🧑‍🤝‍🧑 Counselor", pathway:"College and graduate school in counseling.", income:"About $50,000–$85,000 a year.", school:"Look for psychology, social work, or human services programs.", does:"Listens to people and helps them solve problems.", prompt:"A counselor helps people talk about their feelings. I might like this job because I love to listen and help." },
-  business_owner:{ label:"👔 Business Owner", pathway:"College or learn by starting small.", income:"Income changes a lot.", school:"Look for business, math, or leadership programs.", does:"Starts and runs their own company.", prompt:"A business owner makes their own company. I might like this job because I love having big ideas." },
-  public_leader:{ label:"🏛️ Public Leader", pathway:"College in government, law, or leadership.", income:"Income changes a lot.", school:"Look for student council, history, or debate.", does:"Makes decisions to help their community.", prompt:"A public leader helps their town or city. I might like this job because I love to lead and help groups." },
-  movie_director:{ label:"🎬 Movie Director", pathway:"Film school or lots of practice making videos.", income:"Income can change a lot.", school:"Look for film, theater, or media arts programs.", does:"Leads a team to make movies or videos.", prompt:"A movie director leads people to tell a story on screen. I might like this job because I love creativity and being in charge." },
-  accountant:{ label:"📊 Accountant", pathway:"College in accounting or business.", income:"About $60,000–$100,000 a year.", school:"Look for math, business, or finance programs.", does:"Keeps track of money and checks that numbers are right.", prompt:"An accountant organizes money records. I might like this job because I love numbers and careful work." },
-  office_manager:{ label:"📁 Office Manager", pathway:"College or job training.", income:"About $45,000–$85,000 a year.", school:"Look for business, organization, or management programs.", does:"Keeps an office organized and helps a team work together.", prompt:"An office manager keeps things running smoothly. I might like this job because I love organizing and planning." },
-  banker:{ label:"🏦 Banker", pathway:"College or job training.", income:"About $40,000–$90,000 a year.", school:"Look for business, math, or finance programs.", does:"Helps people save and use their money wisely.", prompt:"A banker helps people take care of their money. I might like this job because I love numbers and helping people." }
+  builder:{ label:"🏗️ Builder", does:"Uses tools and materials to make or fix buildings and things.", income:"About $50,000–$90,000 a year.",
+    day:"Wake up early! Drive to a job site. Measure wood and cut it just right. Build walls for a new house. Eat lunch outside. Fix a door that won't close. Clean up the site at the end of the day.",
+    pathway:[{icon:"🏠",level:"At Home / Elementary",steps:"Build things with cardboard boxes, LEGO, or wood scraps. Help a grown-up fix things around the house. Draw pictures of buildings you'd like to make."},{icon:"🏫",level:"Middle School",steps:"Take shop class. Join robotics or building clubs. Help with school projects that involve building."},{icon:"📐",level:"High School",steps:"Take construction or woodshop classes. Get a summer job helping a builder. Learn about blueprints and measurements."},{icon:"🎓",level:"After High School",steps:"Learn on the job or go to a trade school. No 4-year college needed! Apprenticeship programs pay you while you learn."}],
+    colleges:"Trade schools and programs: UTI, Wyotech, community college CTE programs, and apprenticeship programs through unions nationwide." },
+  farmer:{ label:"🌾 Farmer", does:"Grows food, takes care of animals, and works outside.", income:"About $40,000–$80,000 a year.",
+    day:"Wake up before sunrise! Feed the chickens and check on the cows. Water the vegetable garden. Drive the tractor to plow a field. Pick ripe tomatoes. Sell vegetables at the farmers market. Watch the sunset.",
+    pathway:[{icon:"🌱",level:"At Home / Elementary",steps:"Grow a plant from a seed in a cup. Visit a farm or farmers market. Feed animals if you can. Learn about where your food comes from."},{icon:"🌿",level:"Middle School",steps:"Join 4-H club. Grow a bigger garden. Learn about soil, weather, and plants in science class."},{icon:"🚜",level:"High School",steps:"Take agriculture classes. Join FFA (Future Farmers of America). Work on a farm after school or on weekends."},{icon:"🎓",level:"After High School",steps:"Work on a farm, go to community college, or get a 4-year degree in agriculture. UC Davis and Cal Poly have great farm programs."}],
+    colleges:"Top agriculture schools: UC Davis, Iowa State, Cal Poly SLO, Texas A&M, Cornell." },
+  mechanic:{ label:"🔧 Mechanic", does:"Fixes cars, trucks, and machines so they work right.", income:"About $45,000–$80,000 a year.",
+    day:"Put on your uniform. A car comes in making a funny noise — you listen carefully and figure out what's wrong. Fix the brakes. Change the oil on another car. Show a customer what you fixed. Order new parts for tomorrow's work.",
+    pathway:[{icon:"🔩",level:"At Home / Elementary",steps:"Tinker with broken toys to see how they work. Watch videos about how car engines work. Help a grown-up with simple repairs."},{icon:"⚙️",level:"Middle School",steps:"Take shop class. Build model cars or robots. Start learning tool names and how to use them safely."},{icon:"🚗",level:"High School",steps:"Take auto tech classes at school. Work at a repair shop. Compete in SkillsUSA auto contests."},{icon:"🎓",level:"After High School",steps:"Trade school or community college auto program (1–2 years). Earn mechanic certifications (ASE). No 4-year degree required!"}],
+    colleges:"Strong auto programs: UTI, Lincoln Tech, Wyotech, and community colleges with automotive technology programs." },
+  scientist:{ label:"🔬 Scientist", does:"Asks questions, does experiments, and finds out how things work.", income:"About $65,000–$120,000 a year.",
+    day:"Come into the lab. Write down today's big question. Set up an experiment with test tubes and special liquids. Wait and watch what happens. Write down everything you see. Share your discovery with your team. Think of the next question to ask!",
+    pathway:[{icon:"🧪",level:"At Home / Elementary",steps:"Do experiments at home — mix vinegar and baking soda! Grow crystals. Look at bugs with a magnifying glass. Ask why things happen."},{icon:"🔬",level:"Middle School",steps:"Enter your school science fair. Join a science club. Visit science museums. Keep a science notebook."},{icon:"🧬",level:"High School",steps:"Take AP Biology or AP Chemistry. Do a science internship. Apply for summer research programs."},{icon:"🎓",level:"After High School",steps:"Get a college science degree. Then maybe graduate school for more research. Many scientists have a PhD."}],
+    colleges:"Great science schools: MIT, Stanford, UC Berkeley, UCSD, Johns Hopkins, University of Chicago." },
+  doctor:{ label:"🩺 Doctor", does:"Checks on people, figures out what is wrong, and helps them feel better.", income:"About $100,000–$250,000+ a year.",
+    day:"Put on your white coat. Visit patients in the hospital. Listen to heartbeats with a stethoscope. Figure out why someone has a tummy ache. Give good advice. Perform a small procedure. Write notes about each patient. Help someone go home healthy!",
+    pathway:[{icon:"💊",level:"At Home / Elementary",steps:"Learn about the human body — bones, heart, lungs. Volunteer at health fairs. Show care when people around you are sick."},{icon:"🏥",level:"Middle School",steps:"Join HOSA health club. Shadow a doctor or nurse. Take biology and health classes."},{icon:"🩻",level:"High School",steps:"Take AP Biology, AP Chemistry. Volunteer at a hospital. Study hard — medical school is competitive!"},{icon:"🎓",level:"After High School",steps:"4 years of college → 4 years of medical school → 3–7 years of training. It's a long road, but doctors help so many people!"}],
+    colleges:"Top pre-med schools: Johns Hopkins, Duke, UCSD, UCLA, Emory. Medical schools: Harvard, UCSF, Mayo Clinic." },
+  coder:{ label:"💻 Coder", does:"Writes instructions that make apps, games, and websites work.", income:"About $70,000–$130,000 a year.",
+    day:"Sit at your computer. Look at a bug someone found in your app — something isn't working right. Figure out what went wrong in the code. Fix it! Test the app to make sure it works. Build a new feature for a game. Share it with your team.",
+    pathway:[{icon:"🎮",level:"At Home / Elementary",steps:"Try Scratch at scratch.mit.edu — it's free! Play coding games on Code.org. Make your own simple game or animation."},{icon:"💡",level:"Middle School",steps:"Learn Python on Khan Academy or freeCodeCamp. Join a coding club. Build a small app or website."},{icon:"🖥️",level:"High School",steps:"Take AP Computer Science. Enter hackathons. Build apps and put them on GitHub."},{icon:"🎓",level:"After High School",steps:"Computer science degree, coding bootcamp, or self-teach with a strong portfolio. Many coders are hired based on what they've built!"}],
+    colleges:"Top CS schools: MIT, Stanford, Carnegie Mellon, UC Berkeley, Georgia Tech, UCSD." },
+  artist:{ label:"🎨 Artist", does:"Makes pictures, paintings, sculptures, and other beautiful things.", income:"About $35,000–$80,000 a year.",
+    day:"Set up your art space. Mix just the right colors. Paint a landscape. Draw character sketches for a new storybook. Meet with a client who wants a mural for their restaurant. Post your new work online. Head to a gallery opening for a friend.",
+    pathway:[{icon:"✏️",level:"At Home / Elementary",steps:"Draw and paint every single day. Fill up sketchbooks. Visit art museums and say what you like and don't like about each piece."},{icon:"🖌️",level:"Middle School",steps:"Take art class. Try digital art with free tools like Krita. Enter local art contests."},{icon:"🎭",level:"High School",steps:"Take AP Studio Art. Build your art portfolio. Apply to summer art programs."},{icon:"🎓",level:"After High School",steps:"Art school (BFA) or college arts program. Your portfolio is your most important application — keep making things!"}],
+    colleges:"Top art schools: RISD, CalArts, SCAD, Pratt Institute, Art Center College of Design (Pasadena)." },
+  musician:{ label:"🎵 Musician", does:"Plays instruments, sings, writes music, and performs for people.", income:"About $35,000–$80,000 a year.",
+    day:"Morning: practice your instrument for an hour. Afternoon: rehearse songs with your band. Evening: perform at a concert — the crowd loves it! After the show: sign autographs and talk to fans. Night: listen back to recordings and make notes.",
+    pathway:[{icon:"🎶",level:"At Home / Elementary",steps:"Start learning an instrument — even a recorder or ukulele. Sing along to your favorite songs. Tap out rhythms on anything you can find."},{icon:"🎸",level:"Middle School",steps:"Join school band, orchestra, or choir. Take private lessons. Learn music theory (the rules of music)."},{icon:"🎤",level:"High School",steps:"Audition for honor bands and orchestras. Record your own music. Attend summer music programs."},{icon:"🎓",level:"After High School",steps:"Music school (conservatory), college music program, or start performing and building your own career. Practice never stops!"}],
+    colleges:"Top music schools: Juilliard, Berklee, New England Conservatory, USC Thornton, Eastman." },
+  actor:{ label:"🎭 Actor", does:"Acts out stories in plays, movies, and shows.", income:"Income can change a lot depending on the job.",
+    day:"Morning: do vocal warm-ups and stretch your body. Rehearsal: run through your lines with other actors. The director gives you notes on how to improve. Afternoon: film a scene for a commercial. Evening: perform in front of a live audience. Take a bow!",
+    pathway:[{icon:"🌟",level:"At Home / Elementary",steps:"Put on shows for your family. Read stories out loud with different voices. Pretend to be different characters."},{icon:"🎪",level:"Middle School",steps:"Audition for the school play. Try community theater. Watch great actors and study how they move and speak."},{icon:"🎬",level:"High School",steps:"Perform in every show you can. Attend theater camps. Make short films with friends."},{icon:"🎓",level:"After High School",steps:"Acting school or theater degree. Build a video reel. Audition, audition, audition!"}],
+    colleges:"Top performing arts programs: Juilliard, NYU Tisch, Northwestern, Carnegie Mellon, USC." },
+  teacher:{ label:"🍎 Teacher", does:"Helps students learn new things every day.", income:"About $50,000–$90,000 a year.",
+    day:"Greet your students at the door. Start the day with a read-aloud. Teach a math lesson using colorful blocks. Help a student who is struggling — and watch them understand! Grade papers at lunch. Lead an art project. Send students home smiling.",
+    pathway:[{icon:"📚",level:"At Home / Elementary",steps:"Teach things you know to younger kids, siblings, or friends. Play school. Notice what your favorite teachers do that you like."},{icon:"🧑‍🏫",level:"Middle School",steps:"Tutor younger students. Volunteer at after-school programs. Take leadership roles in clubs."},{icon:"📓",level:"High School",steps:"Volunteer in an elementary classroom. Take psychology or child development classes. Look for teacher cadet programs."},{icon:"🎓",level:"After High School",steps:"4-year education degree and a teaching credential. Student teaching (working in a real classroom) is part of the program!"}],
+    colleges:"Strong education schools: Michigan, Stanford, Teachers College (Columbia), SDSU, UCLA. Most CSU campuses offer California teaching credentials." },
+  nurse:{ label:"🌡️ Nurse", does:"Takes care of patients and helps doctors and families.", income:"About $75,000–$120,000 a year.",
+    day:"Start your shift. Check on every patient. Take temperatures and blood pressure. Give medications. Help a scared patient feel calmer by explaining what's happening. Work closely with the doctor on a treatment plan. Hug a patient on their way home — they got better!",
+    pathway:[{icon:"❤️",level:"At Home / Elementary",steps:"Learn basic first aid. Take care of people around you when they're sick. Visit a nurse if you can and ask them questions."},{icon:"🩺",level:"Middle School",steps:"Join HOSA health club. Shadow a nurse. Take biology and health classes seriously."},{icon:"💉",level:"High School",steps:"Volunteer at a hospital or clinic. Take AP Biology. Look into CNA (certified nursing assistant) programs."},{icon:"🎓",level:"After High School",steps:"Nursing college program (2 or 4 years) plus a nursing license (NCLEX exam). Many paths to nursing!"}],
+    colleges:"Great nursing schools: UCSF, Johns Hopkins, Duke, Emory, University of Pennsylvania, and many community colleges and state universities." },
+  counselor:{ label:"🧑‍🤝‍🧑 Counselor", does:"Listens to people and helps them solve problems.", income:"About $50,000–$85,000 a year.",
+    day:"Welcome a student into your office. Really listen. Ask questions to help them think through a problem. Connect a family to helpful resources. Run a small group for students who want to talk about big feelings. Write notes and plan for tomorrow.",
+    pathway:[{icon:"💛",level:"At Home / Elementary",steps:"Be a good listener. Practice being kind and non-judgmental. Learn how to name and talk about feelings."},{icon:"🤝",level:"Middle School",steps:"Join peer mediation or conflict resolution programs. Volunteer with younger kids. Take health and wellness classes."},{icon:"📖",level:"High School",steps:"Take AP Psychology. Volunteer at a community center. Shadow a school counselor."},{icon:"🎓",level:"After High School",steps:"Psychology or social work degree. Then a master's degree (MSW or MA in counseling) to become fully licensed."}],
+    colleges:"Strong social work and psychology programs: University of Michigan, USC, Columbia, UC Berkeley, Boston College." },
+  business_owner:{ label:"👔 Business Owner", does:"Starts and runs their own company.", income:"Income changes a lot.",
+    day:"Check your sales numbers from last night. Meet with your team to plan the day. Help a customer with a problem — and solve it! Interview someone who wants to work for you. Work with a designer on new product packaging. Celebrate a big order!",
+    pathway:[{icon:"🍋",level:"At Home / Elementary",steps:"Start a small business! Lemonade stand, baked goods, dog walking. Learn what people want and how to charge for it."},{icon:"💼",level:"Middle School",steps:"Grow your business or try a new idea. Join Junior Achievement or DECA. Learn about money management."},{icon:"📈",level:"High School",steps:"Start a real side business. Take economics and business classes. Enter entrepreneurship competitions."},{icon:"🎓",level:"After High School",steps:"Business degree is helpful but not required. Many entrepreneurs start during college. Real-world experience matters a lot!"}],
+    colleges:"Top entrepreneurship schools: Babson College, Stanford, MIT, UC Berkeley Haas, Wharton (UPenn)." },
+  public_leader:{ label:"🏛️ Public Leader", does:"Makes decisions to help their community.", income:"Income changes a lot.",
+    day:"Read news and community updates in the morning. Hold a meeting where citizens share their concerns. Work with a team to solve a community problem. Give a speech at a school event. Vote on a new community rule. Meet with young leaders in your town.",
+    pathway:[{icon:"⭐",level:"At Home / Elementary",steps:"Run for class president or student council. Learn about your city government. Attend a town council meeting with a parent."},{icon:"🗳️",level:"Middle School",steps:"Join student government. Volunteer for local campaigns or civic projects. Practice public speaking."},{icon:"🏫",level:"High School",steps:"Take AP Government and Economics. Join debate club. Apply for Boys/Girls State program. Intern for a local official."},{icon:"🎓",level:"After High School",steps:"Political science, law, public policy, or economics degree. Law school or a master's in public policy opens big doors."}],
+    colleges:"Great government and policy schools: Harvard Kennedy School, Georgetown, Princeton, UCLA Luskin, UCSD GPS." },
+  movie_director:{ label:"🎬 Movie Director", does:"Leads a team to make movies or videos.", income:"Income can change a lot.",
+    day:"Morning: review the day's script and storyboard with your team. On set: tell actors where to stand and how to feel. Watch the camera to make sure the shot is perfect. Afternoon: review yesterday's footage with the editor. Evening: plan tomorrow's big scene.",
+    pathway:[{icon:"📱",level:"At Home / Elementary",steps:"Make short movies on a phone or tablet. Tell stories. Watch great movies and talk about what makes them exciting."},{icon:"🎥",level:"Middle School",steps:"Make short films for school. Enter student film contests. Learn free video editing software (iMovie, DaVinci Resolve)."},{icon:"🎞️",level:"High School",steps:"Take film or media arts class. Build a short film portfolio. Submit to youth film festivals."},{icon:"🎓",level:"After High School",steps:"Film school (BFA) or start making independent films while working your way up in the industry."}],
+    colleges:"Top film schools: USC School of Cinematic Arts, NYU Tisch, AFI, UCLA, Chapman University, Emerson College." },
+  accountant:{ label:"📊 Accountant", does:"Keeps track of money and checks that numbers are right.", income:"About $60,000–$100,000 a year.",
+    day:"Review financial records for a client. Find a math error — and fix it! Make sure a company paid all its taxes correctly. Meet with a small business owner to show them how much money they made this year. Double-check everything before it gets submitted.",
+    pathway:[{icon:"🔢",level:"At Home / Elementary",steps:"Practice math every day. Keep track of your own allowance or savings. Learn to use a calculator."},{icon:"📊",level:"Middle School",steps:"Take every math class available. Learn to use spreadsheets. Play stock market simulation games."},{icon:"💹",level:"High School",steps:"Take AP Statistics and economics. Join DECA or FBLA (Future Business Leaders of America). Shadow an accountant."},{icon:"🎓",level:"After High School",steps:"Accounting or business degree (4 years). Then the CPA exam. Big accounting firms hire straight out of college!"}],
+    colleges:"Strong accounting programs: University of Illinois, UT Austin, Michigan Ross, NYU Stern, BYU." },
+  office_manager:{ label:"📁 Office Manager", does:"Keeps an office organized and helps a team work together.", income:"About $45,000–$85,000 a year.",
+    day:"Arrive early and check the schedule for the day. Help a new employee get settled in. Fix a mix-up in the calendar. Order supplies the office needs. Organize a team celebration. Make sure everything runs smoothly so everyone else can do their jobs.",
+    pathway:[{icon:"🗂️",level:"At Home / Elementary",steps:"Keep your room and school things organized. Help plan family outings. Practice being responsible and on time."},{icon:"📅",level:"Middle School",steps:"Take on leadership roles in clubs. Learn to use calendars and to-do lists. Help organize school events."},{icon:"💼",level:"High School",steps:"Take business and computer applications classes. Work part-time in an office, store, or service job."},{icon:"🎓",level:"After High School",steps:"Associate's or bachelor's degree in business administration. Or start in an entry-level office role and work your way up."}],
+    colleges:"Business administration programs at community colleges and state universities like SDSU, CSULB, Arizona State." },
+  banker:{ label:"🏦 Banker", does:"Helps people save and use their money wisely.", income:"About $40,000–$90,000 a year.",
+    day:"Welcome customers into the bank. Help a family open a savings account for their child. Explain how a home loan works to someone buying their first house. Review financial data. Help a small business get a loan to grow. Count money accurately at the end of the day.",
+    pathway:[{icon:"💰",level:"At Home / Elementary",steps:"Open a savings account. Learn the difference between spending and saving. Practice counting money and making change."},{icon:"📈",level:"Middle School",steps:"Play stock market games. Learn about budgets. Take math seriously."},{icon:"💳",level:"High School",steps:"Take economics and AP Statistics. Join DECA. Shadow a banker or financial advisor."},{icon:"🎓",level:"After High School",steps:"Finance, economics, or business degree. Certifications like CFP and CFA help for financial advisor roles."}],
+    colleges:"Strong finance schools: Wharton (UPenn), NYU Stern, Michigan Ross, Georgetown, UT Austin McCombs." }
 };
 
 let currentQ = 0;
@@ -580,7 +638,7 @@ function nextQuestion() {
   else renderQuestion();
 }
 
-function showResults() {
+function showResults(savedData) {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progress-area').style.display = 'none';
   document.getElementById('results').style.display = 'block';
@@ -632,13 +690,17 @@ function showCareer(jobId) {
   document.getElementById('career-title').textContent = c.label;
   document.getElementById('career-does').textContent = c.does;
   document.getElementById('career-income').textContent = c.income;
-  document.getElementById('career-pathway').textContent = c.pathway;
-  document.getElementById('career-school').textContent = c.school;
-  document.getElementById('career-prompt').innerHTML = '<strong>SENTENCE HELPER:</strong><br>' + c.prompt + '<br><br><strong>TRY WRITING:</strong> I chose this job because _____.';
+  if(c.day){ document.getElementById('career-day').textContent=c.day; document.getElementById('career-day-wrap').style.display='block'; }
+  if(c.pathway){ const s=document.getElementById('career-pathway-steps'); s.innerHTML=c.pathway.map(p=>'<div class="pathway-step"><span class="pathway-step-icon">'+p.icon+'</span><div><div class="pathway-step-label">'+p.level+'</div>'+p.steps+'</div></div>').join(''); document.getElementById('career-pathway-wrap').style.display='block'; }
+  if(c.colleges){ document.getElementById('career-colleges').textContent=c.colleges; document.getElementById('career-colleges-wrap').style.display='block'; }
   const panel = document.getElementById('career-panel');
   panel.classList.add('show');
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+function saveResults(sorted){ try{localStorage.setItem('careerexplorer_tkk',JSON.stringify({sorted,ts:Date.now()}));}catch(e){} }
+function loadResults(){ try{const d=localStorage.getItem('careerexplorer_tkk');return d?JSON.parse(d):null;}catch(e){return null;} }
+function clearSaved(){ try{localStorage.removeItem('careerexplorer_tkk');}catch(e){} document.getElementById('saved-banner').classList.remove('show'); }
 
 function resetQuiz() {
   document.getElementById('results').style.display = 'none';
@@ -647,8 +709,14 @@ function resetQuiz() {
   scores = { R:0, I:0, A:0, S:0, E:0, C:0 };
   counts = { R:0, I:0, A:0, S:0, E:0, C:0 };
   answered = new Array(QUESTIONS.length).fill(null);
+  clearSaved();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  const saved=loadResults();
+  if(saved){ document.getElementById('intro').style.display='none'; showResults(saved); }
+});
 </script>
 </body>
 </html>

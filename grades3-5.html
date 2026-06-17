@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Explorer — Rising Explorers (Grades 3–5)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0F1B38;
+  --blue: #1D4ED8;
+  --sky: #38BDF8;
+  --amber: #F59E0B;
+  --green: #10B981;
+  --rose: #F43F5E;
+  --purple: #8B5CF6;
+  --bg: #F0F4FF;
+  --card: #FFFFFF;
+  --ink: #0F172A;
+  --muted: #64748B;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* subtle grid bg */
+body::before {
+  content:'';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(29,78,216,0.08) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* HEADER */
+.site-header {
+  position: relative; z-index: 1;
+  background: linear-gradient(135deg, var(--navy) 0%, #1E3A8A 60%, #312E81 100%);
+  padding: 2.5rem 1.5rem 4rem;
+  text-align: center;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px);
+}
+.back-link {
+  position: absolute; top: 1.2rem; left: 1.2rem;
+  font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6);
+  text-decoration: none; background: rgba(255,255,255,0.1);
+  padding: 0.35rem 0.9rem; border-radius: 6px; letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.15); transition: all 0.15s;
+}
+.back-link:hover { background: rgba(255,255,255,0.18); color: white; }
+.header-badge {
+  display: inline-block; background: rgba(56,189,248,0.2); color: #7DD3FC;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.3rem 1rem; border-radius: 4px; margin-bottom: 1rem;
+  border: 1px solid rgba(56,189,248,0.3);
+}
+.header-emoji { font-size: 3rem; display: block; margin-bottom: 0.6rem; animation: spin-slow 8s linear infinite; }
+@keyframes spin-slow { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+.site-header h1 {
+  font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 6vw, 3.6rem);
+  color: white; line-height: 1.05; margin-bottom: 0.5rem;
+  text-shadow: 0 2px 20px rgba(56,189,248,0.3);
+}
+.site-header h1 em { font-style: italic; color: #FCD34D; }
+.site-header p {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: #94A3B8; font-weight: 400; max-width:480px; margin:0 auto;
+}
+
+.main {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto; padding: 2.5rem 1.2rem 5rem;
+}
+
+/* PROGRESS */
+.progress-area { margin-bottom: 2rem; display: none; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.progress-label { font-size: 0.85rem; font-weight: 700; color: var(--blue); letter-spacing: 0.05em; text-transform: uppercase; }
+.progress-pct { font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+.progress-track { background: #E2E8F0; border-radius: 8px; height: 10px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); border-radius: 8px; transition: width 0.5s ease; }
+
+/* INTRO */
+#intro { }
+.intro-card {
+  background: white; border-radius: 16px; padding: 2.5rem;
+  border: 1px solid #E2E8F0; box-shadow: 0 4px 24px rgba(15,27,56,0.08);
+  margin-bottom: 1.5rem;
+}
+.intro-mascot { font-size: 4rem; display: block; margin: 0 auto 1rem; text-align: center; animation: bob 2s ease-in-out infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.intro-card h2 {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--navy); text-align: center; margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.intro-card p {
+  font-size: 1rem; color: #334155; line-height: 1.7; margin-bottom: 0.8rem;
+}
+.scale-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin: 1.2rem 0;
+}
+.scale-item {
+  padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+}
+.sc-yes { background: #D1FAE5; color: #065F46; border: 1.5px solid #34D399; }
+.sc-kinda { background: #FEF3C7; color: #92400E; border: 1.5px solid #FBBF24; }
+.sc-notreally { background: #DBEAFE; color: #1E40AF; border: 1.5px solid #60A5FA; }
+.sc-nope { background: #FFE4E6; color: #9F1239; border: 1.5px solid #FB7185; }
+
+.start-btn {
+  display: block; width: 100%; padding: 1rem;
+  font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: white; background: linear-gradient(135deg, var(--blue), var(--purple));
+  border: none; border-radius: 12px; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(29,78,216,0.35); transition: all 0.2s;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(29,78,216,0.4); }
+
+/* QUESTION */
+#quiz { display: none; }
+.question-card {
+  background: white; border-radius: 20px; padding: 2.5rem 2rem;
+  border: 1px solid #E2E8F0; box-shadow: 0 4px 24px rgba(15,27,56,0.08);
+  animation: slide-up 0.35s cubic-bezier(0.34,1.2,0.64,1);
+}
+@keyframes slide-up {
+  0%{transform:translateY(24px);opacity:0} 100%{transform:translateY(0);opacity:1}
+}
+.q-emoji { font-size: 4rem; display: block; text-align: center; margin-bottom: 0.8rem; animation: gentle-bob 2s ease-in-out infinite; }
+@keyframes gentle-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.q-text {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  text-align: center; color: var(--navy); line-height: 1.35; margin-bottom: 2rem;
+}
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.answer-btn {
+  font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700;
+  padding: 0.95rem 0.8rem; border-radius: 12px; border: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s; line-height: 1.3; text-align: center;
+}
+.answer-btn:hover { transform: translateY(-2px); }
+.answer-btn.yes { background:#ECFDF5; color:#065F46; border-color:#34D399; box-shadow:0 3px 0 #34D39955; }
+.answer-btn.yes:hover { background:#D1FAE5; }
+.answer-btn.kinda { background:#FFFBEB; color:#92400E; border-color:#FBBF24; box-shadow:0 3px 0 #FBBF2455; }
+.answer-btn.kinda:hover { background:#FEF3C7; }
+.answer-btn.not-really { background:#EFF6FF; color:#1E40AF; border-color:#60A5FA; box-shadow:0 3px 0 #60A5FA55; }
+.answer-btn.not-really:hover { background:#DBEAFE; }
+.answer-btn.nope { background:#FFF1F2; color:#9F1239; border-color:#FB7185; box-shadow:0 3px 0 #FB718555; }
+.answer-btn.nope:hover { background:#FFE4E6; }
+.answer-btn.selected { filter:brightness(0.9); transform:translateY(1px); box-shadow:none !important; border-width:3px; }
+
+.next-wrap { text-align: center; margin-top: 1.8rem; }
+.next-btn {
+  font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.85rem 2.5rem; background: var(--navy); color: white;
+  border: none; border-radius: 10px; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15,27,56,0.25); transition: all 0.2s; display: none;
+}
+.next-btn:hover { background: var(--blue); transform: translateY(-2px); }
+.next-btn.show { display: inline-block; animation: slide-up 0.25s ease; }
+
+/* RESULTS */
+#results { display: none; }
+.results-top {
+  background: linear-gradient(135deg, var(--navy), #1E3A8A);
+  border-radius: 20px; padding: 2rem; text-align: center;
+  margin-bottom: 2rem; color: white;
+  box-shadow: 0 8px 32px rgba(15,27,56,0.25);
+}
+.results-top .celebrate { font-size: 3rem; display: block; margin-bottom: 0.5rem; animation: bob 1.5s ease-in-out infinite; }
+.results-top h2 {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: #FCD34D; margin-bottom: 0.4rem;
+}
+.results-top p { font-size: 1rem; color: #94A3B8; }
+
+.result-cards-wrap {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.2rem; margin-bottom: 2rem;
+}
+.result-card {
+  border-radius: 16px; padding: 1.5rem 1rem; text-align: center; border: 2px solid;
+  box-shadow: 0 4px 0;
+  animation: slide-up 0.5s cubic-bezier(0.34,1.2,0.64,1) both;
+}
+.result-card:nth-child(1){animation-delay:0.1s}
+.result-card:nth-child(2){animation-delay:0.2s}
+.result-card:nth-child(3){animation-delay:0.3s}
+.rc-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+.rc-rank { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; opacity: 0.75; }
+.rc-type { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-bottom: 0.25rem; line-height: 1.1; }
+.rc-full { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.65; margin-bottom: 0.4rem; }
+.rc-match { font-size: 0.85rem; font-weight: 800; margin-bottom: 1rem; }
+.rc-jobs { font-size: 0.88rem; font-weight: 600; line-height: 1.8; text-align: left; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 0.6rem 0.8rem; }
+.job-link-btn {
+  width:100%; display:block; text-align:left; background:rgba(255,255,255,0.7);
+  border:1.5px solid rgba(29,78,216,0.15); border-radius:8px; padding:0.3rem 0.5rem; margin-bottom:0.3rem;
+  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700;
+  color:inherit; cursor:pointer; transition:all 0.12s;
+}
+.job-link-btn:hover { transform:translateX(3px); background:white; border-color:var(--blue); }
+
+/* Career panel */
+.career-panel {
+  background:white; border:2px solid #BFDBFE; border-radius:20px;
+  padding:2rem; margin-bottom:2rem;
+  box-shadow:0 4px 24px rgba(29,78,216,0.1); display:none;
+  animation:slide-up 0.3s ease;
+}
+.career-panel.show { display:block; }
+.career-panel h3 {
+  font-family:'DM Serif Display',serif; font-size:1.6rem;
+  color:var(--navy); text-align:center; margin-bottom:0.5rem;
+}
+.career-intro { text-align:center; font-size:0.9rem; color:var(--muted); margin-bottom:1.2rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+.career-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; margin-bottom:1.2rem; }
+.career-box {
+  background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:12px;
+  padding:1rem; font-size:0.9rem; color:#334155; line-height:1.5;
+}
+.career-box strong {
+  font-size:0.72rem; font-weight:800; color:var(--blue); display:block;
+  text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;
+}
+.career-note { font-size:0.8rem; color:var(--muted); text-align:center; margin-top:0.8rem; font-weight:600; }
+
+/* Day in the Life */
+.career-day-box {
+  background:#F0FDF4; border:2px solid #86EFAC; border-radius:12px;
+  padding:1.2rem 1.4rem; margin-bottom:1rem; font-size:0.9rem; color:#14532D; line-height:1.65;
+}
+.career-day-box strong { display:block; font-size:0.75rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#15803D; margin-bottom:0.5rem; }
+
+/* Pathway timeline */
+.pathway-section { margin-bottom:1rem; }
+.pathway-section > strong { font-size:0.75rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:0.8rem; }
+.pathway-steps { display:flex; flex-direction:column; gap:0; }
+.pathway-step {
+  display:flex; gap:0.8rem; align-items:flex-start;
+  background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:10px;
+  padding:0.8rem 1rem; position:relative;
+  font-size:0.88rem; color:#334155; line-height:1.5; margin-bottom:0.5rem;
+}
+.pathway-step-icon { font-size:1.4rem; flex-shrink:0; margin-top:0.1rem; }
+.pathway-step-content {}
+.pathway-step-label { font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue); margin-bottom:0.2rem; }
+
+/* Colleges */
+.colleges-box {
+  background:#FFF7ED; border:2px solid #FCD34D; border-radius:12px;
+  padding:1.2rem 1.4rem; margin-bottom:1rem; font-size:0.9rem; color:#78350F; line-height:1.65;
+}
+.colleges-box strong { display:block; font-size:0.75rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#B45309; margin-bottom:0.5rem; }
+
+/* Saved results banner */
+.saved-banner {
+  background:#D1FAE5; border:2px solid #34D399; border-radius:12px;
+  padding:0.9rem 1.2rem; margin-bottom:1.5rem; display:none;
+  font-size:0.88rem; font-weight:700; color:#065F46;
+  display:flex; align-items:center; gap:0.6rem;
+}
+.saved-banner.show { display:flex; }
+
+
+.action-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+.print-btn {
+  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
+  text-transform:uppercase; padding:0.8rem 1.8rem;
+  background:transparent; color:var(--blue); border:2px solid var(--blue);
+  border-radius:10px; cursor:pointer; transition:all 0.15s;
+}
+.print-btn:hover { background:var(--blue); color:white; }
+.retry-btn {
+  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
+  text-transform:uppercase; padding:0.8rem 1.8rem;
+  background:var(--navy); color:white; border:2px solid var(--navy);
+  border-radius:10px; cursor:pointer; transition:all 0.15s;
+}
+.retry-btn:hover { background:#1E3A8A; }
+
+@media(max-width:580px) {
+  .answers{grid-template-columns:1fr}
+  .career-grid{grid-template-columns:1fr}
+  .scale-grid{grid-template-columns:1fr}
+}
+@media print {
+  body::before,.action-btns,.answer-btn,.next-btn,.start-btn,.progress-area{display:none!important}
+  body{background:white}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="index.html">← HUB</a>
+  <div class="header-badge">Grades 3–5 · Rising Explorers</div>
+  <span class="header-emoji">🔭</span>
+  <h1>Career <em>Explorer</em></h1>
+  <p>Discover your interests and connect them to real careers.</p>
+</header>
+
+<div class="main">
+  <div id="progress-area" class="progress-area">
+    <div class="progress-top">
+      <span class="progress-label" id="progress-label">Question 1 of 20</span>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="intro-card">
+      <span class="intro-mascot">🧭</span>
+      <h2>WELCOME, EXPLORER!</h2>
+      <p>This inventory will help you discover what kinds of jobs match your interests. There are <strong>20 questions</strong> — no wrong answers! Just choose the response that best describes how you actually feel.</p>
+      <p>Your top three interest types will appear at the end, along with careers that match each one. You can tap any career to read about what that person does, how they get trained, and how much they might earn.</p>
+      <div class="scale-grid">
+        <div class="scale-item sc-yes">✅ <strong>YES!</strong> — That's totally me.</div>
+        <div class="scale-item sc-kinda">🤔 <strong>Kind of</strong> — Sometimes, maybe.</div>
+        <div class="scale-item sc-notreally">😐 <strong>Not really</strong> — That's not usually me.</div>
+        <div class="scale-item sc-nope">❌ <strong>Nope</strong> — Definitely not for me.</div>
+      </div>
+      <button class="start-btn" onclick="startQuiz()">START THE ASSESSMENT →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz"></div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="saved-banner" id="saved-banner">
+      ✅ Your results were saved! You can come back anytime and they'll still be here.
+      <button onclick="clearSaved()" style="margin-left:auto;background:none;border:1.5px solid #065F46;color:#065F46;border-radius:6px;padding:0.2rem 0.7rem;font-size:0.8rem;font-weight:800;cursor:pointer;">CLEAR</button>
+    </div>
+    <div class="results-top">
+      <span class="celebrate">🎉</span>
+      <h2>YOUR RESULTS ARE IN!</h2>
+      <p>Here are your top three RIASEC interest types. Tap any career to explore it further.</p>
+    </div>
+    <div class="result-cards-wrap" id="result-cards"></div>
+
+    <div class="career-panel" id="career-panel">
+      <h3 id="career-title">SELECT A CAREER TO EXPLORE</h3>
+      <p class="career-intro" id="career-intro">Tap any career from your results to explore it.</p>
+      <div class="career-grid">
+        <div class="career-box"><strong>📖 What They Do</strong><span id="career-does"></span></div>
+        <div class="career-box"><strong>💰 Approximate Earnings</strong><span id="career-income"></span></div>
+      </div>
+      <div class="career-day-box" id="career-day-wrap" style="display:none">
+        <strong>☀️ A Day in the Life</strong>
+        <span id="career-day"></span>
+      </div>
+      <div class="pathway-section" id="career-pathway-wrap" style="display:none">
+        <strong>🗺️ How Can You Prepare? Your Pathway</strong>
+        <div class="pathway-steps" id="career-pathway-steps"></div>
+      </div>
+      <div class="colleges-box" id="career-colleges-wrap" style="display:none">
+        <strong>🏛️ Colleges Known for This Field</strong>
+        <span id="career-colleges"></span>
+      </div>
+      <p class="career-note">Salary ranges are national approximations and may vary by location, experience, and employer.</p>
+    </div>
+
+
+    <div class="action-btns">
+      <button class="print-btn" onclick="window.print()">🖨️ PRINT RESULTS</button>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 RETAKE ASSESSMENT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {id:1,  riasec:"R", emoji:"🔧", text:"I enjoy taking things apart to see how they work, even if I'm not sure I can put them back together."},
+  {id:2,  riasec:"I", emoji:"🔬", text:"When I have a question, I like to research it and really dig into the answer."},
+  {id:3,  riasec:"A", emoji:"🎨", text:"I prefer projects where I can make creative choices rather than follow a set of exact instructions."},
+  {id:4,  riasec:"S", emoji:"🤝", text:"I feel good when I explain something and someone else finally understands it."},
+  {id:5,  riasec:"E", emoji:"📣", text:"I like being in charge of a group project and helping the team decide what to do."},
+  {id:6,  riasec:"C", emoji:"📋", text:"I prefer having a clear plan and organized steps before I start a task."},
+  {id:7,  riasec:"R", emoji:"🌿", text:"I enjoy working with my hands — building, fixing, planting, or creating physical things."},
+  {id:8,  riasec:"I", emoji:"🧪", text:"I like designing experiments or investigations to test whether something is true."},
+  {id:9,  riasec:"A", emoji:"✍️", text:"Writing stories, poems, or creating art is one of my favorite ways to express myself."},
+  {id:10, riasec:"S", emoji:"🧑‍🤝‍🧑", text:"I am good at listening to how someone is feeling and helping them figure out what to do next."},
+  {id:11, riasec:"E", emoji:"🏆", text:"I enjoy competitions or challenges where I get to show what I am capable of."},
+  {id:12, riasec:"C", emoji:"🗂️", text:"I like keeping my schoolwork, notes, or belongings organized so I can find things easily."},
+  {id:13, riasec:"R", emoji:"🚜", text:"I would enjoy a job that keeps me moving, working outdoors, or using tools and equipment."},
+  {id:14, riasec:"I", emoji:"🌍", text:"I like thinking about big questions about science, nature, or how the universe works."},
+  {id:15, riasec:"A", emoji:"🎭", text:"I enjoy performing — acting, singing, playing music, or presenting in front of others."},
+  {id:16, riasec:"S", emoji:"🏫", text:"Volunteering or helping others in my community is something I find meaningful."},
+  {id:17, riasec:"E", emoji:"💡", text:"I often have ideas for new businesses, inventions, or ways to improve things."},
+  {id:18, riasec:"C", emoji:"📊", text:"I enjoy tasks like checking math carefully, managing records, or making sure details are correct."},
+  {id:19, riasec:"R", emoji:"🛠️", text:"If something in my home or classroom is broken, I want to be the one who fixes it."},
+  {id:20, riasec:"I", emoji:"🧠", text:"I like solving problems that take real mental effort — puzzles, strategies, or brain teasers."}
+];
+
+const SCORE_MAP = { yes:3, kinda:2, 'not-really':1, nope:0 };
+
+const RIASEC = {
+  R:{ name:"Realistic", fullName:"Builder / Doer", emoji:"🔧", color:"#DC2626", light:"#FEF2F2", border:"#FCA5A5", shadow:"#DC262655", textColor:"#7F1D1D",
+      jobs:["construction_worker","mechanic","farmer","firefighter","engineer"] },
+  I:{ name:"Investigative", fullName:"Thinker / Researcher", emoji:"🔬", color:"#7C3AED", light:"#F5F3FF", border:"#C4B5FD", shadow:"#7C3AED55", textColor:"#3B1D8E",
+      jobs:["scientist","doctor","paleontologist","coder","nurse"] },
+  A:{ name:"Artistic", fullName:"Creator / Performer", emoji:"🎨", color:"#BE185D", light:"#FDF2F8", border:"#F9A8D4", shadow:"#BE185D55", textColor:"#831843",
+      jobs:["artist","actor","author","musician","photographer"] },
+  S:{ name:"Social", fullName:"Helper / Educator", emoji:"🤝", color:"#065F46", light:"#ECFDF5", border:"#6EE7B7", shadow:"#065F4655", textColor:"#064E3B",
+      jobs:["teacher","nurse","counselor","coach","social_worker"] },
+  E:{ name:"Enterprising", fullName:"Leader / Persuader", emoji:"🏆", color:"#B45309", light:"#FFFBEB", border:"#FCD34D", shadow:"#B4530955", textColor:"#78350F",
+      jobs:["business_owner","salesperson","public_leader","movie_director","adventure_guide"] },
+  C:{ name:"Conventional", fullName:"Organizer / Planner", emoji:"📋", color:"#1D4ED8", light:"#EFF6FF", border:"#93C5FD", shadow:"#1D4ED855", textColor:"#1E3A8A",
+      jobs:["banker","accountant","office_manager","postal_worker","cashier"] }
+};
+
+const CAREERS = {
+  construction_worker:{ label:"👷 Construction Worker", does:"Plans and constructs buildings, roads, and structures. Works with blueprints, tools, materials, and a team to bring designs to life.", income:"About $45,000–$75,000 per year; skilled trades can earn significantly more.",
+    day:"7:00 AM — Arrive at the job site and review the day's blueprints with your foreman. 8:00 AM — Frame walls for a new house, measure twice, nail once. 11:00 AM — Problem-solve with the team when the delivery arrives short on lumber. 1:00 PM — Safety check on scaffolding before afternoon work. 3:00 PM — Clean up the site, log progress, and prep materials for tomorrow.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Build things at home — cardboard, LEGO, wood scraps. Visit construction sites with a parent. Try art and drawing classes to understand scale and design."},{icon:"🏫",level:"Middle School",steps:"Take shop class or any hands-on elective. Join robotics club. Help with home repair projects with a parent or guardian."},{icon:"🏫",level:"High School",steps:"Enroll in Career & Technical Education (CTE) building trades courses. Apply for a summer job or shadow a contractor. Take geometry and physics."},{icon:"🎓",level:"After High School",steps:"Apprenticeship programs (free, paid on-the-job training), trade school, or community college construction certificates. No 4-year degree required."}],
+    colleges:"Strong construction management programs: Arizona State University, Purdue University, Cal Poly San Luis Obispo, Milwaukee School of Engineering, and community college CTE pathways nationwide." },
+  mechanic:{ label:"🔧 Mechanic", does:"Diagnoses mechanical problems, repairs engines and parts, and performs maintenance on vehicles or other equipment.", income:"About $45,000–$80,000 per year, depending on specialty and certifications.",
+    day:"8:00 AM — Check in the first car and run a diagnostic scan. 9:00 AM — Replace brake pads while listening to the engine idle. 11:30 AM — Explain the repair clearly to the car owner. 1:00 PM — Work on an oil change and tire rotation. 3:30 PM — Update digital records and order parts for tomorrow.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Tinker with broken toys or electronics. Watch tutorials on how engines work. Visit an auto shop with a parent."},{icon:"🏫",level:"Middle School",steps:"Take shop class. Build model engines or RC cars. Learn basic tools — wrenches, screwdrivers, multimeters."},{icon:"🏫",level:"High School",steps:"Take auto tech CTE courses. Compete in SkillsUSA automotive events. Get a part-time job at a garage."},{icon:"🎓",level:"After High School",steps:"Vocational school or community college automotive programs (1–2 years). Earn ASE (Automotive Service Excellence) certifications."}],
+    colleges:"Strong automotive technology programs: UTI (Universal Technical Institute), Wyotech, Lincoln Tech, community colleges nationwide, and manufacturer-specific training (BMW, Toyota, Ford ASSET programs)." },
+  farmer:{ label:"🌿 Farmer / Agricultural Scientist", does:"Manages land and crops or livestock; may also research sustainable farming methods or agricultural technology.", income:"Highly variable — from $40,000 to $100,000+ depending on scale and specialty.",
+    day:"6:00 AM — Check on livestock before sunrise. 7:30 AM — Inspect irrigation systems and soil moisture sensors. 10:00 AM — Meet with an agricultural extension agent about a new crop pest. 1:00 PM — Drive the tractor to turn a field. 4:00 PM — Record crop data in the farm management app. 6:00 PM — Review weather forecasts for the week.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Grow plants from seeds at home. Visit a farm or farmers market. Learn about where food comes from."},{icon:"🏫",level:"Middle School",steps:"Join 4-H or FFA (Future Farmers of America). Grow a small garden. Take earth science and biology classes."},{icon:"🏫",level:"High School",steps:"Enroll in agriculture CTE courses. Raise an animal or grow a crop through FFA. Work or volunteer on a local farm."},{icon:"🎓",level:"After High School",steps:"Community college, 4-year degree in agriculture, agribusiness, plant science, or environmental science. Many farms also train through apprenticeships."}],
+    colleges:"Top agriculture programs: UC Davis, Iowa State University, Cornell University, Texas A&M, Cal Poly San Luis Obispo, and community colleges with ag programs across rural regions." },
+  firefighter:{ label:"🚒 Firefighter / EMT", does:"Responds to fires, medical emergencies, and rescue situations; educates communities about safety.", income:"About $50,000–$90,000 per year with benefits.",
+    day:"7:00 AM — Shift begins; check all gear and equipment. 9:00 AM — Training drill — practice hose techniques and ladder placement. 11:00 AM — Community outreach at a local school. 1:30 PM — Emergency call: structure fire downtown. Respond, assess, contain. 4:00 PM — Debrief and file incident reports. 6:00 PM — Station maintenance and dinner with the crew.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn fire safety rules. Visit your local fire station. Practice staying calm in emergencies."},{icon:"🏫",level:"Middle School",steps:"Get CPR certified (many programs start at age 12). Join a Junior Firefighter program if available. Stay physically active."},{icon:"🏫",level:"High School",steps:"Enroll in EMT or public safety CTE courses. Volunteer at a fire department explorer post. Take health, anatomy, and PE seriously."},{icon:"🎓",level:"After High School",steps:"Fire academy (typically 6 months). EMT-Basic or Paramedic certification. Associate's degree in fire science helps for promotion."}],
+    colleges:"Fire science and emergency management programs: San Diego Miramar College, Columbia Southern University, Oklahoma State University, and local community colleges with fire academy partnerships." },
+  engineer:{ label:"🏗️ Engineer", does:"Applies science and math to design systems, machines, buildings, and technology that solve real-world problems.", income:"About $75,000–$130,000 per year depending on field.",
+    day:"8:30 AM — Review 3D design files for a new bridge support system. 10:00 AM — Team meeting to discuss structural load calculations. 11:30 AM — Site visit to inspect concrete pours. 1:30 PM — Run computer simulations to test failure points. 3:30 PM — Update client on project timeline. 4:30 PM — Collaborate with architects on revised blueprints.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Build with LEGO Technic or K'Nex. Enter science fairs. Play engineering-based games like Minecraft or Kerbal Space Program."},{icon:"🏫",level:"Middle School",steps:"Join robotics club (FLL or FIRST). Take pre-algebra and science seriously. Build simple circuits with an Arduino or Raspberry Pi."},{icon:"🏫",level:"High School",steps:"Take AP Physics, AP Calculus, and AP Chemistry. Compete in Science Olympiad or FIRST Robotics. Tour university engineering departments."},{icon:"🎓",level:"After High School",steps:"4-year engineering degree (civil, mechanical, electrical, chemical, etc.). Many engineers earn a Professional Engineer (PE) license after experience."}],
+    colleges:"Top engineering schools: MIT, Stanford, Georgia Tech, UC San Diego, Cal Poly SLO, Purdue, University of Michigan, and Harvey Mudd. Many strong programs exist at state universities." },
+  scientist:{ label:"👩‍🔬 Scientist / Researcher", does:"Formulates hypotheses, conducts controlled experiments, analyzes data, and publishes findings to advance human knowledge.", income:"About $60,000–$115,000 per year; varies widely by field and sector.",
+    day:"8:00 AM — Review overnight data from the experiment in the lab. 9:30 AM — Prepare specimens and run tests. 11:30 AM — Lab meeting where the team shares updates. 1:00 PM — Write a section of a research paper. 3:00 PM — Peer review a colleague's draft. 4:30 PM — Update your research journal and plan tomorrow's experiment.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Do experiments at home (vinegar + baking soda, grow crystals). Read about scientists. Visit science museums."},{icon:"🏫",level:"Middle School",steps:"Enter science fairs. Join a science club. Ask teachers about summer science camps."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Chemistry, or AP Environmental Science. Apply for research internships. Shadow a university researcher."},{icon:"🎓",level:"After High School",steps:"Bachelor's degree in a science field. Most research careers require a master's or PhD. Paid research assistantships are common in graduate school."}],
+    colleges:"Strong science research programs: MIT, Stanford, Johns Hopkins, UC Berkeley, University of Chicago, UCSD, and many large state research universities with funded lab programs." },
+  doctor:{ label:"🩺 Doctor / Physician", does:"Diagnoses illnesses, prescribes treatment, performs procedures, and guides patients toward better health outcomes.", income:"Generally $150,000–$300,000+ per year after completing training.",
+    day:"7:00 AM — Hospital rounds: check in on patients admitted overnight. 9:00 AM — Clinic hours: see scheduled patients, review charts, order tests. 12:00 PM — Consult with a specialist about a complex case. 1:00 PM — Review lab results and update treatment plans. 3:00 PM — Perform a minor procedure. 5:00 PM — Dictate notes and sign off on prescriptions.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Volunteer at community health events. Read about the human body. Care for others around you who are sick."},{icon:"🏫",level:"Middle School",steps:"Join HOSA (Health Occupations Students of America). Take strong science classes. Shadow a doctor or nurse if possible."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Chemistry, AP Statistics. Volunteer at a hospital or clinic. Research pre-med requirements at colleges you like."},{icon:"🎓",level:"After High School",steps:"4-year college (pre-med) → 4-year medical school → 3–7 year residency. Total training: about 11–15 years. It's a long road, but it pays off."}],
+    colleges:"Strong pre-med programs: Johns Hopkins, Duke, UCSD, UCLA, University of Michigan, NYU, Emory. Medical schools include Mayo Clinic, Harvard, UCSF, and others." },
+  paleontologist:{ label:"🦕 Paleontologist", does:"Excavates and studies fossils to reconstruct ancient ecosystems, track evolutionary history, and understand climate change.", income:"About $55,000–$100,000 per year.",
+    day:"6:00 AM — Drive to the dig site. 8:00 AM — Carefully brush rock away from a newly discovered bone. 12:00 PM — Document the find with photos and GPS coordinates. 2:00 PM — Back at the museum lab, clean specimens and catalog fossils. 4:00 PM — Work on a scientific paper about last season's discoveries.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Visit natural history museums. Collect rocks and learn to identify them. Read about dinosaurs and prehistoric life."},{icon:"🏫",level:"Middle School",steps:"Join geology or earth science clubs. Attend fossil hunting programs. Take strong biology and earth science classes."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Environmental Science, and earth science. Apply for museum internships. Look for field programs run by universities."},{icon:"🎓",level:"After High School",steps:"Bachelor's in geology, biology, or earth science. Most professional paleontologists earn a PhD. Many work in universities, museums, or government agencies."}],
+    colleges:"Strong programs: University of Chicago, University of Montana, UC Berkeley, University of Kansas, Yale, and many state universities in fossil-rich regions (Wyoming, Montana, Utah)." },
+  coder:{ label:"💻 Software Developer / Coder", does:"Writes and tests code that powers websites, apps, games, software systems, and digital tools.", income:"About $80,000–$140,000 per year; varies widely by specialization.",
+    day:"9:00 AM — Check overnight bug reports from users. 10:00 AM — Sprint meeting: plan what features to build this week. 11:00 AM — Deep work: write code for a new app feature. 1:30 PM — Code review: read a teammate's code and give feedback. 3:00 PM — Fix a bug causing crashes. 4:30 PM — Update project documentation.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Try Scratch (scratch.mit.edu) — it's free and fun. Play coding games on Code.org. Ask if you can build a simple website."},{icon:"🏫",level:"Middle School",steps:"Learn Python through Khan Academy or freeCodeCamp. Join a coding club or hackathon. Build a small game or app."},{icon:"🏫",level:"High School",steps:"Take AP Computer Science A or Principles. Participate in hackathons. Build a portfolio of personal projects on GitHub."},{icon:"🎓",level:"After High School",steps:"4-year CS degree, coding bootcamp (3–6 months), or self-taught with a strong portfolio. Many employers care more about what you can build than your degree."}],
+    colleges:"Top CS programs: MIT, Stanford, Carnegie Mellon, UC Berkeley, Georgia Tech, UCSD, UT Austin. Coding bootcamps (General Assembly, App Academy) are popular alternatives." },
+  nurse:{ label:"🌡️ Nurse / Healthcare Professional", does:"Assesses patient conditions, administers treatments, communicates with doctors and families, and advocates for patient well-being.", income:"About $75,000–$120,000 per year; advanced practice nurses earn more.",
+    day:"7:00 AM — Receive handoff from the night shift: review each patient's status. 8:00 AM — Administer morning medications and check vital signs. 10:00 AM — Educate a patient and family about a new diagnosis. 12:00 PM — Assist a doctor during a procedure. 2:00 PM — Document updates in the health record. 5:00 PM — Handoff to incoming nurse with thorough notes.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Volunteer at community health events. Learn basic first aid. Show care for people around you who are sick or hurt."},{icon:"🏫",level:"Middle School",steps:"Join HOSA. Shadow a nurse if possible. Take biology and health classes seriously."},{icon:"🏫",level:"High School",steps:"Take AP Biology and chemistry. Volunteer at a hospital. Look into CNA (certified nursing assistant) programs available to high schoolers."},{icon:"🎓",level:"After High School",steps:"Associate's Degree in Nursing (ADN, 2 years) or Bachelor of Science in Nursing (BSN, 4 years), plus passing the NCLEX licensing exam."}],
+    colleges:"Strong nursing programs: UCSF, Johns Hopkins, Duke, Emory, University of Pennsylvania, and hundreds of community colleges and state universities with accredited nursing programs." },
+  artist:{ label:"🎨 Visual Artist / Designer", does:"Creates paintings, drawings, digital designs, sculptures, or other visual work for galleries, clients, or commercial purposes.", income:"About $35,000–$90,000 per year; highly variable based on specialty and freelance work.",
+    day:"9:00 AM — Review client brief for a new logo project. 10:30 AM — Sketch concepts in your sketchbook. 12:00 PM — Refine sketches in Adobe Illustrator. 2:00 PM — Video call with client to present three logo options. 3:30 PM — Work on a personal painting for an upcoming gallery show. 5:30 PM — Post work-in-progress to your portfolio website.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Draw and paint every day. Fill sketchbooks. Visit art museums. Take every art class available."},{icon:"🏫",level:"Middle School",steps:"Explore digital art tools (free: Krita, Canva). Enter local art contests. Study artists you admire and try copying their style to learn."},{icon:"🏫",level:"High School",steps:"Build an art portfolio. Take AP Studio Art. Apply to summer pre-college art programs. Learn Adobe Illustrator and Photoshop."},{icon:"🎓",level:"After High School",steps:"Art school (BFA), liberal arts college with strong arts program, or design school. Build your portfolio website — it's your most important credential."}],
+    colleges:"Top art and design schools: RISD, CalArts, Pratt Institute, SCAD (Savannah College of Art and Design), Art Center (Pasadena), and SVA (New York)." },
+  actor:{ label:"🎭 Actor / Performer", does:"Interprets and portrays characters in stage productions, films, television, commercials, or voice work.", income:"Highly variable — most performers build income from multiple related roles.",
+    day:"9:00 AM — Morning warm-up: vocal exercises and physical stretching. 10:00 AM — Rehearsal with the cast. 1:00 PM — Audition for a commercial. 3:00 PM — Acting class to work on a new monologue. 5:00 PM — Review script and highlight character beats. 7:30 PM — Evening performance. Take a bow.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Join your school play. Take drama class. Read stories aloud and practice using your voice expressively."},{icon:"🏫",level:"Middle School",steps:"Audition for community theater. Watch great performances and study how actors use body and voice. Try improv classes."},{icon:"🏫",level:"High School",steps:"Perform in every show you can. Attend a summer theater intensive. Create video auditions for student film projects."},{icon:"🎓",level:"After High School",steps:"BFA in acting or theater, conservatory training, or dive into professional auditions. Build your reel (video portfolio) from student and independent projects."}],
+    colleges:"Top theater and performing arts programs: Juilliard, NYU Tisch, Northwestern, Carnegie Mellon, Yale School of Drama, USC, and AMDA." },
+  author:{ label:"✍️ Author / Writer", does:"Writes novels, nonfiction books, screenplays, articles, essays, or other content that informs, entertains, or inspires readers.", income:"Variable — from project-based earnings to staff writing positions at $50,000–$90,000 per year.",
+    day:"8:00 AM — Morning pages: write freely for 30 minutes. 9:00 AM — Draft a new chapter. 12:00 PM — Edit yesterday's writing. 2:00 PM — Research for an article on medieval history. 4:00 PM — Reply to your editor's notes on a manuscript. 6:00 PM — Read — great writers are constant readers.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Write stories — any stories. Keep a journal. Read as much as you possibly can, across every genre."},{icon:"🏫",level:"Middle School",steps:"Submit writing to school publications and contests. Read widely in your genre. Start a blog or creative writing notebook."},{icon:"🏫",level:"High School",steps:"Take AP English Language and Composition. Write for the school newspaper or literary magazine. Enter the Scholastic Art & Writing Awards."},{icon:"🎓",level:"After High School",steps:"English, creative writing, or journalism degree. MFA programs for advanced writers. Build a portfolio through internships, freelancing, and independent publishing."}],
+    colleges:"Strong writing programs: University of Iowa (Iowa Writers' Workshop), NYU, Columbia, Emerson College, UC Davis, and many state universities with journalism and creative writing MFA programs." },
+  musician:{ label:"🎵 Musician / Composer", does:"Performs, records, or composes music across a wide range of genres and settings — from concert halls to recording studios.", income:"About $35,000–$90,000 per year; varies enormously based on career path.",
+    day:"9:00 AM — Practice scales and repertoire for 2 hours. 11:00 AM — Compose a new piece using notation software. 1:00 PM — Recording session in the studio. 4:00 PM — Rehearse with the band for this weekend's show. 7:00 PM — Perform live at a local venue. 10:00 PM — Review recordings and make notes for improvement.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start an instrument — any instrument. Practice every day, even 10 minutes. Listen to many genres of music actively."},{icon:"🏫",level:"Middle School",steps:"Join school band, orchestra, or choir. Take private lessons if possible. Learn music theory — it's the math of music."},{icon:"🏫",level:"High School",steps:"Audition for competitive ensembles and honor bands. Record original songs. Attend summer music programs and conservatory pre-college camps."},{icon:"🎓",level:"After High School",steps:"Music conservatory, BM in performance, or music education degree. Self-producing and touring is also a legitimate path if you build an audience."}],
+    colleges:"Top music programs: Juilliard, Berklee College of Music, New England Conservatory, USC Thornton, Eastman School of Music, and strong state programs at UT Austin and University of Michigan." },
+  photographer:{ label:"📸 Photographer / Videographer", does:"Captures and edits images or video to document events, tell stories, advertise products, or create artistic work.", income:"About $35,000–$75,000 per year; specialized or commercial photographers can earn more.",
+    day:"7:00 AM — Sunrise shoot for a nature photography project. 10:00 AM — Edit yesterday's wedding photos in Lightroom. 12:30 PM — Meet with a client to book a shoot. 2:00 PM — Product photography session for a local business. 5:00 PM — Update your website and social portfolio. 7:00 PM — Watch a documentary for visual inspiration.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Use your family's phone to practice composition. Study what makes a photo interesting. Visit photography exhibits at museums."},{icon:"🏫",level:"Middle School",steps:"Get access to a basic camera. Learn about exposure: aperture, shutter speed, and ISO. Start a photo journal."},{icon:"🏫",level:"High School",steps:"Take a photography class. Enter photo contests. Build a portfolio website. Learn Adobe Lightroom and Premiere."},{icon:"🎓",level:"After High School",steps:"BFA in photography, film degree, or visual communications. Many photographers are self-taught with a strong portfolio. Assisting a working photographer is invaluable."}],
+    colleges:"Strong photography and media programs: RISD, Brooks Institute, Syracuse University (Newhouse), NYU Tisch, SCAD, Art Center (Pasadena), and state universities with strong journalism schools." },
+  teacher:{ label:"🍎 Teacher / Educator", does:"Plans and delivers lessons, assesses student learning, builds relationships, and supports the intellectual and social development of students.", income:"About $50,000–$90,000 per year depending on grade level and district.",
+    day:"7:30 AM — Set up the classroom and review the day's lesson plan. 8:15 AM — Teach a history lesson on the Civil Rights Movement. 10:00 AM — Small group reading support. 12:00 PM — Lunch + grade a set of essays. 1:30 PM — Collaborate with a colleague. 3:00 PM — Hold office hours and call a parent. 4:30 PM — Plan next week's unit.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Teach what you know to a younger sibling, neighbor, or friend. Notice what great teachers do. Help others with schoolwork."},{icon:"🏫",level:"Middle School",steps:"Tutor younger students. Volunteer at community programs. Join clubs where you can lead and explain things to peers."},{icon:"🏫",level:"High School",steps:"Volunteer at an elementary school or after-school program. Take psychology or child development classes. Look into teacher cadet programs."},{icon:"🎓",level:"After High School",steps:"4-year education degree or subject-area degree + credential program. Student teaching (a semester in a real classroom) is required."}],
+    colleges:"Strong education programs: University of Michigan, Stanford (education school), Teachers College at Columbia, SDSU, UCLA, and many state universities. California teaching credential programs are at most CSUs." },
+  counselor:{ label:"🧑‍🤝‍🧑 Counselor / Social Worker", does:"Supports individuals through personal, social, and emotional challenges by listening, providing guidance, and connecting them to resources.", income:"About $50,000–$85,000 per year for counselors; varies by specialty.",
+    day:"8:30 AM — Review case notes before appointments. 9:00 AM — Individual session: guide a student through school anxiety. 11:00 AM — Group session with students navigating family changes. 1:00 PM — Collaborate with teachers about a student's academic plan. 2:30 PM — Connect a family to community resources. 4:00 PM — Complete documentation.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Be a kind and trustworthy friend. Practice listening without judgment. Learn about emotions and how to name them."},{icon:"🏫",level:"Middle School",steps:"Join peer mediation programs. Volunteer with younger kids. Take health and wellness or psychology electives if available."},{icon:"🏫",level:"High School",steps:"Volunteer at a crisis hotline, community center, or mentoring program. Take AP Psychology. Shadow a school counselor or social worker."},{icon:"🎓",level:"After High School",steps:"Bachelor's in psychology, social work, or human development. Master's degree (MSW or MA in counseling) is typically required for licensure."}],
+    colleges:"Strong psychology and social work programs: University of Michigan, Boston College, USC, Columbia, UC Berkeley, and many state universities with CSWE-accredited social work programs." },
+  coach:{ label:"🤸 Coach / Athletic Trainer", does:"Designs and leads training programs, teaches technique and strategy, builds team culture, and motivates athletes to reach their potential.", income:"Variable — from $35,000 to $80,000+ per year depending on sport and level.",
+    day:"6:00 AM — Early morning lift with the team. 8:00 AM — Film session: review game tape with athletes. 10:00 AM — Individual technique sessions. 1:00 PM — Plan next week's practice structure. 3:30 PM — Practice — drill work, scrimmage, and conditioning. 6:00 PM — Post-practice review and individual check-ins.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Play multiple sports. Help younger kids learn games. Pay attention to what great coaches do — the ones who inspire you."},{icon:"🏫",level:"Middle School",steps:"Become a team captain or help with youth sports in your community. Learn the strategy behind your sport."},{icon:"🏫",level:"High School",steps:"Compete at a high level and coach youth leagues on the side. Take anatomy and physiology if available. Get CPR and first aid certified."},{icon:"🎓",level:"After High School",steps:"Kinesiology, physical education, or sports science degree. Many coaches also earn strength and conditioning certifications (CSCS, NASM). Graduate assistantships allow you to coach while earning a master's."}],
+    colleges:"Strong kinesiology and sports science programs: Ohio State, University of Florida, Penn State, Oregon, SDSU, Cal Poly, and many state universities with Division I athletics." },
+  social_worker:{ label:"🧑‍⚕️ Social Worker / Advocate", does:"Helps individuals and families access services, overcome challenges, and navigate complex systems like healthcare, housing, and education.", income:"About $50,000–$80,000 per year.",
+    day:"8:30 AM — Review case files for today's home visits. 10:00 AM — Home visit: assess a family's safety and support needs. 12:00 PM — Connect a client to emergency food and rental assistance. 2:00 PM — Meet with a hospital team about discharge planning. 4:00 PM — Complete court-required documentation. 5:00 PM — Prepare a community resource guide.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn about fairness and advocacy. Volunteer with community service projects. Notice when others need help and act on it."},{icon:"🏫",level:"Middle School",steps:"Join student government or social justice clubs. Organize a community service project. Take civics and history classes."},{icon:"🏫",level:"High School",steps:"Volunteer at a food bank, shelter, or youth organization. Take AP Government or AP Psychology. Intern with a nonprofit."},{icon:"🎓",level:"After High School",steps:"Bachelor's of Social Work (BSW) or psychology degree. Master's of Social Work (MSW) required for clinical or licensed positions (LCSW)."}],
+    colleges:"Top social work programs: University of Michigan, Columbia, Washington University in St. Louis, USC, UC Berkeley, and many state universities with CSWE-accredited BSW/MSW programs." },
+  business_owner:{ label:"👔 Entrepreneur / Business Owner", does:"Identifies a market need, builds a product or service, manages a team, handles finances, and adapts to challenges over time.", income:"Highly variable — dependent on the business itself.",
+    day:"8:00 AM — Review overnight sales data and customer messages. 9:30 AM — Team standup. 11:00 AM — Pitch your business idea to a potential investor. 1:30 PM — Solve a supply chain problem. 3:00 PM — Work with a designer on new product packaging. 5:00 PM — Write content for social media. 7:00 PM — Research competitors.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start a small business: lemonade stand, baked goods, lawn mowing. Learn what customers want and how to price things."},{icon:"🏫",level:"Middle School",steps:"Expand your business or try a new one. Participate in DECA or Junior Achievement programs. Study businesses you admire."},{icon:"🏫",level:"High School",steps:"Start a real side business or social enterprise. Take economics and business classes. Apply for youth entrepreneurship competitions."},{icon:"🎓",level:"After High School",steps:"Business degree helpful but not required. Many entrepreneurs start during college or right after. Programs like Y Combinator and incubators help early-stage businesses."}],
+    colleges:"Top entrepreneurship programs: Babson College, Stanford, MIT Sloan, UC Berkeley Haas, Wharton (UPenn), Indiana University Kelley, and many state universities with entrepreneurship centers." },
+  salesperson:{ label:"📢 Sales Professional / Account Manager", does:"Builds client relationships, explains products or services clearly, overcomes objections, and helps customers make informed decisions.", income:"About $40,000–$100,000+ per year; many roles include performance bonuses.",
+    day:"8:00 AM — Review your pipeline: which deals are close to closing? 9:00 AM — Cold outreach: email and call 20 new prospects. 11:00 AM — Product demo with a potential client. 1:00 PM — Follow up with last week's prospects. 2:30 PM — Team training on new product features. 4:00 PM — Prepare a proposal for a major account.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice explaining things clearly. Run a small business. Observe how salespeople make you feel valued as a customer."},{icon:"🏫",level:"Middle School",steps:"Join debate or speech club. Sell items for school fundraisers. Notice what makes people say yes to an idea."},{icon:"🏫",level:"High School",steps:"Take a marketing, communication, or business elective. Participate in DECA competitions. Get a part-time retail or customer service job."},{icon:"🎓",level:"After High School",steps:"Business, communications, or marketing degree. Many sales careers are open to high school graduates with strong interpersonal skills."}],
+    colleges:"Strong business and marketing programs: Wharton (UPenn), Michigan Ross, Indiana Kelley, ASU, UC Davis, and most major state universities with business schools." },
+  public_leader:{ label:"🏛️ Public Official / Policy Maker", does:"Creates or influences policy, represents constituent interests, manages public agencies, and makes decisions that affect entire communities.", income:"Highly variable — from local public service stipends to six-figure executive or legislative salaries.",
+    day:"7:30 AM — Read briefings on three pending policy decisions. 9:00 AM — Town hall meeting: listen to constituent concerns. 11:00 AM — Meet with the city budget director. 1:00 PM — Press conference on a new public safety initiative. 3:00 PM — Review a proposed ordinance with the city attorney. 5:00 PM — Community event: youth leadership ceremony.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Run for class representative or student council. Learn about your city or town government. Attend a city council meeting with a parent."},{icon:"🏫",level:"Middle School",steps:"Participate in student government. Volunteer for a local campaign or civic organization. Practice public speaking and debate."},{icon:"🏫",level:"High School",steps:"Take AP Government, AP Economics, and debate. Apply for Boys/Girls State. Intern for a local elected official."},{icon:"🎓",level:"After High School",steps:"Degrees in political science, public policy, law, economics, or communications. Law school or a master's in public policy (MPP) opens many doors."}],
+    colleges:"Strong public policy and government programs: Harvard Kennedy School, Princeton Woodrow Wilson School, Georgetown, UCLA Luskin, UCSD GPS, and many strong state schools with government programs." },
+  movie_director:{ label:"🎬 Film Director / Media Producer", does:"Oversees all creative aspects of a film or video project — from script interpretation to casting, visual style, editing, and final delivery.", income:"Variable and project-based; successful directors can earn well above average.",
+    day:"8:00 AM — Pre-production meeting: review storyboards with the cinematographer. 10:00 AM — Casting session: watch actors audition. 1:00 PM — On set: direct a key scene. 4:00 PM — Editing session with the editor on last week's footage. 6:30 PM — Screen a rough cut with your producing team and give notes.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Make short films on a phone or tablet. Tell stories. Watch great films and talk about what makes them work."},{icon:"🏫",level:"Middle School",steps:"Make short films for school. Enter student film competitions. Learn iMovie or DaVinci Resolve (free)."},{icon:"🏫",level:"High School",steps:"Take film or media arts classes. Build a short film portfolio. Submit to youth film festivals. Volunteer on student film sets."},{icon:"🎓",level:"After High School",steps:"Film school BFA, or start working on independent projects while building your resume. Key early jobs: production assistant, camera assistant, editor's assistant."}],
+    colleges:"Top film programs: USC School of Cinematic Arts, NYU Tisch, AFI (American Film Institute), UCLA, Chapman University Dodge, Emerson College, and UT Austin." },
+  adventure_guide:{ label:"🗺️ Outdoor Educator / Guide", does:"Leads groups through outdoor environments, teaches skills like navigation and ecology, ensures safety, and builds connection to the natural world.", income:"About $35,000–$70,000 per year; seasonal and geographic variation is significant.",
+    day:"6:00 AM — Pack gear, check weather, and brief the group on the day's route. 7:30 AM — Lead a 12-person group on a backcountry trail, teaching plant identification. 12:00 PM — Treat a minor ankle sprain on the trail. 2:00 PM — Teach map and compass navigation at a scenic overlook. 5:00 PM — Set up camp and lead a group debrief. 8:00 PM — Stars, campfire, and reflections.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Spend time outside. Learn to identify plants and animals near your home. Camp with family or in a scouting program."},{icon:"🏫",level:"Middle School",steps:"Join Boy Scouts, Girl Scouts, or a similar outdoor program. Take a wilderness first aid or survival skills class. Hike harder trails."},{icon:"🏫",level:"High School",steps:"Lead outdoor trips or become a junior counselor at a camp. Get wilderness first responder (WFR) certified. Take ecology or environmental science."},{icon:"🎓",level:"After High School",steps:"Outdoor education degree, environmental science program, or a NOLS (National Outdoor Leadership School) certificate. Many guides work seasonally."}],
+    colleges:"Strong outdoor education and environmental programs: University of Utah, Prescott College, Colorado State, Warren Wilson College, NAU (Northern Arizona), and state universities with recreation management programs." },
+  banker:{ label:"🏦 Financial Advisor / Banker", does:"Analyzes financial data, advises clients on investments and savings, manages accounts, and helps individuals or organizations plan for the future.", income:"About $55,000–$100,000+ per year; financial advisors often earn more with experience.",
+    day:"8:00 AM — Review markets and economic news. 9:30 AM — Client meeting: help a family plan for college savings and retirement. 11:00 AM — Review a loan application from a small business. 1:00 PM — Update client portfolio recommendations. 3:00 PM — Compliance review: ensure account documentation is in order. 4:30 PM — Continuing education on new tax law changes.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start a savings account. Learn the difference between needs and wants. Practice keeping track of your money."},{icon:"🏫",level:"Middle School",steps:"Play stock market simulation games (e.g., SIFMA Foundation's Stock Market Game). Learn about budgeting. Take math seriously."},{icon:"🏫",level:"High School",steps:"Take economics and AP Statistics. Participate in DECA financial services events. Shadow a financial advisor or banker."},{icon:"🎓",level:"After High School",steps:"Finance, economics, or business degree. CFP (Certified Financial Planner) or CFA (Chartered Financial Analyst) certification for advanced roles."}],
+    colleges:"Strong finance programs: Wharton (UPenn), NYU Stern, Michigan Ross, Georgetown McDonough, UT Austin McCombs, and many state universities with strong business schools." },
+  accountant:{ label:"📊 Accountant / Financial Analyst", does:"Prepares and audits financial statements, tracks organizational spending, ensures compliance with tax law, and provides financial analysis.", income:"About $60,000–$110,000 per year.",
+    day:"8:30 AM — Review last month's financial statements for a client. 10:00 AM — Audit meeting: go through expense records. 12:00 PM — Prepare quarterly tax estimates. 2:00 PM — Model out a financial forecast for a growing company. 4:00 PM — Meet with a client to explain their financials. 5:00 PM — Update spreadsheets and reconcile accounts.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice math every day — especially mental math. Help keep track of family expenses or a small savings goal."},{icon:"🏫",level:"Middle School",steps:"Take every math class available. Learn to use spreadsheets. Study how businesses earn and spend money."},{icon:"🏫",level:"High School",steps:"Take AP Statistics and economics. Compete in DECA or FBLA. Shadow an accountant during tax season."},{icon:"🎓",level:"After High School",steps:"Accounting or finance degree (4 years). CPA exam after 150 college credit hours. Big 4 firms (Deloitte, PwC, EY, KPMG) hire heavily from college."}],
+    colleges:"Strong accounting programs: University of Illinois Urbana-Champaign, UT Austin, Michigan Ross, NYU Stern, BYU, and many state universities with AACSB-accredited business schools." },
+  office_manager:{ label:"📁 Office Manager / Operations Coordinator", does:"Keeps a workplace or organization running efficiently — managing schedules, coordinating teams, handling logistics, and solving day-to-day operational problems.", income:"About $45,000–$85,000 per year.",
+    day:"8:00 AM — Review today's calendar and confirm all meetings. 9:00 AM — Onboard a new employee. 11:00 AM — Coordinate with IT on a tech issue. 1:00 PM — Manage vendor invoices and check budget tracking. 2:30 PM — Organize company event logistics. 4:30 PM — Prepare the weekly status report for the director.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Keep your room, backpack, and schoolwork organized. Help plan family events. Practice being responsible with tasks."},{icon:"🏫",level:"Middle School",steps:"Volunteer to help organize school events. Take on leadership roles that require coordinating others. Learn to use calendars and task lists."},{icon:"🏫",level:"High School",steps:"Take business, communications, and computer applications classes. Work part-time in a customer service or admin role."},{icon:"🎓",level:"After High School",steps:"Associate's or bachelor's in business administration. Many office managers start in entry-level admin roles and advance through skill and reliability."}],
+    colleges:"Strong business administration programs at most community colleges (2-year AA) and 4-year programs at state universities like SDSU, CSULB, Arizona State, and many others nationwide." },
+  postal_worker:{ label:"📬 Postal / Logistics Professional", does:"Processes and delivers mail and packages with accuracy and reliability; some roles involve supervising routes or managing distribution centers.", income:"About $45,000–$70,000 per year with federal benefits for postal employees.",
+    day:"6:00 AM — Sort the morning mail load by neighborhood. 7:30 AM — Load the vehicle and verify the manifest. 8:00 AM — Begin the delivery route. 12:00 PM — Return undeliverable packages and pick up outgoing mail. 2:30 PM — Complete end-of-day paperwork. 3:00 PM — Done — and your evenings are your own.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn to be responsible and follow through on commitments. Take pride in doing things accurately."},{icon:"🏫",level:"Middle School",steps:"Take geography and map skills seriously. Practice organization and time management."},{icon:"🏫",level:"High School",steps:"Work part-time in delivery, retail, or customer service. Explore logistics and supply chain as career fields."},{icon:"🎓",level:"After High School",steps:"High school diploma required. USPS has its own hiring and training process. Logistics careers at UPS, FedEx, or Amazon may offer management tracks with or without a degree."}],
+    colleges:"For logistics management and supply chain: Michigan State, Penn State, Arizona State, and community colleges with logistics and operations management certificates." },
+  cashier:{ label:"💰 Customer Service / Retail Professional", does:"Helps customers with purchases, processes transactions accurately, resolves issues, and contributes to a positive store environment.", income:"About $28,000–$45,000 per year for full-time roles; varies widely.",
+    day:"9:00 AM — Open the register and prepare the checkout area. 10:00 AM — Greet customers, process purchases, and handle questions. 12:00 PM — Handle a return while keeping the line moving. 2:00 PM — Help a customer find a product. 4:00 PM — Balance the register. 5:00 PM — Restock shelves and prep for tomorrow.",
+    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice good manners and patience. Learn to count money and make change. Notice how businesses treat their customers."},{icon:"🏫",level:"Middle School",steps:"Volunteer in service roles. Learn to communicate clearly with all kinds of people. Study business and money management."},{icon:"🏫",level:"High School",steps:"Get a part-time job in retail or food service. Take business or marketing classes."},{icon:"🎓",level:"After High School",steps:"Many customer service roles hire high school graduates. Advancement to management typically requires demonstrated leadership and may benefit from a business degree."}],
+    colleges:"Retail management pathways through community college business programs, or 4-year retail management degrees at schools like Michigan State, Ball State, and LIM College." }
+};
+
+const SCORE_MAP_REF = { yes:3, kinda:2, 'not-really':1, nope:0 };
+let currentQ=0, scores={R:0,I:0,A:0,S:0,E:0,C:0}, counts={R:0,I:0,A:0,S:0,E:0,C:0};
+let answered=new Array(QUESTIONS.length).fill(null);
+const STORAGE_KEY='careerexplorer_35_results';
+
+function saveResults(sorted){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({sorted, ts: Date.now()})); } catch(e){}
+}
+function loadResults(){
+  try { const d=localStorage.getItem(STORAGE_KEY); return d?JSON.parse(d):null; } catch(e){return null;}
+}
+function clearSaved(){
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  document.getElementById('saved-banner').classList.remove('show');
+}
+
+function startQuiz(){
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  document.getElementById('progress-area').style.display='block';
+  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
+  answered=new Array(QUESTIONS.length).fill(null);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const quiz=document.getElementById('quiz');
+  quiz.innerHTML='';
+  const q=QUESTIONS[currentQ], total=QUESTIONS.length;
+  const pct=Math.round((currentQ/total)*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-label').textContent='Question '+(currentQ+1)+' of '+total;
+  document.getElementById('progress-pct').textContent=pct+'%';
+  const card=document.createElement('div');
+  card.className='question-card';
+  card.innerHTML=`
+    <span class="q-emoji">${q.emoji}</span>
+    <div class="q-text">${q.text}</div>
+    <div class="answers">
+      <button class="answer-btn yes" onclick="selectAnswer('yes',this)">✅ Yes, that's me</button>
+      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)">🤔 Kind of</button>
+      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)">😐 Not really</button>
+      <button class="answer-btn nope" onclick="selectAnswer('nope',this)">❌ Not at all</button>
+    </div>
+    <div class="next-wrap">
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+        ${currentQ<QUESTIONS.length-1?'NEXT QUESTION →':'VIEW MY RESULTS →'}
+      </button>
+    </div>
+  `;
+  quiz.appendChild(card);
+  if(answered[currentQ]!==null){
+    const prev=card.querySelector('.answer-btn.'+answered[currentQ]);
+    if(prev){prev.classList.add('selected');document.getElementById('next-btn').classList.add('show');}
+  }
+}
+
+function selectAnswer(value,btn){
+  btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected'); answered[currentQ]=value;
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function nextQuestion(){
+  if(answered[currentQ]===null)return;
+  const q=QUESTIONS[currentQ];
+  scores[q.riasec]+=SCORE_MAP_REF[answered[currentQ]]; counts[q.riasec]+=1;
+  currentQ++;
+  if(currentQ>=QUESTIONS.length) showResults(); else renderQuestion();
+}
+
+function showResults(savedData){
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('progress-area').style.display='none';
+  document.getElementById('results').style.display='block';
+  let sorted;
+  if(savedData){
+    sorted=savedData.sorted;
+    document.getElementById('saved-banner').classList.add('show');
+  } else {
+    const priorityOrder={R:1,I:2,A:3,S:4,E:5,C:6};
+    sorted=Object.keys(scores).map(code=>({
+      code, total:scores[code], count:counts[code],
+      average:counts[code]?scores[code]/counts[code]:0
+    })).sort((a,b)=>{
+      if(b.average!==a.average) return b.average-a.average;
+      if(b.total!==a.total) return b.total-a.total;
+      return priorityOrder[a.code]-priorityOrder[b.code];
+    }).slice(0,3);
+    saveResults(sorted);
+    document.getElementById('saved-banner').classList.add('show');
+  }
+  const ranks=['#1 INTEREST TYPE','#2 INTEREST TYPE','#3 INTEREST TYPE'];
+  const medals=['🥇','🥈','🥉'];
+  const container=document.getElementById('result-cards');
+  container.innerHTML='';
+  sorted.forEach((result,idx)=>{
+    const info=RIASEC[result.code];
+    const card=document.createElement('div');
+    card.className='result-card';
+    card.style.background=info.light; card.style.borderColor=info.border;
+    card.style.boxShadow='0 4px 0 '+info.shadow; card.style.color=info.textColor;
+    card.innerHTML=`
+      <span class="rc-emoji">${info.emoji}</span>
+      <div class="rc-rank">${medals[idx]} ${ranks[idx]}</div>
+      <div class="rc-type" style="color:${info.color}">${info.name}</div>
+      <div class="rc-full">${info.fullName}</div>
+      <div class="rc-match">Match: ${Math.round(result.average*100/3)}%</div>
+      <div class="rc-jobs">${info.jobs.map(jobId=>{
+        const job=CAREERS[jobId];
+        return '<button class="job-link-btn" onclick="showCareer(\''+jobId+'\')">'+job.label+'</button>';
+      }).join('')}</div>
+    `;
+    container.appendChild(card);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showCareer(jobId){
+  const c=CAREERS[jobId]; if(!c)return;
+  document.getElementById('career-title').textContent=c.label;
+  document.getElementById('career-intro').textContent='Tap any career from your results to explore it.';
+  document.getElementById('career-does').textContent=c.does;
+  document.getElementById('career-income').textContent=c.income;
+  document.getElementById('career-day').textContent=c.day;
+  document.getElementById('career-day-wrap').style.display='block';
+  const stepsEl=document.getElementById('career-pathway-steps');
+  stepsEl.innerHTML=c.pathway.map(p=>'<div class="pathway-step"><span class="pathway-step-icon">'+p.icon+'</span><div class="pathway-step-content"><div class="pathway-step-label">'+p.level+'</div>'+p.steps+'</div></div>').join('');
+  document.getElementById('career-pathway-wrap').style.display='block';
+  document.getElementById('career-colleges').textContent=c.colleges;
+  document.getElementById('career-colleges-wrap').style.display='block';
+  const panel=document.getElementById('career-panel');
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetQuiz(){
+  document.getElementById('results').style.display='none';
+  document.getElementById('intro').style.display='block';
+  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
+  answered=new Array(QUESTIONS.length).fill(null);
+  clearSaved();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  const saved=loadResults();
+  if(saved){ document.getElementById('intro').style.display='none'; showResults(saved); }
+});
+</script>
+</body>
+</html>
