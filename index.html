@@ -4,6 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Career Explorer — Educator Hub</title>
+<meta property="og:type"        content="website" />
+<meta property="og:title"       content="Career Explorer — Educator Hub" />
+<meta property="og:description" content="A free RIASEC-based career interest assessment for elementary students in grades TK through 5." />
+<meta property="og:url"         content="https://wpr-creator.github.io/careerexplorer/" />
+<meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.png" />
+<meta name="twitter:card"       content="summary_large_image" />
+<meta name="twitter:title"      content="Career Explorer — Educator Hub" />
+<meta name="twitter:description" content="A free RIASEC-based career interest assessment for elementary students in grades TK through 5." />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
 <style>
@@ -357,6 +365,12 @@ footer {
   .riasec-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+
+@media (max-width: 768px) and (min-width: 581px) {
+  main { padding: 1.5rem; }
+  .levels-grid { grid-template-columns: 1fr 1fr; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -409,7 +423,7 @@ footer {
       <div class="level-grades">Grades TK – K</div>
       <p class="level-desc">A picture-supported, 15-question inventory using simple yes/no style language. Designed for pre-readers and early readers with teacher or aide support.</p>
       <div class="level-meta">15 Questions · Read-Aloud Friendly · 4-Choice Scale</div>
-      <a class="launch-btn" href="tk-k.html">LAUNCH ASSESSMENT →</a>
+      <a class="launch-btn" href="tk-k.html" aria-label="Launch the TK through Kindergarten career assessment">LAUNCH ASSESSMENT →</a>
     </div>
 
     <!-- Grades 1–2 -->
@@ -420,7 +434,7 @@ footer {
       <div class="level-grades">Grades 1 – 2</div>
       <p class="level-desc">A 15-question inventory using beginning reader vocabulary. Students identify activities they enjoy with a four-point response scale from "Yes!" to "Nope."</p>
       <div class="level-meta">15 Questions · Independent Reader · 4-Choice Scale</div>
-      <a class="launch-btn btn-green" href="grades1-2.html">LAUNCH ASSESSMENT →</a>
+      <a class="launch-btn btn-green" href="grades1-2.html" aria-label="Launch the Grades 1 through 2 career assessment">LAUNCH ASSESSMENT →</a>
     </div>
 
     <!-- Grades 3–5 -->
@@ -431,7 +445,7 @@ footer {
       <div class="level-grades">Grades 3 – 5</div>
       <p class="level-desc">A 20-question inventory with expanded vocabulary and more nuanced interest prompts. Students reflect on skills and preferences across all six RIASEC domains.</p>
       <div class="level-meta">20 Questions · Grade-Level Reader · 4-Choice Scale</div>
-      <a class="launch-btn btn-blue" href="grades3-5.html">LAUNCH ASSESSMENT →</a>
+      <a class="launch-btn btn-blue" href="grades3-5.html" aria-label="Launch the Grades 3 through 5 career assessment">LAUNCH ASSESSMENT →</a>
     </div>
 
   </div>

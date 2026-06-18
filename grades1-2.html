@@ -4,6 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Career Explorer — Young Explorers (Grades 1–2)</title>
+<meta property="og:type"        content="website" />
+<meta property="og:title"       content="Career Explorer — Grades 1–2" />
+<meta property="og:description" content="A 15-question RIASEC career interest inventory for Grades 1 and 2." />
+<meta property="og:url"         content="https://wpr-creator.github.io/careerexplorer/grades1-2.html" />
+<meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.png" />
+<meta name="twitter:card"       content="summary_large_image" />
+<meta name="twitter:title"      content="Career Explorer — Grades 1–2" />
+<meta name="twitter:description" content="A 15-question RIASEC career interest inventory for Grades 1 and 2." />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>" />
 <style>
@@ -245,10 +253,7 @@ body {
   .answers{grid-template-columns:1fr}
   .career-grid{grid-template-columns:1fr}
 }
-@media print {
-  .float-bg,.action-btns,.answer-btn,.next-btn,.start-btn,.progress-area { display:none !important; }
-  body { background:white; }
-}
+
 
 .career-day-box { background:#F0FDF4; border:2px solid #86EFAC; border-radius:12px; padding:1.2rem; margin-bottom:1rem; font-size:0.9rem; color:#14532D; line-height:1.65; }
 .career-day-box strong { display:block; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#15803D; margin-bottom:0.5rem; }
@@ -261,6 +266,15 @@ body {
 .colleges-box strong { display:block; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#B45309; margin-bottom:0.5rem; }
 .saved-banner { background:#D1FAE5; border:2px solid #34D399; border-radius:12px; padding:0.8rem 1rem; margin-bottom:1.2rem; font-size:0.85rem; font-weight:700; color:#065F46; display:none; align-items:center; gap:0.5rem; }
 .saved-banner.show { display:flex; }
+
+
+@media (max-width: 768px) and (min-width: 581px) {
+  main { padding: 1.5rem; }
+  .career-grid { grid-template-columns: 1fr; }
+  .result-cards-wrap { grid-template-columns: 1fr 1fr; }
+  .pathway-steps { gap: 0.4rem; }
+  .answers { grid-template-columns: 1fr 1fr; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -276,6 +290,76 @@ body {
 .day-time { font-size: 0.72rem; font-weight: 800; color: #15803D; letter-spacing: 0.05em; min-width: 4.5rem; padding-top: 0.15rem; white-space: nowrap; }
 .day-time:empty { display: none; }
 .day-task { font-size: 0.88rem; color: #14532D; line-height: 1.5; }
+
+/* ── PRINT STYLESHEET ───────────────────────────────────────── */
+@media print {
+  @page { size: letter portrait; margin: 0.75in; }
+  body { background: white !important; font-size: 11pt; }
+  body::before, .action-btns, .answer-btn, .next-btn,
+  .start-btn, .progress-area, .saved-banner,
+  #quiz, #intro, .float-bg, .header-deco,
+  .header-emoji, .header-emoji-row { display: none !important; }
+  #results { display: block !important; }
+  .results-top { text-align: center; margin-bottom: 1rem; }
+  .results-top .celebrate { display: none !important; }
+  .results-top h2 { font-size: 18pt; color: #000 !important; }
+  .results-top p  { font-size: 11pt; color: #333 !important; }
+  .result-cards-wrap {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.4in !important;
+    margin-bottom: 0.3in;
+    break-inside: avoid;
+  }
+  .result-card {
+    border: 2pt solid #ccc !important;
+    border-radius: 8pt !important;
+    padding: 0.15in !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .rc-emoji  { font-size: 20pt; }
+  .rc-rank   { font-size: 8pt; font-weight: 700; }
+  .rc-type   { font-size: 13pt; font-weight: 800; color: #000 !important; }
+  .rc-full, .rc-match { font-size: 9pt; color: #444 !important; }
+  .job-link-btn {
+    display: block;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 9pt;
+    padding: 0 !important;
+    color: #000 !important;
+    text-align: left;
+  }
+  .career-panel.show {
+    display: block !important;
+    border: 1pt solid #ccc !important;
+    box-shadow: none !important;
+    break-before: page;
+    page-break-before: always;
+  }
+  .career-panel h3  { font-size: 14pt; color: #000 !important; }
+  .career-box       { border: 1pt solid #ddd !important; box-shadow: none !important; font-size: 9pt; }
+  .career-box strong { font-size: 7pt; }
+  .career-day-box, .colleges-box { border: 1pt solid #ddd !important; font-size: 9pt; }
+  .pathway-step     { border: 1pt solid #ddd !important; font-size: 9pt; }
+  .pathway-step-label { font-size: 7pt; }
+  .day-timeline     { gap: 0.1rem; }
+  .day-time         { font-size: 7pt; min-width: 3rem; }
+  .day-task         { font-size: 9pt; }
+  header, nav, footer { display: none !important; }
+}
+
+.back-to-results {
+  display: block; width: 100%; margin-top: 1.2rem;
+  background: none; border: 2px solid #BFDBFE; border-radius: 10px;
+  padding: 0.7rem 1rem; font-size: 0.85rem; font-weight: 800;
+  color: var(--blue, #1D4ED8); cursor: pointer; text-align: center;
+  letter-spacing: 0.05em; transition: background 0.15s, color 0.15s;
+}
+.back-to-results:hover { background: #EFF6FF; }
 </style>
 </head>
 <body>
@@ -310,7 +394,7 @@ body {
         ❌ <strong>Nope!</strong> — Not for me!
       </div>
     </div>
-    <button class="start-btn" onclick="startQuiz()">LET'S GO! 🚀</button>
+    <button class="start-btn" onclick="startQuiz()" aria-label="Start the career interest assessment">LET'S GO! 🚀</button>
   </div>
 
   <!-- QUIZ -->
@@ -339,13 +423,14 @@ body {
         <div class="career-box"><strong>⭐ WHAT THEY DO</strong><span id="career-do"></span></div>
       </div>
       <div class="career-note">Income is approximate and can change by state, experience, and type of workplace.</div>
+      <button class="back-to-results" onclick="document.getElementById('result-cards').scrollIntoView({behavior:'smooth',block:'start'})" aria-label="Scroll back up to your results">↑ Back to My Results</button>
     </div>
 
     
 
 
     <div class="action-btns">
-      <button class="print-btn" onclick="window.print()">🖨️ PRINT MY RESULTS!</button>
+      <button class="print-btn" onclick="window.print()" aria-label="Print your results">🖨️ PRINT RESULTS</button>
       <button class="retry-btn" onclick="resetQuiz()">🔄 TRY AGAIN!</button>
     </div>
   </div>
@@ -525,10 +610,10 @@ function renderQuestion() {
     <span class="q-emoji">${q.emoji}</span>
     <div class="q-text">${q.text}</div>
     <div class="answers">
-      <button class="answer-btn yes" onclick="selectAnswer('yes',this)">✅ YES!</button>
-      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)">🤔 Kind of!</button>
-      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)">😐 Not really</button>
-      <button class="answer-btn nope" onclick="selectAnswer('nope',this)">❌ Nope!</button>
+      <button class="answer-btn yes" onclick="selectAnswer('yes',this)" aria-label="Yes, that describes me">✅ YES!</button>
+      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)" aria-label="Kind of describes me">🤔 Kind of!</button>
+      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)" aria-label="Not really like me">😐 Not really</button>
+      <button class="answer-btn nope" onclick="selectAnswer('nope',this)" aria-label="No, not like me at all">❌ Nope!</button>
     </div>
     <div class="next-wrap">
       <button class="next-btn" id="next-btn" onclick="nextQuestion()">
@@ -547,6 +632,7 @@ function selectAnswer(value,btn){
   btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected'); answered[currentQ]=value;
   document.getElementById('next-btn').classList.add('show');
+  setTimeout(nextQuestion, 400);
 }
 
 function nextQuestion(){
@@ -621,6 +707,23 @@ window.addEventListener('DOMContentLoaded', ()=>{
   const saved=loadResults();
   if(saved){ document.getElementById('intro').style.display='none'; showResults(saved); }
 });
+
+// Keyboard navigation: keys 1-4 select answers, Enter advances
+document.addEventListener('keydown', function(e) {
+  const quizVisible = document.getElementById('quiz') &&
+    document.getElementById('quiz').style.display !== 'none';
+  if (!quizVisible) return;
+  const map = { '1':'yes', '2':'kinda', '3':'not-really', '4':'nope' };
+  if (map[e.key]) {
+    const btn = document.querySelector('.answer-btn.' + map[e.key].replace('-','\\-'));
+    if (btn) btn.click();
+  }
+  if (e.key === 'Enter') {
+    const nb = document.getElementById('next-btn');
+    if (nb && nb.classList.contains('show')) nb.click();
+  }
+});
+
 </script>
 </body>
 </html>
