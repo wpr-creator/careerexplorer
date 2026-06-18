@@ -264,8 +264,6 @@ body {
 .pathway-step-label { font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#5B21B6; margin-bottom:0.2rem; }
 .colleges-box { background:#FFF7ED; border:2px solid #FCD34D; border-radius:12px; padding:1rem; margin-bottom:1rem; font-size:0.88rem; color:#78350F; line-height:1.65; }
 .colleges-box strong { display:block; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#B45309; margin-bottom:0.5rem; }
-.saved-banner { background:#D1FAE5; border:2px solid #34D399; border-radius:12px; padding:0.8rem 1rem; margin-bottom:1.2rem; font-size:0.85rem; font-weight:700; color:#065F46; display:none; align-items:center; gap:0.5rem; }
-.saved-banner.show { display:flex; }
 
 
 @media (max-width: 768px) and (min-width: 581px) {
@@ -405,6 +403,18 @@ body {
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 .browse-fab .fab-icon { font-size: 1rem; }
+
+/* ── JUMP TO CAREERS (quiz screen) ─────────────────── */
+.quiz-jump-btn {
+  display: block; width: 100%; margin-top: 1rem;
+  background: none; border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 10px; padding: 0.55rem 1rem;
+  font-family: inherit; font-size: 0.78rem; font-weight: 800;
+  color: var(--muted, #64748B); cursor: pointer; text-align: center;
+  letter-spacing: 0.06em; text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.quiz-jump-btn:hover { border-color: var(--blue, #1D4ED8); color: var(--blue, #1D4ED8); }
 </style>
 </head>
 <body>
@@ -447,10 +457,6 @@ body {
 
   <!-- RESULTS -->
   <div id="results">
-    <div class="saved-banner" id="saved-banner">
-      ✅ Your results were saved! Come back anytime — they'll still be here.
-      <button onclick="clearSaved()" style="margin-left:auto;background:none;border:1.5px solid #065F46;color:#065F46;border-radius:6px;padding:0.2rem 0.7rem;font-size:0.8rem;font-weight:800;cursor:pointer;">CLEAR</button>
-    </div>
     <div class="results-top">
       <div class="celebrate">🎉🌟🎊</div>
       <h2>YOU DID IT!</h2>
@@ -635,14 +641,6 @@ let currentQ=0, scores={R:0,I:0,A:0,S:0,E:0,C:0}, counts={R:0,I:0,A:0,S:0,E:0,C:
 let answered = new Array(QUESTIONS.length).fill(null);
 
 function startQuiz() {
-  const prog = loadProgress();
-  if (prog && prog.currentQ > 0 && prog.currentQ < QUESTIONS.length) {
-    currentQ = prog.currentQ; scores = prog.scores; counts = prog.counts; answered = prog.answered;
-    document.getElementById('intro').style.display='none';
-    document.getElementById('quiz').style.display='block';
-    document.getElementById('progress-area').style.display='block';
-    renderQuestion(); return;
-  }
   currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
   answered=new Array(QUESTIONS.length).fill(null);
   document.getElementById('intro').style.display='none';
@@ -673,6 +671,7 @@ function renderQuestion() {
         ${currentQ<QUESTIONS.length-1?'NEXT QUESTION ➡️':'SEE MY RESULTS! 🎉'}
       </button>
     </div>
+    <a class='quiz-jump-btn' href='careers.html' aria-label='Jump to full career list'>📋 Jump to Career List</a>
   `;
   quiz.appendChild(card);
   if(answered[currentQ]!==null){
@@ -685,7 +684,6 @@ function selectAnswer(value,btn){
   btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected'); answered[currentQ]=value;
   document.getElementById('next-btn').classList.add('show');
-  saveProgress();
   setTimeout(nextQuestion, 400);
 }
 
@@ -705,7 +703,6 @@ function showResults(savedData){
   let sorted;
   if(savedData){
     sorted=savedData.sorted;
-    document.getElementById('saved-banner').classList.add('show');
   } else {
     const priorityOrder={R:1,I:2,A:3,S:4,E:5,C:6};
     sorted=Object.keys(scores).map(code=>({
@@ -715,8 +712,6 @@ function showResults(savedData){
       if(b.total!==a.total)return b.total-a.total;
       return priorityOrder[a.code]-priorityOrder[b.code];
     }).slice(0,3);
-    saveResults(sorted);
-    document.getElementById('saved-banner').classList.add('show');
   }
 
   const ranks=['🥇 #1 JOB TYPE!','🥈 #2 JOB TYPE!','🥉 #3 JOB TYPE!'];
@@ -744,36 +739,15 @@ function showResults(savedData){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function saveResults(sorted){ try{localStorage.setItem('careerexplorer_12',JSON.stringify({sorted,ts:Date.now()}));}catch(e){} }
-function loadResults(){ try{const d=localStorage.getItem('careerexplorer_12');return d?JSON.parse(d):null;}catch(e){return null;} }
-function clearSaved(){ try{localStorage.removeItem('careerexplorer_12');}catch(e){} document.getElementById('saved-banner').classList.remove('show'); }
 
 function resetQuiz(){
   document.getElementById('results').style.display='none';
   document.getElementById('intro').style.display='block';
   currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
   answered=new Array(QUESTIONS.length).fill(null);
-  clearSaved();
-  clearProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = loadResults();
-  if (saved) {
-    document.getElementById('intro').style.display = 'none';
-    showResults(saved);
-    return;
-  }
-  const prog = loadProgress();
-  if (prog && prog.currentQ > 0) {
-    const btn = document.querySelector('.start-btn');
-    if (btn) {
-      btn.textContent = '▶ RESUME WHERE YOU LEFT OFF';
-      btn.style.background = '#059669';
-    }
-  }
-});
 
 
 
@@ -828,7 +802,7 @@ function devClearStorage() {
     localStorage.removeItem('careerexplorer_12');
     localStorage.removeItem('careerexplorer_12_progress');
   } catch(e) {}
-  try { document.getElementById('saved-banner').classList.remove('show'); } catch(e) {}
+  try {
   devRefreshStorage();
 }
 
@@ -844,23 +818,14 @@ function devRefreshStorage() {
 }
 
 // ── MID-QUIZ PROGRESS SAVE ───────────────────────────────────────────────────
-const PROGRESS_KEY = 'careerexplorer_12_progress';
 
-function saveProgress() {
-  try {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(
-      { currentQ, scores, counts, answered }
     ));
   } catch(e) {}
 }
 
-function loadProgress() {
-  try { const d = localStorage.getItem(PROGRESS_KEY); return d ? JSON.parse(d) : null; }
   catch(e) { return null; }
 }
 
-function clearProgress() {
-  try { localStorage.removeItem(PROGRESS_KEY); } catch(e) {}
 }
 
 
