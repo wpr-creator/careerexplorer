@@ -400,6 +400,47 @@ body::before {
   letter-spacing: 0.05em; transition: background 0.15s, color 0.15s;
 }
 .back-to-results:hover { background: #EFF6FF; }
+
+/* ── DEV MODE ────────────────────────────────────────────── */
+.dev-badge {
+  position:fixed; bottom:1rem; right:1rem; z-index:9999;
+  background:#1e293b; color:#38bdf8; font-size:0.7rem; font-weight:800;
+  letter-spacing:0.12em; text-transform:uppercase;
+  padding:0.35rem 0.7rem; border-radius:6px; border:1.5px solid #38bdf8;
+  display:none; pointer-events:none;
+}
+.dev-badge.show { display:block; }
+.dev-panel {
+  position:fixed; bottom:3rem; right:1rem; z-index:9999;
+  background:#0f172a; color:#e2e8f0; font-size:0.8rem; font-family:monospace;
+  padding:1rem 1.2rem; border-radius:10px; border:1.5px solid #38bdf8;
+  min-width:220px; display:none; box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.dev-panel.show { display:block; }
+.dev-panel h4 { color:#38bdf8; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.6rem; }
+.dev-btn {
+  display:block; width:100%; margin-bottom:0.4rem;
+  background:#1e293b; color:#e2e8f0; border:1px solid #334155;
+  border-radius:5px; padding:0.3rem 0.6rem; font-size:0.75rem;
+  font-family:monospace; cursor:pointer; text-align:left;
+}
+.dev-btn:hover { background:#334155; color:#38bdf8; }
+.dev-storage { font-size:0.68rem; color:#64748b; margin-top:0.5rem; word-break:break-all; white-space:pre; }
+/* ── UNDO TOAST ──────────────────────────────────────────── */
+.undo-toast {
+  position:fixed; bottom:5rem; left:50%; transform:translateX(-50%);
+  background:#1e293b; color:#f1f5f9; font-size:0.82rem; font-weight:700;
+  padding:0.6rem 1.2rem; border-radius:30px; z-index:8888;
+  display:none; align-items:center; gap:0.7rem;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3); white-space:nowrap;
+}
+.undo-toast.show { display:flex; animation:slide-up 0.2s ease; }
+.undo-btn {
+  background:#38bdf8; color:#0f172a; border:none; border-radius:20px;
+  padding:0.25rem 0.7rem; font-size:0.78rem; font-weight:800;
+  cursor:pointer; font-family:inherit;
+}
+.undo-btn:hover { background:#7dd3fc; }
 </style>
 </head>
 <body>
@@ -662,11 +703,19 @@ function clearSaved(){
 }
 
 function startQuiz(){
+  const prog=loadProgress();
+  if(prog && prog.currentQ>0 && prog.currentQ<QUESTIONS.length){
+    currentQ=prog.currentQ; scores=prog.scores; counts=prog.counts; answered=prog.answered;
+    document.getElementById('intro').style.display='none';
+    document.getElementById('quiz').style.display='block';
+    document.getElementById('progress-area').style.display='block';
+    renderQuestion(); return;
+  }
+  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
+  answered=new Array(QUESTIONS.length).fill(null);
   document.getElementById('intro').style.display='none';
   document.getElementById('quiz').style.display='block';
   document.getElementById('progress-area').style.display='block';
-  currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
-  answered=new Array(QUESTIONS.length).fill(null);
   renderQuestion();
 }
 
@@ -703,10 +752,12 @@ function renderQuestion(){
 }
 
 function selectAnswer(value,btn){
+  undoSnapshot = { currentQ, scores:JSON.parse(JSON.stringify(scores)), counts:JSON.parse(JSON.stringify(counts)), answered:[...answered] };
   btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected'); answered[currentQ]=value;
   document.getElementById('next-btn').classList.add('show');
-  setTimeout(nextQuestion, 400);
+  saveProgress();
+  setTimeout(()=>{ showUndoToast(); nextQuestion(); }, 400);
 }
 
 function nextQuestion(){
@@ -736,6 +787,7 @@ function showResults(savedData){
       return priorityOrder[a.code]-priorityOrder[b.code];
     }).slice(0,3);
     saveResults(sorted);
+    clearProgress();
     document.getElementById('saved-banner').classList.add('show');
   }
   const ranks=['#1 INTEREST TYPE','#2 INTEREST TYPE','#3 INTEREST TYPE'];
@@ -794,22 +846,51 @@ function resetQuiz(){
   currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
   answered=new Array(QUESTIONS.length).fill(null);
   clearSaved();
+  clearProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-window.addEventListener('DOMContentLoaded', ()=>{
-  const saved=loadResults();
-  if(saved){ document.getElementById('intro').style.display='none'; showResults(saved); }
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = loadResults();
+  if (saved) {
+    document.getElementById('intro').style.display = 'none';
+    showResults(saved);
+    return;
+  }
+  const prog = loadProgress();
+  if (prog && prog.currentQ > 0) {
+    const btn = document.querySelector('.start-btn');
+    if (btn) {
+      btn.textContent = '▶ RESUME WHERE YOU LEFT OFF';
+      btn.style.background = '#059669';
+    }
+  }
 });
 
-// Keyboard navigation: keys 1-4 select answers, Enter advances
+
+
+
+// ── DEV MODE (type "wpr" on intro screen to toggle) ─────────────────────────
+let devKeyBuffer = '';
+let devMode = false;
 document.addEventListener('keydown', function(e) {
+  devKeyBuffer += e.key.toLowerCase();
+  if (devKeyBuffer.length > 3) devKeyBuffer = devKeyBuffer.slice(-3);
+  if (devKeyBuffer === 'wpr') {
+    devMode = !devMode;
+    devKeyBuffer = '';
+    document.getElementById('dev-badge').classList.toggle('show', devMode);
+    document.getElementById('dev-panel').classList.toggle('show', devMode);
+    devRefreshStorage();
+    return;
+  }
+  // Quiz keyboard nav (1-4 + Enter)
   const quizVisible = document.getElementById('quiz') &&
     document.getElementById('quiz').style.display !== 'none';
   if (!quizVisible) return;
-  const map = { '1':'yes', '2':'kinda', '3':'not-really', '4':'nope' };
+  const map = {'1':'yes','2':'kinda','3':'not-really','4':'nope'};
   if (map[e.key]) {
-    const btn = document.querySelector('.answer-btn.' + map[e.key].replace('-','\\-'));
+    const btn = document.querySelector('.answer-btn.' + map[e.key].replace(/-/g,'\\-'));
     if (btn) btn.click();
   }
   if (e.key === 'Enter') {
@@ -818,6 +899,102 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+function devSkipToResults() {
+  const vals = ['yes','yes','kinda','kinda','not-really','nope'];
+  scores = {R:0,I:0,A:0,S:0,E:0,C:0};
+  counts = {R:0,I:0,A:0,S:0,E:0,C:0};
+  QUESTIONS.forEach(q => {
+    const v = vals[Math.floor(Math.random() * vals.length)];
+    const m = {yes:3,kinda:2,'not-really':1,nope:0};
+    scores[q.riasec] += m[v];
+    counts[q.riasec] += 1;
+  });
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress-area').style.display = 'none';
+  showResults(null);
+}
+
+function devClearStorage() {
+  try {
+    localStorage.removeItem('careerexplorer_35_results');
+    localStorage.removeItem('careerexplorer_35_results_progress');
+  } catch(e) {}
+  try { document.getElementById('saved-banner').classList.remove('show'); } catch(e) {}
+  devRefreshStorage();
+}
+
+function devRefreshStorage() {
+  const el = document.getElementById('dev-storage');
+  if (!el) return;
+  try {
+    const r = localStorage.getItem('careerexplorer_35_results');
+    const p = localStorage.getItem('careerexplorer_35_results_progress');
+    el.textContent = 'results: '  + (r ? '✓ saved' : '✗ none') +
+                     '\nprogress: ' + (p ? '✓ Q' + (JSON.parse(p).currentQ + 1) : '✗ none');
+  } catch(e) { el.textContent = 'storage error'; }
+}
+
+// ── MID-QUIZ PROGRESS SAVE ───────────────────────────────────────────────────
+const PROGRESS_KEY = 'careerexplorer_35_results_progress';
+
+function saveProgress() {
+  try {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(
+      { currentQ, scores, counts, answered }
+    ));
+  } catch(e) {}
+}
+
+function loadProgress() {
+  try { const d = localStorage.getItem(PROGRESS_KEY); return d ? JSON.parse(d) : null; }
+  catch(e) { return null; }
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(PROGRESS_KEY); } catch(e) {}
+}
+
+// ── UNDO LAST ANSWER ─────────────────────────────────────────────────────────
+let undoTimer    = null;
+let undoSnapshot = null;
+
+function showUndoToast() {
+  const toast = document.getElementById('undo-toast');
+  if (toast) toast.classList.add('show');
+  if (undoTimer) clearTimeout(undoTimer);
+  undoTimer = setTimeout(() => {
+    if (toast) toast.classList.remove('show');
+    undoSnapshot = null;
+  }, 2500);
+}
+
+function undoLastAnswer() {
+  if (!undoSnapshot) return;
+  clearTimeout(undoTimer);
+  document.getElementById('undo-toast').classList.remove('show');
+  currentQ = undoSnapshot.currentQ;
+  scores   = JSON.parse(JSON.stringify(undoSnapshot.scores));
+  counts   = JSON.parse(JSON.stringify(undoSnapshot.counts));
+  answered = [...undoSnapshot.answered];
+  undoSnapshot = null;
+  renderQuestion();
+}
+
 </script>
+
+<!-- DEV MODE — activate by typing "wpr" anywhere on the page -->
+<div class="dev-badge" id="dev-badge">⚙ DEV MODE</div>
+<div class="dev-panel" id="dev-panel">
+  <h4>⚙ Developer Tools</h4>
+  <button class="dev-btn" onclick="devSkipToResults()">⚡ Skip to Results</button>
+  <button class="dev-btn" onclick="devClearStorage()">🗑 Clear All Saved Data</button>
+  <button class="dev-btn" onclick="devMode=false;document.getElementById('dev-badge').classList.remove('show');document.getElementById('dev-panel').classList.remove('show');">✕ Close Dev Mode</button>
+  <div class="dev-storage" id="dev-storage"></div>
+</div>
+<div class="undo-toast" id="undo-toast">
+  ↩ Changed your mind?
+  <button class="undo-btn" onclick="undoLastAnswer()">UNDO</button>
+</div>
 </body>
 </html>
