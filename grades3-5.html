@@ -695,10 +695,6 @@ const SCORE_MAP_REF = { yes:3, kinda:2, 'not-really':1, nope:0 };
 let currentQ=0, scores={R:0,I:0,A:0,S:0,E:0,C:0}, counts={R:0,I:0,A:0,S:0,E:0,C:0};
 let answered=new Array(QUESTIONS.length).fill(null);
 
-}
-}
-}
-
 function startQuiz(){
   currentQ=0; scores={R:0,I:0,A:0,S:0,E:0,C:0}; counts={R:0,I:0,A:0,S:0,E:0,C:0};
   answered=new Array(QUESTIONS.length).fill(null);
@@ -886,7 +882,6 @@ function devClearStorage() {
     localStorage.removeItem('careerexplorer_35_results');
     localStorage.removeItem('careerexplorer_35_results_progress');
   } catch(e) {}
-  try {
   devRefreshStorage();
 }
 
@@ -898,21 +893,10 @@ function devRefreshStorage() {
     const p = localStorage.getItem('careerexplorer_35_results_progress');
     el.textContent = 'results: '  + (r ? '✓ saved' : '✗ none') +
                      '\nprogress: ' + (p ? '✓ Q' + (JSON.parse(p).currentQ + 1) : '✗ none');
-  } catch(e) { el.textContent = 'storage error'; }
+  } catch(e) {
+    el.textContent = 'storage error';
+  }
 }
-
-// ── MID-QUIZ PROGRESS SAVE ───────────────────────────────────────────────────
-
-    ));
-  } catch(e) {}
-}
-
-  catch(e) { return null; }
-}
-
-}
-
-
 
 // Show/hide browse FAB based on current view
 (function() {

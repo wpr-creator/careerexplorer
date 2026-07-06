@@ -919,7 +919,6 @@ function devClearStorage() {
     localStorage.removeItem('careerexplorer_tkk');
     localStorage.removeItem('careerexplorer_tkk_progress');
   } catch(e) {}
-  try {
   devRefreshStorage();
 }
 
@@ -931,21 +930,10 @@ function devRefreshStorage() {
     const p = localStorage.getItem('careerexplorer_tkk_progress');
     el.textContent = 'results: '  + (r ? '✓ saved' : '✗ none') +
                      '\nprogress: ' + (p ? '✓ Q' + (JSON.parse(p).currentQ + 1) : '✗ none');
-  } catch(e) { el.textContent = 'storage error'; }
+  } catch(e) {
+    el.textContent = 'storage error';
+  }
 }
-
-// ── MID-QUIZ PROGRESS SAVE ───────────────────────────────────────────────────
-
-    ));
-  } catch(e) {}
-}
-
-  catch(e) { return null; }
-}
-
-}
-
-
 
 // Show/hide browse FAB based on current view
 (function() {
