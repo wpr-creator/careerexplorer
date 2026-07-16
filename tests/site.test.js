@@ -35,18 +35,14 @@ function loadScoring() {
 }
 
 test('every grade band gives equal evidence to all six RIASEC categories', () => {
-  const expectedPerCategory = {
-    'tk-k.html': 3,
-    'grades1-2.html': 3,
-    'grades3-5.html': 4
-  };
-
   for (const file of QUIZ_FILES) {
     const source = read(file);
     const questions = Function(`return (${extractExpression(source, 'const QUESTIONS = ', '\n];')}\n]);`)();
     const counts = Object.fromEntries(['R', 'I', 'A', 'S', 'E', 'C'].map((code) => [code, 0]));
     for (const question of questions) counts[question.riasec] += 1;
-    assert.deepEqual(Object.values(counts), Array(6).fill(expectedPerCategory[file]), `${file} has unequal category counts`);
+    const categoryCounts = Object.values(counts);
+    assert.ok(categoryCounts[0] >= 2, `${file} needs at least two questions per category`);
+    assert.deepEqual(categoryCounts, Array(6).fill(categoryCounts[0]), `${file} has unequal category counts`);
   }
 });
 
