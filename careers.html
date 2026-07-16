@@ -4,10 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Career Explorer — Browse All Careers</title>
+<meta name="description" content="Browse child-friendly career profiles across all six RIASEC interest areas." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Career Explorer — Browse All Careers" />
+<meta property="og:description" content="Browse child-friendly career profiles across all six RIASEC interest areas." />
+<meta property="og:url" content="https://wpr-creator.github.io/careerexplorer/careers.html" />
+<meta property="og:image" content="https://wpr-creator.github.io/careerexplorer/og-preview.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>" />
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
+:focus-visible { outline:4px solid #2563EB; outline-offset:4px; }
 :root {
   --navy:#0F172A; --blue:#1D4ED8; --paper:#F8F9FC;
   --muted:#64748B; --border:#E2E8F0;
@@ -65,7 +73,8 @@ main { max-width:900px; margin:0 auto; padding:1.5rem 1rem 3rem; }
   display:flex; align-items:center; gap:0.8rem;
   padding:0.9rem 1.2rem; border-radius:14px 14px 0 0;
   border:2px solid transparent; border-bottom:none;
-  cursor:pointer; user-select:none;
+  cursor:pointer; user-select:none; width:100%; text-align:left;
+  font-family:inherit;
 }
 .riasec-header .r-emoji  { font-size:1.6rem; }
 .riasec-header .r-name   { font-family:'DM Serif Display',serif; font-size:1.2rem; }
@@ -85,7 +94,8 @@ main { max-width:900px; margin:0 auto; padding:1.5rem 1rem 3rem; }
 .career-card {
   background:white; border:2px solid var(--border); border-radius:12px;
   padding:1rem; cursor:pointer; transition:all 0.15s;
-  display:flex; align-items:center; gap:0.7rem;
+  display:flex; align-items:center; gap:0.7rem; width:100%; text-align:left;
+  font-family:inherit;
 }
 .career-card:hover { border-color:var(--blue); transform:translateY(-1px); box-shadow:0 4px 12px rgba(29,78,216,0.1); }
 .career-card.active { border-color:var(--blue); background:#EFF6FF; }
@@ -147,14 +157,14 @@ main { max-width:900px; margin:0 auto; padding:1.5rem 1rem 3rem; }
 </div>
 
 <div class="grade-tabs">
-  <button class="grade-tab active" data-grade="35" onclick="setGrade('35')">Grades 3–5</button>
-  <button class="grade-tab" data-grade="12" onclick="setGrade('12')">Grades 1–2</button>
-  <button class="grade-tab" data-grade="tkk" onclick="setGrade('tkk')">TK–K</button>
+  <button type="button" class="grade-tab active" data-grade="35" aria-pressed="true" onclick="setGrade('35')">Grades 3–5</button>
+  <button type="button" class="grade-tab" data-grade="12" aria-pressed="false" onclick="setGrade('12')">Grades 1–2</button>
+  <button type="button" class="grade-tab" data-grade="tkk" aria-pressed="false" onclick="setGrade('tkk')">TK–K</button>
 </div>
 
 <div class="search-wrap">
   <input class="search-input" type="text" id="search-input"
-    placeholder="🔍  Search careers..." oninput="filterCareers()" autocomplete="off" />
+    aria-label="Search careers" placeholder="🔍  Search careers..." oninput="filterCareers()" autocomplete="off" />
 </div>
 
 <main id="main-content"></main>
@@ -281,7 +291,7 @@ function setGrade(grade) {
   activeCardId  = null;
   activePanelId = null;
   document.querySelectorAll('.grade-tab').forEach(t =>
-    t.classList.toggle('active', t.dataset.grade === grade));
+    { const selected=t.dataset.grade === grade; t.classList.toggle('active', selected); t.setAttribute('aria-pressed', selected); });
   document.getElementById('search-input').value = '';
   renderAll();
 }
@@ -304,31 +314,31 @@ function renderAll(filter='') {
 
     html += `
     <div class="riasec-section" id="section-${code}">
-      <div class="riasec-header open" id="header-${code}"
+      <button type="button" class="riasec-header open" id="header-${code}"
            style="background:${meta.light};border-color:${meta.border};color:${meta.color}"
-           onclick="toggleSection('${code}')">
+           aria-expanded="true" aria-controls="body-${code}" onclick="toggleSection('${code}')">
         <span class="r-emoji">${meta.emoji}</span>
         <div>
           <div class="r-name">${meta.name}</div>
           <div class="r-full">${meta.full}</div>
         </div>
         <span class="r-chevron">▼</span>
-      </div>
+      </button>
       <div class="riasec-body" id="body-${code}"
            style="background:${meta.light}22;border-color:${meta.border}">
         ${visible.map(career => {
           const id = jobIds.find(id => data.careers[id] === career);
-          return `<div class="career-card" id="card-${code}-${id}"
+          return `<button type="button" class="career-card" id="card-${code}-${id}"
                        onclick="toggleCareer('${code}','${id}')"
-                       role="button" tabindex="0"
+                       aria-expanded="false" aria-controls="panel-${code}"
                        aria-label="View ${career.label.replace(/^\S+\s/,'')} career profile"
-                       onkeydown="if(event.key==='Enter'||event.key===' ')toggleCareer('${code}','${id}')">
+                       >
             <span class="cc-emoji">${career.label.split(' ')[0]}</span>
             <div>
               <div class="cc-name">${career.label.replace(/^\S+\s/,'')}</div>
               <div class="cc-type">${meta.name}</div>
             </div>
-          </div>`;
+          </button>`;
         }).join('')}
         <div class="detail-panel" id="panel-${code}"></div>
       </div>
@@ -343,6 +353,7 @@ function toggleSection(code) {
   const header = document.getElementById('header-' + code);
   const collapsed = body.classList.toggle('collapsed');
   header.classList.toggle('open', !collapsed);
+  header.setAttribute('aria-expanded', String(!collapsed));
 }
 
 function toggleCareer(code, id) {
@@ -355,6 +366,7 @@ function toggleCareer(code, id) {
   if (activePanelId === code && activeCardId === id) {
     panel.classList.remove('show');
     card.classList.remove('active');
+    card.setAttribute('aria-expanded','false');
     activeCardId  = null;
     activePanelId = null;
     return;
@@ -365,12 +377,15 @@ function toggleCareer(code, id) {
     document.getElementById('panel-' + activePanelId)?.classList.remove('show');
   }
   if (activeCardId && activePanelId) {
-    document.getElementById(`card-${activePanelId}-${activeCardId}`)?.classList.remove('active');
+    const previousCard = document.getElementById(`card-${activePanelId}-${activeCardId}`);
+    previousCard?.classList.remove('active');
+    previousCard?.setAttribute('aria-expanded','false');
   }
 
   activeCardId  = id;
   activePanelId = code;
   card.classList.add('active');
+  card.setAttribute('aria-expanded','true');
 
   // Build day timeline
   let dayHtml = '';
