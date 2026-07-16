@@ -6,12 +6,12 @@
 <title>Career Explorer — Tiny Explorers (TK–K)</title>
 <meta property="og:type"        content="website" />
 <meta property="og:title"       content="Career Explorer — Grades TK–K" />
-<meta property="og:description" content="An 18-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
+<meta property="og:description" content="A 12-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
 <meta property="og:url"         content="https://wpr-creator.github.io/careerexplorer/tk-k.html" />
 <meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.jpg" />
 <meta name="twitter:card"       content="summary_large_image" />
 <meta name="twitter:title"      content="Career Explorer — Grades TK–K" />
-<meta name="twitter:description" content="An 18-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
+<meta name="twitter:description" content="A 12-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -571,8 +571,8 @@ body {
 
 <div class="main">
   <div id="progress-area" class="progress-area">
-    <progress class="sr-only" id="progress-native" value="0" max="18" aria-label="Assessment progress">0 of 18 questions complete</progress>
-    <div class="progress-label" id="progress-label">Question 1 of 18</div>
+    <progress class="sr-only" id="progress-native" value="0" max="12" aria-label="Assessment progress">0 of 12 questions complete</progress>
+    <div class="progress-label" id="progress-label">Question 1 of 12</div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
 
@@ -583,7 +583,7 @@ body {
       <h2>HELLO, EXPLORER! 👋</h2>
       <p>We are going to play a fun game!</p>
       <p>I will show you pictures and ask what you like to do.</p>
-      <p>There are <strong>18 questions</strong>. Pick one answer for each one!</p>
+      <p>There are <strong>12 questions</strong>. Pick one answer for each one!</p>
       <div class="answer-key">
         <div class="key-item key-yes">✅ YES! I love it!</div>
         <div class="key-item key-kinda">🤔 Kind of!</div>
@@ -606,7 +606,7 @@ body {
       <h2>YOU DID IT!</h2>
       <p>Your choices made these strongest interest areas. Ties stay tied! ⬇️</p>
     </div>
-    <p class="score-explanation">Every answer counts: Yes = 3, Kind of = 2, Not really = 1, Nope = 0. Each interest area has 3 questions.</p>
+    <p class="score-explanation">Every answer counts: Yes = 3, Kind of = 2, Not really = 1, Nope = 0. Each interest area has 2 questions.</p>
     <div class="score-summary" id="score-summary" role="group" aria-label="All six interest scores"></div>
     <div class="result-cards-wrap" id="result-cards" aria-live="polite"></div>
     <div class="career-panel" id="career-panel">
@@ -634,20 +634,14 @@ const QUESTIONS = [
   { id:2, riasec:"I", emoji:"🔭", text:"Do you like to ask WHY about things?" },
   { id:3, riasec:"A", emoji:"🎨", text:"Do you like to draw or paint?" },
   { id:4, riasec:"S", emoji:"🤗", text:"Do you like to help a friend who is sad?" },
-  { id:5, riasec:"E", emoji:"📣", text:"Do you like to talk to a group of people?" },
+  { id:5, riasec:"E", emoji:"📣", text:"Do you like telling your ideas to other kids?" },
   { id:6, riasec:"C", emoji:"📐", text:"Do you like to sort things and keep them neat?" },
   { id:7, riasec:"R", emoji:"🌱", text:"Do you like to play outside with plants and animals?" },
   { id:8, riasec:"I", emoji:"🐛", text:"Do you like to look at bugs, rocks, or stars?" },
   { id:9, riasec:"A", emoji:"🎭", text:"Do you like to make up stories or pretend games?" },
   { id:10, riasec:"S", emoji:"🍎", text:"Do you like to show someone how to do something?" },
   { id:11, riasec:"E", emoji:"🏅", text:"Do you like to be the one who picks what game to play?" },
-  { id:12, riasec:"C", emoji:"📝", text:"Do you like to follow steps to finish a job the right way?" },
-  { id:13, riasec:"R", emoji:"🛠️", text:"Do you like to fix things or put pieces together?" },
-  { id:14, riasec:"I", emoji:"🧪", text:"Do you like to guess what will happen and then try it?" },
-  { id:15, riasec:"A", emoji:"🌈", text:"Do you like to make things look colorful or pretty?" },
-  { id:16, riasec:"S", emoji:"💛", text:"Do you like to listen and help someone feel better?" },
-  { id:17, riasec:"E", emoji:"🚀", text:"Do you like to start a game and ask others to join?" },
-  { id:18, riasec:"C", emoji:"🧺", text:"Do you like to put toys and supplies back in their places?" }
+  { id:12, riasec:"C", emoji:"📝", text:"Do you like doing things one step at a time?" }
 ];
 
 const SCORE_MAP = { yes:3, kinda:2, 'not-really':1, nope:0 };
