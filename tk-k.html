@@ -6,16 +6,17 @@
 <title>Career Explorer — Tiny Explorers (TK–K)</title>
 <meta property="og:type"        content="website" />
 <meta property="og:title"       content="Career Explorer — Grades TK–K" />
-<meta property="og:description" content="A picture-supported 15-question career interest inventory for TK and Kindergarten students." />
+<meta property="og:description" content="An 18-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
 <meta property="og:url"         content="https://wpr-creator.github.io/careerexplorer/tk-k.html" />
 <meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.png" />
 <meta name="twitter:card"       content="summary_large_image" />
 <meta name="twitter:title"      content="Career Explorer — Grades TK–K" />
-<meta name="twitter:description" content="A picture-supported 15-question career interest inventory for TK and Kindergarten students." />
+<meta name="twitter:description" content="An 18-question, equally weighted RIASEC interest exploration for TK and Kindergarten students." />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+:focus-visible { outline: 4px solid #1D4ED8; outline-offset: 4px; }
 
 :root {
   --sun: #FFD93D;
@@ -293,6 +294,10 @@ body {
   margin-bottom: 0.4rem;
 }
 .results-top p { font-size: 1.15rem; font-weight: 800; color: #5C35A0; }
+.score-explanation { text-align:center; font-size:0.9rem; font-weight:800; color:#4C1D95; margin:0 auto 0.8rem; max-width:620px; }
+.score-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:0.55rem; margin-bottom:1.4rem; }
+.score-chip { background:white; border:2px solid #C4B5FD; border-radius:14px; padding:0.65rem; text-align:center; font-weight:800; color:#3B1D8E; }
+.score-chip strong { display:block; font-size:0.75rem; }
 
 .result-cards-wrap {
   display: grid;
@@ -380,6 +385,7 @@ body {
   .answers{grid-template-columns:1fr}
   .career-grid{grid-template-columns:1fr}
   .answer-key{grid-template-columns:1fr}
+  .score-summary{grid-template-columns:repeat(2,1fr)}
 }
 
 /* Day in the life */
@@ -549,7 +555,7 @@ body {
 </style>
 </head>
 <body>
-<div class="shapes-bg">
+<div class="shapes-bg" aria-hidden="true">
   <div class="shape"></div><div class="shape"></div>
   <div class="shape"></div><div class="shape"></div>
 </div>
@@ -562,19 +568,19 @@ body {
 </header>
 
 <div class="main">
-  <div id="progress-area" class="progress-area">
-    <div class="progress-label" id="progress-label">Question 1 of 15</div>
+  <div id="progress-area" class="progress-area" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0">
+    <div class="progress-label" id="progress-label">Question 1 of 18</div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
 
   <!-- INTRO -->
   <div id="intro">
-    <span class="mascot">🌟</span>
+    <span class="mascot" aria-hidden="true">🌟</span>
     <div class="intro-card">
       <h2>HELLO, EXPLORER! 👋</h2>
       <p>We are going to play a fun game!</p>
       <p>I will show you pictures and ask what you like to do.</p>
-      <p>There are <strong>15 questions</strong>. Pick one answer for each one!</p>
+      <p>There are <strong>18 questions</strong>. Pick one answer for each one!</p>
       <div class="answer-key">
         <div class="key-item key-yes">✅ YES! I love it!</div>
         <div class="key-item key-kinda">🤔 Kind of!</div>
@@ -595,9 +601,11 @@ body {
     <div class="results-top">
       <span class="celebrate">🎉</span>
       <h2>YOU DID IT!</h2>
-      <p>Here are your top job types! Tap a job to learn more. ⬇️</p>
+      <p>Your choices made these strongest interest areas. Ties stay tied! ⬇️</p>
     </div>
-    <div class="result-cards-wrap" id="result-cards"></div>
+    <p class="score-explanation">Every answer counts: Yes = 3, Kind of = 2, Not really = 1, Nope = 0. Each interest area has 3 questions.</p>
+    <div class="score-summary" id="score-summary" aria-label="All six interest scores"></div>
+    <div class="result-cards-wrap" id="result-cards" aria-live="polite"></div>
     <div class="career-panel" id="career-panel">
       <h3 id="career-title"></h3>
       <div class="career-grid">
@@ -614,6 +622,7 @@ body {
   </div>
 </div>
 
+<script src="scoring.js"></script>
 <script>
 const QUESTIONS = [
   { id:1, riasec:"R", emoji:"🔨", text:"Do you like to build things with blocks or LEGOs?" },
@@ -630,7 +639,10 @@ const QUESTIONS = [
   { id:12, riasec:"C", emoji:"📝", text:"Do you like to follow steps to finish a job the right way?" },
   { id:13, riasec:"R", emoji:"🛠️", text:"Do you like to fix things or put pieces together?" },
   { id:14, riasec:"I", emoji:"🧪", text:"Do you like to guess what will happen and then try it?" },
-  { id:15, riasec:"A", emoji:"🌈", text:"Do you like to make things look colorful or pretty?" }
+  { id:15, riasec:"A", emoji:"🌈", text:"Do you like to make things look colorful or pretty?" },
+  { id:16, riasec:"S", emoji:"💛", text:"Do you like to listen and help someone feel better?" },
+  { id:17, riasec:"E", emoji:"🚀", text:"Do you like to start a game and ask others to join?" },
+  { id:18, riasec:"C", emoji:"🧺", text:"Do you like to put toys and supplies back in their places?" }
 ];
 
 const SCORE_MAP = { yes:3, kinda:2, 'not-really':1, nope:0 };
@@ -749,17 +761,18 @@ function renderQuestion() {
   const pct = Math.round((currentQ / total) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-label').textContent = 'Question ' + (currentQ+1) + ' of ' + total;
+  document.getElementById('progress-area').setAttribute('aria-valuenow', currentQ);
 
   const card = document.createElement('div');
   card.className = 'question-card';
   card.innerHTML = `
-    <span class="q-emoji">${q.emoji}</span>
-    <div class="q-text">${q.text}</div>
-    <div class="answers">
-      <button class="answer-btn yes" onclick="selectAnswer('yes',this)" aria-label="Yes, that describes me">✅ YES!</button>
-      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)" aria-label="Kind of describes me">🤔 Kind of!</button>
-      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)" aria-label="Not really like me">😐 Not really</button>
-      <button class="answer-btn nope" onclick="selectAnswer('nope',this)" aria-label="No, not like me at all">❌ Nope!</button>
+    <span class="q-emoji" aria-hidden="true">${q.emoji}</span>
+    <h2 class="q-text" id="question-text">${q.text}</h2>
+    <div class="answers" role="radiogroup" aria-labelledby="question-text">
+      <button class="answer-btn yes" onclick="selectAnswer('yes',this)" aria-pressed="false" aria-label="Yes, that describes me">✅ YES!</button>
+      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)" aria-pressed="false" aria-label="Kind of describes me">🤔 Kind of!</button>
+      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)" aria-pressed="false" aria-label="Not really like me">😐 Not really</button>
+      <button class="answer-btn nope" onclick="selectAnswer('nope',this)" aria-pressed="false" aria-label="No, not like me at all">❌ Nope!</button>
     </div>
     <div class="next-wrap">
       <button class="next-btn" id="next-btn" onclick="nextQuestion()">
@@ -772,16 +785,16 @@ function renderQuestion() {
 
   if (answered[currentQ] !== null) {
     const prev = card.querySelector('.answer-btn.' + answered[currentQ]);
-    if (prev) { prev.classList.add('selected'); document.getElementById('next-btn').classList.add('show'); }
+    if (prev) { prev.classList.add('selected'); prev.setAttribute('aria-pressed','true'); document.getElementById('next-btn').classList.add('show'); }
   }
 }
 
 function selectAnswer(value, btn) {
-  btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b => { b.classList.remove('selected'); b.setAttribute('aria-pressed','false'); });
   btn.classList.add('selected');
+  btn.setAttribute('aria-pressed','true');
   answered[currentQ] = value;
   document.getElementById('next-btn').classList.add('show');
-  setTimeout(nextQuestion, 400);
 }
 
 function nextQuestion() {
@@ -794,22 +807,19 @@ function nextQuestion() {
   else renderQuestion();
 }
 
-function showResults(savedData) {
+function showResults() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progress-area').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
-  const priorityOrder = { R:1, I:2, A:3, S:4, E:5, C:6 };
-  const sorted = Object.keys(scores).map(code => ({
-    code, total: scores[code], count: counts[code],
-    average: counts[code] ? scores[code] / counts[code] : 0
-  })).sort((a,b) => {
-    if (b.average !== a.average) return b.average - a.average;
-    if (b.total !== a.total) return b.total - a.total;
-    return priorityOrder[a.code] - priorityOrder[b.code];
-  }).slice(0,3);
+  document.getElementById('score-summary').innerHTML = CareerExplorerScoring.calculateAllResults(scores, counts).map(result => {
+    const info = RIASEC[result.code];
+    return `<div class="score-chip"><strong>${info.fullName}</strong>${Math.round(result.percentage)}%</div>`;
+  }).join('');
 
-  const ranks = ['🥇 #1!', '🥈 #2!', '🥉 #3!'];
+  const sorted = CareerExplorerScoring.calculateResults(scores, counts);
+
+  const medals = {1:'🥇',2:'🥈',3:'🥉'};
   const container = document.getElementById('result-cards');
   container.innerHTML = '';
 
@@ -823,10 +833,10 @@ function showResults(savedData) {
     card.style.color = info.textColor;
     card.innerHTML = `
       <span class="rc-emoji">${info.emoji}</span>
-      <div class="rc-rank" style="color:${info.textColor}">${ranks[idx]}</div>
+      <div class="rc-rank" style="color:${info.textColor}">${medals[result.rank]} ${CareerExplorerScoring.rankLabel(result,'INTEREST LEVEL')}</div>
       <div class="rc-type" style="color:${info.color}">${info.name}</div>
       <div class="rc-label">(${info.fullName})</div>
-      <div class="rc-label">Match: ${Math.round(result.average * 100 / 3)}%</div>
+      <div class="rc-label">Your answer score: ${Math.round(result.percentage)}%</div>
       <div class="rc-jobs">${info.jobs.map(jobId => {
         const job = CAREERS[jobId];
         return `<button class="job-link-btn" onclick="showCareer('${jobId}')">${job.label}</button>`;
@@ -857,6 +867,7 @@ function showCareer(jobId) {
 
 function resetQuiz() {
   document.getElementById('results').style.display = 'none';
+  document.getElementById('career-panel').classList.remove('show');
   document.getElementById('intro').style.display = 'block';
   currentQ = 0;
   scores = { R:0, I:0, A:0, S:0, E:0, C:0 };
@@ -880,7 +891,6 @@ document.addEventListener('keydown', function(e) {
     devKeyBuffer = '';
     document.getElementById('dev-badge').classList.toggle('show', devMode);
     document.getElementById('dev-panel').classList.toggle('show', devMode);
-    devRefreshStorage();
     return;
   }
   // Quiz keyboard nav (1-4 + Enter)
@@ -903,7 +913,7 @@ function devSkipToResults() {
   scores = {R:0,I:0,A:0,S:0,E:0,C:0};
   counts = {R:0,I:0,A:0,S:0,E:0,C:0};
   QUESTIONS.forEach(q => {
-    const v = vals[Math.floor(Math.random() * vals.length)];
+    const v = vals[(q.id - 1) % vals.length];
     const m = {yes:3,kinda:2,'not-really':1,nope:0};
     scores[q.riasec] += m[v];
     counts[q.riasec] += 1;
@@ -912,27 +922,6 @@ function devSkipToResults() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progress-area').style.display = 'none';
   showResults(null);
-}
-
-function devClearStorage() {
-  try {
-    localStorage.removeItem('careerexplorer_tkk');
-    localStorage.removeItem('careerexplorer_tkk_progress');
-  } catch(e) {}
-  devRefreshStorage();
-}
-
-function devRefreshStorage() {
-  const el = document.getElementById('dev-storage');
-  if (!el) return;
-  try {
-    const r = localStorage.getItem('careerexplorer_tkk');
-    const p = localStorage.getItem('careerexplorer_tkk_progress');
-    el.textContent = 'results: '  + (r ? '✓ saved' : '✗ none') +
-                     '\nprogress: ' + (p ? '✓ Q' + (JSON.parse(p).currentQ + 1) : '✗ none');
-  } catch(e) {
-    el.textContent = 'storage error';
-  }
 }
 
 // Show/hide browse FAB based on current view
@@ -963,9 +952,7 @@ function devRefreshStorage() {
 <div class="dev-panel" id="dev-panel">
   <h4>⚙ Developer Tools</h4>
   <button class="dev-btn" onclick="devSkipToResults()">⚡ Skip to Results</button>
-  <button class="dev-btn" onclick="devClearStorage()">🗑 Clear All Saved Data</button>
   <button class="dev-btn" onclick="devMode=false;document.getElementById('dev-badge').classList.remove('show');document.getElementById('dev-panel').classList.remove('show');">✕ Close Dev Mode</button>
-  <div class="dev-storage" id="dev-storage"></div>
 </div>
 <!-- Browse all careers button — visible on intro screen -->
 <a class="browse-fab" id="browse-fab" href="careers.html" aria-label="Browse all careers without taking the quiz">
