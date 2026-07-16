@@ -8,15 +8,15 @@
 <meta property="og:title"       content="Career Explorer — Grades 3–5" />
 <meta property="og:description" content="A 24-question, equally weighted RIASEC interest exploration for Grades 3–5." />
 <meta property="og:url"         content="https://wpr-creator.github.io/careerexplorer/grades3-5.html" />
-<meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.png" />
+<meta property="og:image"       content="https://wpr-creator.github.io/careerexplorer/og-preview.jpg" />
 <meta name="twitter:card"       content="summary_large_image" />
 <meta name="twitter:title"      content="Career Explorer — Grades 3–5" />
 <meta name="twitter:description" content="A 24-question, equally weighted RIASEC interest exploration for Grades 3–5." />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :focus-visible { outline: 4px solid #1D4ED8; outline-offset: 4px; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
 :root {
   --navy: #0F1B38;
@@ -33,7 +33,7 @@
 }
 
 body {
-  font-family: 'Sora', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
@@ -78,7 +78,7 @@ body::before {
 .header-emoji { font-size: 3rem; display: block; margin-bottom: 0.6rem; animation: spin-slow 8s linear infinite; }
 @keyframes spin-slow { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
 .site-header h1 {
-  font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 6vw, 3.6rem);
+  font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 6vw, 3.6rem);
   color: white; line-height: 1.05; margin-bottom: 0.5rem;
   text-shadow: 0 2px 20px rgba(56,189,248,0.3);
 }
@@ -110,7 +110,7 @@ body::before {
 .intro-mascot { font-size: 4rem; display: block; margin: 0 auto 1rem; text-align: center; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 .intro-card h2 {
-  font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 4vw, 2.4rem);
   color: var(--navy); text-align: center; margin-bottom: 1rem;
   letter-spacing: -0.01em;
 }
@@ -131,7 +131,7 @@ body::before {
 
 .start-btn {
   display: block; width: 100%; padding: 1rem;
-  font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 800;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 1rem; font-weight: 800;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: white; background: linear-gradient(135deg, var(--blue), var(--purple));
   border: none; border-radius: 12px; cursor: pointer;
@@ -152,12 +152,12 @@ body::before {
 .q-emoji { font-size: 4rem; display: block; text-align: center; margin-bottom: 0.8rem; animation: gentle-bob 2s ease-in-out infinite; }
 @keyframes gentle-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .q-text {
-  font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.3rem, 3.5vw, 1.7rem);
   text-align: center; color: var(--navy); line-height: 1.35; margin-bottom: 2rem;
 }
 .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
 .answer-btn {
-  font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.9rem; font-weight: 700;
   padding: 0.95rem 0.8rem; border-radius: 12px; border: 2px solid transparent;
   cursor: pointer; transition: all 0.15s; line-height: 1.3; text-align: center;
 }
@@ -174,7 +174,7 @@ body::before {
 
 .next-wrap { text-align: center; margin-top: 1.8rem; }
 .next-btn {
-  font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 800;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.9rem; font-weight: 800;
   letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.85rem 2.5rem; background: var(--navy); color: white;
   border: none; border-radius: 10px; cursor: pointer;
@@ -193,7 +193,7 @@ body::before {
 }
 .results-top .celebrate { font-size: 3rem; display: block; margin-bottom: 0.5rem; animation: bob 1.5s ease-in-out infinite; }
 .results-top h2 {
-  font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 5vw, 2.6rem);
   color: #FCD34D; margin-bottom: 0.4rem;
 }
 .results-top p { font-size: 1rem; color: #94A3B8; }
@@ -216,14 +216,14 @@ body::before {
 .result-card:nth-child(3){animation-delay:0.3s}
 .rc-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
 .rc-rank { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; opacity: 0.75; }
-.rc-type { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-bottom: 0.25rem; line-height: 1.1; }
+.rc-type { font-family: Georgia, "Times New Roman", serif; font-size: 1.6rem; margin-bottom: 0.25rem; line-height: 1.1; }
 .rc-full { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.65; margin-bottom: 0.4rem; }
 .rc-match { font-size: 0.85rem; font-weight: 800; margin-bottom: 1rem; }
 .rc-jobs { font-size: 0.88rem; font-weight: 600; line-height: 1.8; text-align: left; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 0.6rem 0.8rem; }
 .job-link-btn {
   width:100%; display:block; text-align:left; background:rgba(255,255,255,0.7);
   border:1.5px solid rgba(29,78,216,0.15); border-radius:8px; padding:0.3rem 0.5rem; margin-bottom:0.3rem;
-  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size:0.85rem; font-weight:700;
   color:inherit; cursor:pointer; transition:all 0.12s;
 }
 .job-link-btn:hover { transform:translateX(3px); background:white; border-color:var(--blue); }
@@ -237,7 +237,7 @@ body::before {
 }
 .career-panel.show { display:block; }
 .career-panel h3 {
-  font-family:'DM Serif Display',serif; font-size:1.6rem;
+  font-family:Georgia, "Times New Roman", serif; font-size:1.6rem;
   color:var(--navy); text-align:center; margin-bottom:0.5rem;
 }
 .career-intro { text-align:center; font-size:0.9rem; color:var(--muted); margin-bottom:1.2rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
@@ -251,6 +251,8 @@ body::before {
   text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;
 }
 .career-note { font-size:0.8rem; color:var(--muted); text-align:center; margin-top:0.8rem; font-weight:600; }
+.career-source { font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.55rem; font-weight:600; }
+.career-source a { color:var(--blue); }
 
 /* Day in the Life */
 .career-day-box {
@@ -285,14 +287,14 @@ body::before {
 
 .action-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
 .print-btn {
-  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
   text-transform:uppercase; padding:0.8rem 1.8rem;
   background:transparent; color:var(--blue); border:2px solid var(--blue);
   border-radius:10px; cursor:pointer; transition:all 0.15s;
 }
 .print-btn:hover { background:var(--blue); color:white; }
 .retry-btn {
-  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:0.1em;
   text-transform:uppercase; padding:0.8rem 1.8rem;
   background:var(--navy); color:white; border:2px solid var(--navy);
   border-radius:10px; cursor:pointer; transition:all 0.15s;
@@ -469,7 +471,8 @@ body::before {
 </header>
 
 <div class="main">
-  <div id="progress-area" class="progress-area" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
+  <div id="progress-area" class="progress-area">
+    <progress class="sr-only" id="progress-native" value="0" max="24" aria-label="Assessment progress">0 of 24 questions complete</progress>
     <div class="progress-top">
       <span class="progress-label" id="progress-label">Question 1 of 24</span>
       <span class="progress-pct" id="progress-pct">0%</span>
@@ -490,7 +493,7 @@ body::before {
         <div class="scale-item sc-notreally">😐 <strong>Not really</strong> — That's not usually me.</div>
         <div class="scale-item sc-nope">❌ <strong>Nope</strong> — Definitely not for me.</div>
       </div>
-      <button class="start-btn" onclick="startQuiz()" aria-label="Start the career interest assessment">START THE ASSESSMENT →</button>
+      <button type="button" class="start-btn" onclick="startQuiz()" aria-label="Start the career interest assessment">START THE ASSESSMENT →</button>
     </div>
   </div>
 
@@ -505,7 +508,7 @@ body::before {
       <p>Your choices created these strongest RIASEC interest areas. Exact ties stay tied.</p>
     </div>
     <p class="score-explanation">Transparent scoring: Yes = 3, Kind of = 2, Not really = 1, Nope = 0. Every RIASEC area has 4 questions.</p>
-    <div class="score-summary" id="score-summary" aria-label="All six interest scores"></div>
+    <div class="score-summary" id="score-summary" role="group" aria-label="All six interest scores"></div>
     <div class="result-cards-wrap" id="result-cards" aria-live="polite"></div>
 
     <div class="career-panel" id="career-panel">
@@ -524,21 +527,23 @@ body::before {
         <div class="pathway-steps" id="career-pathway-steps"></div>
       </div>
       <div class="colleges-box" id="career-colleges-wrap" style="display:none">
-        <strong>🏛️ Colleges Known for This Field</strong>
+        <strong>🏛️ Education &amp; Training Examples</strong>
         <span id="career-colleges"></span>
       </div>
       <p class="career-note">Salary ranges are national approximations and may vary by location, experience, and employer.</p>
-      <button class="back-to-results" onclick="document.getElementById('result-cards').scrollIntoView({behavior:'smooth',block:'start'})" aria-label="Scroll back up to your results">↑ Back to My Results</button>
+      <p class="career-source" id="career-source"></p>
+      <button type="button" class="back-to-results" onclick="document.getElementById('result-cards').scrollIntoView({behavior:'smooth',block:'start'})" aria-label="Scroll back up to your results">↑ Back to My Results</button>
     </div>
 
 
     <div class="action-btns">
-      <button class="print-btn" onclick="window.print()" aria-label="Print your results">🖨️ PRINT RESULTS</button>
-      <button class="retry-btn" onclick="resetQuiz()">🔄 RETAKE ASSESSMENT</button>
+      <button type="button" class="print-btn" onclick="window.print()" aria-label="Print your results">🖨️ PRINT RESULTS</button>
+      <button type="button" class="retry-btn" onclick="resetQuiz()">🔄 RETAKE ASSESSMENT</button>
     </div>
   </div>
 </div>
 
+<script src="career-data.js"></script>
 <script src="scoring.js"></script>
 <script>
 const QUESTIONS = [
@@ -585,124 +590,7 @@ const RIASEC = {
       jobs:["banker","accountant","office_manager","postal_worker","cashier"] }
 };
 
-const CAREERS = {
-  construction_worker:{ label:"👷 Construction Worker", does:"Plans and constructs buildings, roads, and structures. Works with blueprints, tools, materials, and a team to bring designs to life.", income:"About $45,000–$75,000 per year; skilled trades can earn significantly more.",
-    day:[{time:"7:00 AM",task:"Arrive at the job site and review the day's blueprints with your foreman"},{time:"8:00 AM",task:"Frame walls for a new house, measure twice, nail once"},{time:"11:00 AM",task:"Problem-solve with the team when the delivery arrives short on lumber"},{time:"1:00 PM",task:"Safety check on scaffolding before afternoon work"},{time:"3:00 PM",task:"Clean up the site, log progress, and prep materials for tomorrow"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Build things at home — cardboard, LEGO, wood scraps. Visit construction sites with a parent. Try art and drawing classes to understand scale and design."},{icon:"🏫",level:"Middle School",steps:"Take shop class or any hands-on elective. Join robotics club. Help with home repair projects with a parent or guardian."},{icon:"🏫",level:"High School",steps:"Enroll in Career & Technical Education (CTE) building trades courses. Apply for a summer job or shadow a contractor. Take geometry and physics."},{icon:"🎓",level:"After High School",steps:"Apprenticeship programs (free, paid on-the-job training), trade school, or community college construction certificates. No 4-year degree required."}],
-    colleges:"Strong construction management programs: Arizona State University, Purdue University, Cal Poly San Luis Obispo, Milwaukee School of Engineering, and community college CTE pathways nationwide." },
-  mechanic:{ label:"🔧 Mechanic", does:"Diagnoses mechanical problems, repairs engines and parts, and performs maintenance on vehicles or other equipment.", income:"About $45,000–$80,000 per year, depending on specialty and certifications.",
-    day:[{time:"8:00 AM",task:"Check in the first car and run a diagnostic scan"},{time:"9:00 AM",task:"Replace brake pads while listening to the engine idle"},{time:"11:30 AM",task:"Explain the repair clearly to the car owner"},{time:"1:00 PM",task:"Work on an oil change and tire rotation"},{time:"3:30 PM",task:"Update digital records and order parts for tomorrow"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Tinker with broken toys or electronics. Watch tutorials on how engines work. Visit an auto shop with a parent."},{icon:"🏫",level:"Middle School",steps:"Take shop class. Build model engines or RC cars. Learn basic tools — wrenches, screwdrivers, multimeters."},{icon:"🏫",level:"High School",steps:"Take auto tech CTE courses. Compete in SkillsUSA automotive events. Get a part-time job at a garage."},{icon:"🎓",level:"After High School",steps:"Vocational school or community college automotive programs (1–2 years). Earn ASE (Automotive Service Excellence) certifications."}],
-    colleges:"Strong automotive technology programs: UTI (Universal Technical Institute), Wyotech, Lincoln Tech, community colleges nationwide, and manufacturer-specific training (BMW, Toyota, Ford ASSET programs)." },
-  farmer:{ label:"🌿 Farmer / Agricultural Scientist", does:"Manages land and crops or livestock; may also research sustainable farming methods or agricultural technology.", income:"Highly variable — from $40,000 to $100,000+ depending on scale and specialty.",
-    day:[{time:"6:00 AM",task:"Check on livestock before sunrise"},{time:"7:30 AM",task:"Inspect irrigation systems and soil moisture sensors"},{time:"10:00 AM",task:"Meet with an agricultural extension agent about a new crop pest"},{time:"1:00 PM",task:"Drive the tractor to turn a field"},{time:"4:00 PM",task:"Record crop data in the farm management app"},{time:"6:00 PM",task:"Review weather forecasts for the week"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Grow plants from seeds at home. Visit a farm or farmers market. Learn about where food comes from."},{icon:"🏫",level:"Middle School",steps:"Join 4-H or FFA (Future Farmers of America). Grow a small garden. Take earth science and biology classes."},{icon:"🏫",level:"High School",steps:"Enroll in agriculture CTE courses. Raise an animal or grow a crop through FFA. Work or volunteer on a local farm."},{icon:"🎓",level:"After High School",steps:"Community college, 4-year degree in agriculture, agribusiness, plant science, or environmental science. Many farms also train through apprenticeships."}],
-    colleges:"Top agriculture programs: UC Davis, Iowa State University, Cornell University, Texas A&M, Cal Poly San Luis Obispo, and community colleges with ag programs across rural regions." },
-  firefighter:{ label:"🚒 Firefighter / EMT", does:"Responds to fires, medical emergencies, and rescue situations; educates communities about safety.", income:"About $50,000–$90,000 per year with benefits.",
-    day:[{time:"7:00 AM",task:"Shift begins; check all gear and equipment"},{time:"9:00 AM",task:"Training drill — practice hose techniques and ladder placement"},{time:"11:00 AM",task:"Community outreach at a local school"},{time:"1:30 PM",task:"Emergency call: structure fire downtown. Respond, assess, contain"},{time:"4:00 PM",task:"Debrief and file incident reports"},{time:"6:00 PM",task:"Station maintenance and dinner with the crew"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn fire safety rules. Visit your local fire station. Practice staying calm in emergencies."},{icon:"🏫",level:"Middle School",steps:"Get CPR certified (many programs start at age 12). Join a Junior Firefighter program if available. Stay physically active."},{icon:"🏫",level:"High School",steps:"Enroll in EMT or public safety CTE courses. Volunteer at a fire department explorer post. Take health, anatomy, and PE seriously."},{icon:"🎓",level:"After High School",steps:"Fire academy (typically 6 months). EMT-Basic or Paramedic certification. Associate's degree in fire science helps for promotion."}],
-    colleges:"Fire science and emergency management programs: San Diego Miramar College, Columbia Southern University, Oklahoma State University, and local community colleges with fire academy partnerships." },
-  engineer:{ label:"🏗️ Engineer", does:"Applies science and math to design systems, machines, buildings, and technology that solve real-world problems.", income:"About $75,000–$130,000 per year depending on field.",
-    day:[{time:"8:30 AM",task:"Review 3D design files for a new bridge support system"},{time:"10:00 AM",task:"Team meeting to discuss structural load calculations"},{time:"11:30 AM",task:"Site visit to inspect concrete pours"},{time:"1:30 PM",task:"Run computer simulations to test failure points"},{time:"3:30 PM",task:"Update client on project timeline"},{time:"4:30 PM",task:"Collaborate with architects on revised blueprints"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Build with LEGO Technic or K'Nex. Enter science fairs. Play engineering-based games like Minecraft or Kerbal Space Program."},{icon:"🏫",level:"Middle School",steps:"Join robotics club (FLL or FIRST). Take pre-algebra and science seriously. Build simple circuits with an Arduino or Raspberry Pi."},{icon:"🏫",level:"High School",steps:"Take AP Physics, AP Calculus, and AP Chemistry. Compete in Science Olympiad or FIRST Robotics. Tour university engineering departments."},{icon:"🎓",level:"After High School",steps:"4-year engineering degree (civil, mechanical, electrical, chemical, etc.). Many engineers earn a Professional Engineer (PE) license after experience."}],
-    colleges:"Top engineering schools: MIT, Stanford, Georgia Tech, UC San Diego, Cal Poly SLO, Purdue, University of Michigan, and Harvey Mudd. Many strong programs exist at state universities." },
-  scientist:{ label:"👩‍🔬 Scientist / Researcher", does:"Formulates hypotheses, conducts controlled experiments, analyzes data, and publishes findings to advance human knowledge.", income:"About $60,000–$115,000 per year; varies widely by field and sector.",
-    day:[{time:"8:00 AM",task:"Review overnight data from the experiment in the lab"},{time:"9:30 AM",task:"Prepare specimens and run tests"},{time:"11:30 AM",task:"Lab meeting where the team shares updates"},{time:"1:00 PM",task:"Write a section of a research paper"},{time:"3:00 PM",task:"Peer review a colleague's draft"},{time:"4:30 PM",task:"Update your research journal and plan tomorrow's experiment"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Do experiments at home (vinegar + baking soda, grow crystals). Read about scientists. Visit science museums."},{icon:"🏫",level:"Middle School",steps:"Enter science fairs. Join a science club. Ask teachers about summer science camps."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Chemistry, or AP Environmental Science. Apply for research internships. Shadow a university researcher."},{icon:"🎓",level:"After High School",steps:"Bachelor's degree in a science field. Most research careers require a master's or PhD. Paid research assistantships are common in graduate school."}],
-    colleges:"Strong science research programs: MIT, Stanford, Johns Hopkins, UC Berkeley, University of Chicago, UCSD, and many large state research universities with funded lab programs." },
-  doctor:{ label:"🩺 Doctor / Physician", does:"Diagnoses illnesses, prescribes treatment, performs procedures, and guides patients toward better health outcomes.", income:"Generally $150,000–$300,000+ per year after completing training.",
-    day:[{time:"7:00 AM",task:"Hospital rounds: check in on patients admitted overnight"},{time:"9:00 AM",task:"Clinic hours: see scheduled patients, review charts, order tests"},{time:"12:00 PM",task:"Consult with a specialist about a complex case"},{time:"1:00 PM",task:"Review lab results and update treatment plans"},{time:"3:00 PM",task:"Perform a minor procedure"},{time:"5:00 PM",task:"Dictate notes and sign off on prescriptions"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Volunteer at community health events. Read about the human body. Care for others around you who are sick."},{icon:"🏫",level:"Middle School",steps:"Join HOSA (Health Occupations Students of America). Take strong science classes. Shadow a doctor or nurse if possible."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Chemistry, AP Statistics. Volunteer at a hospital or clinic. Research pre-med requirements at colleges you like."},{icon:"🎓",level:"After High School",steps:"4-year college (pre-med) → 4-year medical school → 3–7 year residency. Total training: about 11–15 years. It's a long road, but it pays off."}],
-    colleges:"Strong pre-med programs: Johns Hopkins, Duke, UCSD, UCLA, University of Michigan, NYU, Emory. Medical schools include Mayo Clinic, Harvard, UCSF, and others." },
-  paleontologist:{ label:"🦕 Paleontologist", does:"Excavates and studies fossils to reconstruct ancient ecosystems, track evolutionary history, and understand climate change.", income:"About $55,000–$100,000 per year.",
-    day:[{time:"6:00 AM",task:"Drive to the dig site"},{time:"8:00 AM",task:"Carefully brush rock away from a newly discovered bone"},{time:"12:00 PM",task:"Document the find with photos and GPS coordinates"},{time:"2:00 PM",task:"Back at the museum lab, clean specimens and catalog fossils"},{time:"4:00 PM",task:"Work on a scientific paper about last season's discoveries"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Visit natural history museums. Collect rocks and learn to identify them. Read about dinosaurs and prehistoric life."},{icon:"🏫",level:"Middle School",steps:"Join geology or earth science clubs. Attend fossil hunting programs. Take strong biology and earth science classes."},{icon:"🏫",level:"High School",steps:"Take AP Biology, AP Environmental Science, and earth science. Apply for museum internships. Look for field programs run by universities."},{icon:"🎓",level:"After High School",steps:"Bachelor's in geology, biology, or earth science. Most professional paleontologists earn a PhD. Many work in universities, museums, or government agencies."}],
-    colleges:"Strong programs: University of Chicago, University of Montana, UC Berkeley, University of Kansas, Yale, and many state universities in fossil-rich regions (Wyoming, Montana, Utah)." },
-  coder:{ label:"💻 Software Developer / Coder", does:"Writes and tests code that powers websites, apps, games, software systems, and digital tools.", income:"About $80,000–$140,000 per year; varies widely by specialization.",
-    day:[{time:"9:00 AM",task:"Check overnight bug reports from users"},{time:"10:00 AM",task:"Sprint meeting: plan what features to build this week"},{time:"11:00 AM",task:"Deep work: write code for a new app feature"},{time:"1:30 PM",task:"Code review: read a teammate's code and give feedback"},{time:"3:00 PM",task:"Fix a bug causing crashes"},{time:"4:30 PM",task:"Update project documentation"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Try Scratch (scratch.mit.edu) — it's free and fun. Play coding games on Code.org. Ask if you can build a simple website."},{icon:"🏫",level:"Middle School",steps:"Learn Python through Khan Academy or freeCodeCamp. Join a coding club or hackathon. Build a small game or app."},{icon:"🏫",level:"High School",steps:"Take AP Computer Science A or Principles. Participate in hackathons. Build a portfolio of personal projects on GitHub."},{icon:"🎓",level:"After High School",steps:"4-year CS degree, coding bootcamp (3–6 months), or self-taught with a strong portfolio. Many employers care more about what you can build than your degree."}],
-    colleges:"Top CS programs: MIT, Stanford, Carnegie Mellon, UC Berkeley, Georgia Tech, UCSD, UT Austin. Coding bootcamps (General Assembly, App Academy) are popular alternatives." },
-  nurse:{ label:"🌡️ Nurse / Healthcare Professional", does:"Assesses patient conditions, administers treatments, communicates with doctors and families, and advocates for patient well-being.", income:"About $75,000–$120,000 per year; advanced practice nurses earn more.",
-    day:[{time:"7:00 AM",task:"Receive handoff from the night shift: review each patient's status"},{time:"8:00 AM",task:"Administer morning medications and check vital signs"},{time:"10:00 AM",task:"Educate a patient and family about a new diagnosis"},{time:"12:00 PM",task:"Assist a doctor during a procedure"},{time:"2:00 PM",task:"Document updates in the health record"},{time:"5:00 PM",task:"Handoff to incoming nurse with thorough notes"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Volunteer at community health events. Learn basic first aid. Show care for people around you who are sick or hurt."},{icon:"🏫",level:"Middle School",steps:"Join HOSA. Shadow a nurse if possible. Take biology and health classes seriously."},{icon:"🏫",level:"High School",steps:"Take AP Biology and chemistry. Volunteer at a hospital. Look into CNA (certified nursing assistant) programs available to high schoolers."},{icon:"🎓",level:"After High School",steps:"Associate's Degree in Nursing (ADN, 2 years) or Bachelor of Science in Nursing (BSN, 4 years), plus passing the NCLEX licensing exam."}],
-    colleges:"Strong nursing programs: UCSF, Johns Hopkins, Duke, Emory, University of Pennsylvania, and hundreds of community colleges and state universities with accredited nursing programs." },
-  artist:{ label:"🎨 Visual Artist / Designer", does:"Creates paintings, drawings, digital designs, sculptures, or other visual work for galleries, clients, or commercial purposes.", income:"About $35,000–$90,000 per year; highly variable based on specialty and freelance work.",
-    day:[{time:"9:00 AM",task:"Review client brief for a new logo project"},{time:"10:30 AM",task:"Sketch concepts in your sketchbook"},{time:"12:00 PM",task:"Refine sketches in Adobe Illustrator"},{time:"2:00 PM",task:"Video call with client to present three logo options"},{time:"3:30 PM",task:"Work on a personal painting for an upcoming gallery show"},{time:"5:30 PM",task:"Post work-in-progress to your portfolio website"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Draw and paint every day. Fill sketchbooks. Visit art museums. Take every art class available."},{icon:"🏫",level:"Middle School",steps:"Explore digital art tools (free: Krita, Canva). Enter local art contests. Study artists you admire and try copying their style to learn."},{icon:"🏫",level:"High School",steps:"Build an art portfolio. Take AP Studio Art. Apply to summer pre-college art programs. Learn Adobe Illustrator and Photoshop."},{icon:"🎓",level:"After High School",steps:"Art school (BFA), liberal arts college with strong arts program, or design school. Build your portfolio website — it's your most important credential."}],
-    colleges:"Top art and design schools: RISD, CalArts, Pratt Institute, SCAD (Savannah College of Art and Design), Art Center (Pasadena), and SVA (New York)." },
-  actor:{ label:"🎭 Actor / Performer", does:"Interprets and portrays characters in stage productions, films, television, commercials, or voice work.", income:"Highly variable — most performers build income from multiple related roles.",
-    day:[{time:"9:00 AM",task:"Morning warm-up: vocal exercises and physical stretching"},{time:"10:00 AM",task:"Rehearsal with the cast"},{time:"1:00 PM",task:"Audition for a commercial"},{time:"3:00 PM",task:"Acting class to work on a new monologue"},{time:"5:00 PM",task:"Review script and highlight character beats"},{time:"7:30 PM",task:"Evening performance. Take a bow"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Join your school play. Take drama class. Read stories aloud and practice using your voice expressively."},{icon:"🏫",level:"Middle School",steps:"Audition for community theater. Watch great performances and study how actors use body and voice. Try improv classes."},{icon:"🏫",level:"High School",steps:"Perform in every show you can. Attend a summer theater intensive. Create video auditions for student film projects."},{icon:"🎓",level:"After High School",steps:"BFA in acting or theater, conservatory training, or dive into professional auditions. Build your reel (video portfolio) from student and independent projects."}],
-    colleges:"Top theater and performing arts programs: Juilliard, NYU Tisch, Northwestern, Carnegie Mellon, Yale School of Drama, USC, and AMDA." },
-  author:{ label:"✍️ Author / Writer", does:"Writes novels, nonfiction books, screenplays, articles, essays, or other content that informs, entertains, or inspires readers.", income:"Variable — from project-based earnings to staff writing positions at $50,000–$90,000 per year.",
-    day:[{time:"8:00 AM",task:"Morning pages: write freely for 30 minutes"},{time:"9:00 AM",task:"Draft a new chapter"},{time:"12:00 PM",task:"Edit yesterday's writing"},{time:"2:00 PM",task:"Research for an article on medieval history"},{time:"4:00 PM",task:"Reply to your editor's notes on a manuscript"},{time:"6:00 PM",task:"Read — great writers are constant readers"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Write stories — any stories. Keep a journal. Read as much as you possibly can, across every genre."},{icon:"🏫",level:"Middle School",steps:"Submit writing to school publications and contests. Read widely in your genre. Start a blog or creative writing notebook."},{icon:"🏫",level:"High School",steps:"Take AP English Language and Composition. Write for the school newspaper or literary magazine. Enter the Scholastic Art & Writing Awards."},{icon:"🎓",level:"After High School",steps:"English, creative writing, or journalism degree. MFA programs for advanced writers. Build a portfolio through internships, freelancing, and independent publishing."}],
-    colleges:"Strong writing programs: University of Iowa (Iowa Writers' Workshop), NYU, Columbia, Emerson College, UC Davis, and many state universities with journalism and creative writing MFA programs." },
-  musician:{ label:"🎵 Musician / Composer", does:"Performs, records, or composes music across a wide range of genres and settings — from concert halls to recording studios.", income:"About $35,000–$90,000 per year; varies enormously based on career path.",
-    day:[{time:"9:00 AM",task:"Practice scales and repertoire for 2 hours"},{time:"11:00 AM",task:"Compose a new piece using notation software"},{time:"1:00 PM",task:"Recording session in the studio"},{time:"4:00 PM",task:"Rehearse with the band for this weekend's show"},{time:"7:00 PM",task:"Perform live at a local venue"},{time:"10:00 PM",task:"Review recordings and make notes for improvement"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start an instrument — any instrument. Practice every day, even 10 minutes. Listen to many genres of music actively."},{icon:"🏫",level:"Middle School",steps:"Join school band, orchestra, or choir. Take private lessons if possible. Learn music theory — it's the math of music."},{icon:"🏫",level:"High School",steps:"Audition for competitive ensembles and honor bands. Record original songs. Attend summer music programs and conservatory pre-college camps."},{icon:"🎓",level:"After High School",steps:"Music conservatory, BM in performance, or music education degree. Self-producing and touring is also a legitimate path if you build an audience."}],
-    colleges:"Top music programs: Juilliard, Berklee College of Music, New England Conservatory, USC Thornton, Eastman School of Music, and strong state programs at UT Austin and University of Michigan." },
-  photographer:{ label:"📸 Photographer / Videographer", does:"Captures and edits images or video to document events, tell stories, advertise products, or create artistic work.", income:"About $35,000–$75,000 per year; specialized or commercial photographers can earn more.",
-    day:[{time:"7:00 AM",task:"Sunrise shoot for a nature photography project"},{time:"10:00 AM",task:"Edit yesterday's wedding photos in Lightroom"},{time:"12:30 PM",task:"Meet with a client to book a shoot"},{time:"2:00 PM",task:"Product photography session for a local business"},{time:"5:00 PM",task:"Update your website and social portfolio"},{time:"7:00 PM",task:"Watch a documentary for visual inspiration"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Use your family's phone to practice composition. Study what makes a photo interesting. Visit photography exhibits at museums."},{icon:"🏫",level:"Middle School",steps:"Get access to a basic camera. Learn about exposure: aperture, shutter speed, and ISO. Start a photo journal."},{icon:"🏫",level:"High School",steps:"Take a photography class. Enter photo contests. Build a portfolio website. Learn Adobe Lightroom and Premiere."},{icon:"🎓",level:"After High School",steps:"BFA in photography, film degree, or visual communications. Many photographers are self-taught with a strong portfolio. Assisting a working photographer is invaluable."}],
-    colleges:"Strong photography and media programs: RISD, Brooks Institute, Syracuse University (Newhouse), NYU Tisch, SCAD, Art Center (Pasadena), and state universities with strong journalism schools." },
-  teacher:{ label:"🍎 Teacher / Educator", does:"Plans and delivers lessons, assesses student learning, builds relationships, and supports the intellectual and social development of students.", income:"About $50,000–$90,000 per year depending on grade level and district.",
-    day:[{time:"7:30 AM",task:"Set up the classroom and review the day's lesson plan"},{time:"8:15 AM",task:"Teach a history lesson on the Civil Rights Movement"},{time:"10:00 AM",task:"Small group reading support"},{time:"12:00 PM",task:"Lunch + grade a set of essays"},{time:"1:30 PM",task:"Collaborate with a colleague"},{time:"3:00 PM",task:"Hold office hours and call a parent"},{time:"4:30 PM",task:"Plan next week's unit"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Teach what you know to a younger sibling, neighbor, or friend. Notice what great teachers do. Help others with schoolwork."},{icon:"🏫",level:"Middle School",steps:"Tutor younger students. Volunteer at community programs. Join clubs where you can lead and explain things to peers."},{icon:"🏫",level:"High School",steps:"Volunteer at an elementary school or after-school program. Take psychology or child development classes. Look into teacher cadet programs."},{icon:"🎓",level:"After High School",steps:"4-year education degree or subject-area degree + credential program. Student teaching (a semester in a real classroom) is required."}],
-    colleges:"Strong education programs: University of Michigan, Stanford (education school), Teachers College at Columbia, SDSU, UCLA, and many state universities. California teaching credential programs are at most CSUs." },
-  counselor:{ label:"🧑‍🤝‍🧑 Counselor / Social Worker", does:"Supports individuals through personal, social, and emotional challenges by listening, providing guidance, and connecting them to resources.", income:"About $50,000–$85,000 per year for counselors; varies by specialty.",
-    day:[{time:"8:30 AM",task:"Review case notes before appointments"},{time:"9:00 AM",task:"Individual session: guide a student through school anxiety"},{time:"11:00 AM",task:"Group session with students navigating family changes"},{time:"1:00 PM",task:"Collaborate with teachers about a student's academic plan"},{time:"2:30 PM",task:"Connect a family to community resources"},{time:"4:00 PM",task:"Complete documentation"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Be a kind and trustworthy friend. Practice listening without judgment. Learn about emotions and how to name them."},{icon:"🏫",level:"Middle School",steps:"Join peer mediation programs. Volunteer with younger kids. Take health and wellness or psychology electives if available."},{icon:"🏫",level:"High School",steps:"Volunteer at a crisis hotline, community center, or mentoring program. Take AP Psychology. Shadow a school counselor or social worker."},{icon:"🎓",level:"After High School",steps:"Bachelor's in psychology, social work, or human development. Master's degree (MSW or MA in counseling) is typically required for licensure."}],
-    colleges:"Strong psychology and social work programs: University of Michigan, Boston College, USC, Columbia, UC Berkeley, and many state universities with CSWE-accredited social work programs." },
-  coach:{ label:"🤸 Coach / Athletic Trainer", does:"Designs and leads training programs, teaches technique and strategy, builds team culture, and motivates athletes to reach their potential.", income:"Variable — from $35,000 to $80,000+ per year depending on sport and level.",
-    day:[{time:"6:00 AM",task:"Early morning lift with the team"},{time:"8:00 AM",task:"Film session: review game tape with athletes"},{time:"10:00 AM",task:"Individual technique sessions"},{time:"1:00 PM",task:"Plan next week's practice structure"},{time:"3:30 PM",task:"Practice — drill work, scrimmage, and conditioning"},{time:"6:00 PM",task:"Post-practice review and individual check-ins"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Play multiple sports. Help younger kids learn games. Pay attention to what great coaches do — the ones who inspire you."},{icon:"🏫",level:"Middle School",steps:"Become a team captain or help with youth sports in your community. Learn the strategy behind your sport."},{icon:"🏫",level:"High School",steps:"Compete at a high level and coach youth leagues on the side. Take anatomy and physiology if available. Get CPR and first aid certified."},{icon:"🎓",level:"After High School",steps:"Kinesiology, physical education, or sports science degree. Many coaches also earn strength and conditioning certifications (CSCS, NASM). Graduate assistantships allow you to coach while earning a master's."}],
-    colleges:"Strong kinesiology and sports science programs: Ohio State, University of Florida, Penn State, Oregon, SDSU, Cal Poly, and many state universities with Division I athletics." },
-  social_worker:{ label:"🧑‍⚕️ Social Worker / Advocate", does:"Helps individuals and families access services, overcome challenges, and navigate complex systems like healthcare, housing, and education.", income:"About $50,000–$80,000 per year.",
-    day:[{time:"8:30 AM",task:"Review case files for today's home visits"},{time:"10:00 AM",task:"Home visit: assess a family's safety and support needs"},{time:"12:00 PM",task:"Connect a client to emergency food and rental assistance"},{time:"2:00 PM",task:"Meet with a hospital team about discharge planning"},{time:"4:00 PM",task:"Complete court-required documentation"},{time:"5:00 PM",task:"Prepare a community resource guide"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn about fairness and advocacy. Volunteer with community service projects. Notice when others need help and act on it."},{icon:"🏫",level:"Middle School",steps:"Join student government or social justice clubs. Organize a community service project. Take civics and history classes."},{icon:"🏫",level:"High School",steps:"Volunteer at a food bank, shelter, or youth organization. Take AP Government or AP Psychology. Intern with a nonprofit."},{icon:"🎓",level:"After High School",steps:"Bachelor's of Social Work (BSW) or psychology degree. Master's of Social Work (MSW) required for clinical or licensed positions (LCSW)."}],
-    colleges:"Top social work programs: University of Michigan, Columbia, Washington University in St. Louis, USC, UC Berkeley, and many state universities with CSWE-accredited BSW/MSW programs." },
-  business_owner:{ label:"👔 Entrepreneur / Business Owner", does:"Identifies a market need, builds a product or service, manages a team, handles finances, and adapts to challenges over time.", income:"Highly variable — dependent on the business itself.",
-    day:[{time:"8:00 AM",task:"Review overnight sales data and customer messages"},{time:"9:30 AM",task:"Team standup"},{time:"11:00 AM",task:"Pitch your business idea to a potential investor"},{time:"1:30 PM",task:"Solve a supply chain problem"},{time:"3:00 PM",task:"Work with a designer on new product packaging"},{time:"5:00 PM",task:"Write content for social media"},{time:"7:00 PM",task:"Research competitors"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start a small business: lemonade stand, baked goods, lawn mowing. Learn what customers want and how to price things."},{icon:"🏫",level:"Middle School",steps:"Expand your business or try a new one. Participate in DECA or Junior Achievement programs. Study businesses you admire."},{icon:"🏫",level:"High School",steps:"Start a real side business or social enterprise. Take economics and business classes. Apply for youth entrepreneurship competitions."},{icon:"🎓",level:"After High School",steps:"Business degree helpful but not required. Many entrepreneurs start during college or right after. Programs like Y Combinator and incubators help early-stage businesses."}],
-    colleges:"Top entrepreneurship programs: Babson College, Stanford, MIT Sloan, UC Berkeley Haas, Wharton (UPenn), Indiana University Kelley, and many state universities with entrepreneurship centers." },
-  salesperson:{ label:"📢 Sales Professional / Account Manager", does:"Builds client relationships, explains products or services clearly, overcomes objections, and helps customers make informed decisions.", income:"About $40,000–$100,000+ per year; many roles include performance bonuses.",
-    day:[{time:"8:00 AM",task:"Review your pipeline: which deals are close to closing?"},{time:"9:00 AM",task:"Cold outreach: email and call 20 new prospects"},{time:"11:00 AM",task:"Product demo with a potential client"},{time:"1:00 PM",task:"Follow up with last week's prospects"},{time:"2:30 PM",task:"Team training on new product features"},{time:"4:00 PM",task:"Prepare a proposal for a major account"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice explaining things clearly. Run a small business. Observe how salespeople make you feel valued as a customer."},{icon:"🏫",level:"Middle School",steps:"Join debate or speech club. Sell items for school fundraisers. Notice what makes people say yes to an idea."},{icon:"🏫",level:"High School",steps:"Take a marketing, communication, or business elective. Participate in DECA competitions. Get a part-time retail or customer service job."},{icon:"🎓",level:"After High School",steps:"Business, communications, or marketing degree. Many sales careers are open to high school graduates with strong interpersonal skills."}],
-    colleges:"Strong business and marketing programs: Wharton (UPenn), Michigan Ross, Indiana Kelley, ASU, UC Davis, and most major state universities with business schools." },
-  public_leader:{ label:"🏛️ Public Official / Policy Maker", does:"Creates or influences policy, represents constituent interests, manages public agencies, and makes decisions that affect entire communities.", income:"Highly variable — from local public service stipends to six-figure executive or legislative salaries.",
-    day:[{time:"7:30 AM",task:"Read briefings on three pending policy decisions"},{time:"9:00 AM",task:"Town hall meeting: listen to constituent concerns"},{time:"11:00 AM",task:"Meet with the city budget director"},{time:"1:00 PM",task:"Press conference on a new public safety initiative"},{time:"3:00 PM",task:"Review a proposed ordinance with the city attorney"},{time:"5:00 PM",task:"Community event: youth leadership ceremony"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Run for class representative or student council. Learn about your city or town government. Attend a city council meeting with a parent."},{icon:"🏫",level:"Middle School",steps:"Participate in student government. Volunteer for a local campaign or civic organization. Practice public speaking and debate."},{icon:"🏫",level:"High School",steps:"Take AP Government, AP Economics, and debate. Apply for Boys/Girls State. Intern for a local elected official."},{icon:"🎓",level:"After High School",steps:"Degrees in political science, public policy, law, economics, or communications. Law school or a master's in public policy (MPP) opens many doors."}],
-    colleges:"Strong public policy and government programs: Harvard Kennedy School, Princeton Woodrow Wilson School, Georgetown, UCLA Luskin, UCSD GPS, and many strong state schools with government programs." },
-  movie_director:{ label:"🎬 Film Director / Media Producer", does:"Oversees all creative aspects of a film or video project — from script interpretation to casting, visual style, editing, and final delivery.", income:"Variable and project-based; successful directors can earn well above average.",
-    day:[{time:"8:00 AM",task:"Pre-production meeting: review storyboards with the cinematographer"},{time:"10:00 AM",task:"Casting session: watch actors audition"},{time:"1:00 PM",task:"On set: direct a key scene"},{time:"4:00 PM",task:"Editing session with the editor on last week's footage"},{time:"6:30 PM",task:"Screen a rough cut with your producing team and give notes"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Make short films on a phone or tablet. Tell stories. Watch great films and talk about what makes them work."},{icon:"🏫",level:"Middle School",steps:"Make short films for school. Enter student film competitions. Learn iMovie or DaVinci Resolve (free)."},{icon:"🏫",level:"High School",steps:"Take film or media arts classes. Build a short film portfolio. Submit to youth film festivals. Volunteer on student film sets."},{icon:"🎓",level:"After High School",steps:"Film school BFA, or start working on independent projects while building your resume. Key early jobs: production assistant, camera assistant, editor's assistant."}],
-    colleges:"Top film programs: USC School of Cinematic Arts, NYU Tisch, AFI (American Film Institute), UCLA, Chapman University Dodge, Emerson College, and UT Austin." },
-  adventure_guide:{ label:"🗺️ Outdoor Educator / Guide", does:"Leads groups through outdoor environments, teaches skills like navigation and ecology, ensures safety, and builds connection to the natural world.", income:"About $35,000–$70,000 per year; seasonal and geographic variation is significant.",
-    day:[{time:"6:00 AM",task:"Pack gear, check weather, and brief the group on the day's route"},{time:"7:30 AM",task:"Lead a 12-person group on a backcountry trail, teaching plant identification"},{time:"12:00 PM",task:"Treat a minor ankle sprain on the trail"},{time:"2:00 PM",task:"Teach map and compass navigation at a scenic overlook"},{time:"5:00 PM",task:"Set up camp and lead a group debrief"},{time:"8:00 PM",task:"Stars, campfire, and reflections"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Spend time outside. Learn to identify plants and animals near your home. Camp with family or in a scouting program."},{icon:"🏫",level:"Middle School",steps:"Join Boy Scouts, Girl Scouts, or a similar outdoor program. Take a wilderness first aid or survival skills class. Hike harder trails."},{icon:"🏫",level:"High School",steps:"Lead outdoor trips or become a junior counselor at a camp. Get wilderness first responder (WFR) certified. Take ecology or environmental science."},{icon:"🎓",level:"After High School",steps:"Outdoor education degree, environmental science program, or a NOLS (National Outdoor Leadership School) certificate. Many guides work seasonally."}],
-    colleges:"Strong outdoor education and environmental programs: University of Utah, Prescott College, Colorado State, Warren Wilson College, NAU (Northern Arizona), and state universities with recreation management programs." },
-  banker:{ label:"🏦 Financial Advisor / Banker", does:"Analyzes financial data, advises clients on investments and savings, manages accounts, and helps individuals or organizations plan for the future.", income:"About $55,000–$100,000+ per year; financial advisors often earn more with experience.",
-    day:[{time:"8:00 AM",task:"Review markets and economic news"},{time:"9:30 AM",task:"Client meeting: help a family plan for college savings and retirement"},{time:"11:00 AM",task:"Review a loan application from a small business"},{time:"1:00 PM",task:"Update client portfolio recommendations"},{time:"3:00 PM",task:"Compliance review: ensure account documentation is in order"},{time:"4:30 PM",task:"Continuing education on new tax law changes"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Start a savings account. Learn the difference between needs and wants. Practice keeping track of your money."},{icon:"🏫",level:"Middle School",steps:"Play stock market simulation games (e.g., SIFMA Foundation's Stock Market Game). Learn about budgeting. Take math seriously."},{icon:"🏫",level:"High School",steps:"Take economics and AP Statistics. Participate in DECA financial services events. Shadow a financial advisor or banker."},{icon:"🎓",level:"After High School",steps:"Finance, economics, or business degree. CFP (Certified Financial Planner) or CFA (Chartered Financial Analyst) certification for advanced roles."}],
-    colleges:"Strong finance programs: Wharton (UPenn), NYU Stern, Michigan Ross, Georgetown McDonough, UT Austin McCombs, and many state universities with strong business schools." },
-  accountant:{ label:"📊 Accountant / Financial Analyst", does:"Prepares and audits financial statements, tracks organizational spending, ensures compliance with tax law, and provides financial analysis.", income:"About $60,000–$110,000 per year.",
-    day:[{time:"8:30 AM",task:"Review last month's financial statements for a client"},{time:"10:00 AM",task:"Audit meeting: go through expense records"},{time:"12:00 PM",task:"Prepare quarterly tax estimates"},{time:"2:00 PM",task:"Model out a financial forecast for a growing company"},{time:"4:00 PM",task:"Meet with a client to explain their financials"},{time:"5:00 PM",task:"Update spreadsheets and reconcile accounts"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice math every day — especially mental math. Help keep track of family expenses or a small savings goal."},{icon:"🏫",level:"Middle School",steps:"Take every math class available. Learn to use spreadsheets. Study how businesses earn and spend money."},{icon:"🏫",level:"High School",steps:"Take AP Statistics and economics. Compete in DECA or FBLA. Shadow an accountant during tax season."},{icon:"🎓",level:"After High School",steps:"Accounting or finance degree (4 years). CPA exam after 150 college credit hours. Big 4 firms (Deloitte, PwC, EY, KPMG) hire heavily from college."}],
-    colleges:"Strong accounting programs: University of Illinois Urbana-Champaign, UT Austin, Michigan Ross, NYU Stern, BYU, and many state universities with AACSB-accredited business schools." },
-  office_manager:{ label:"📁 Office Manager / Operations Coordinator", does:"Keeps a workplace or organization running efficiently — managing schedules, coordinating teams, handling logistics, and solving day-to-day operational problems.", income:"About $45,000–$85,000 per year.",
-    day:[{time:"8:00 AM",task:"Review today's calendar and confirm all meetings"},{time:"9:00 AM",task:"Onboard a new employee"},{time:"11:00 AM",task:"Coordinate with IT on a tech issue"},{time:"1:00 PM",task:"Manage vendor invoices and check budget tracking"},{time:"2:30 PM",task:"Organize company event logistics"},{time:"4:30 PM",task:"Prepare the weekly status report for the director"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Keep your room, backpack, and schoolwork organized. Help plan family events. Practice being responsible with tasks."},{icon:"🏫",level:"Middle School",steps:"Volunteer to help organize school events. Take on leadership roles that require coordinating others. Learn to use calendars and task lists."},{icon:"🏫",level:"High School",steps:"Take business, communications, and computer applications classes. Work part-time in a customer service or admin role."},{icon:"🎓",level:"After High School",steps:"Associate's or bachelor's in business administration. Many office managers start in entry-level admin roles and advance through skill and reliability."}],
-    colleges:"Strong business administration programs at most community colleges (2-year AA) and 4-year programs at state universities like SDSU, CSULB, Arizona State, and many others nationwide." },
-  postal_worker:{ label:"📬 Postal / Logistics Professional", does:"Processes and delivers mail and packages with accuracy and reliability; some roles involve supervising routes or managing distribution centers.", income:"About $45,000–$70,000 per year with federal benefits for postal employees.",
-    day:[{time:"6:00 AM",task:"Sort the morning mail load by neighborhood"},{time:"7:30 AM",task:"Load the vehicle and verify the manifest"},{time:"8:00 AM",task:"Begin the delivery route"},{time:"12:00 PM",task:"Return undeliverable packages and pick up outgoing mail"},{time:"2:30 PM",task:"Complete end-of-day paperwork"},{time:"3:00 PM",task:"Done — and your evenings are your own"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Learn to be responsible and follow through on commitments. Take pride in doing things accurately."},{icon:"🏫",level:"Middle School",steps:"Take geography and map skills seriously. Practice organization and time management."},{icon:"🏫",level:"High School",steps:"Work part-time in delivery, retail, or customer service. Explore logistics and supply chain as career fields."},{icon:"🎓",level:"After High School",steps:"High school diploma required. USPS has its own hiring and training process. Logistics careers at UPS, FedEx, or Amazon may offer management tracks with or without a degree."}],
-    colleges:"For logistics management and supply chain: Michigan State, Penn State, Arizona State, and community colleges with logistics and operations management certificates." },
-  cashier:{ label:"💰 Customer Service / Retail Professional", does:"Helps customers with purchases, processes transactions accurately, resolves issues, and contributes to a positive store environment.", income:"About $28,000–$45,000 per year for full-time roles; varies widely.",
-    day:[{time:"9:00 AM",task:"Open the register and prepare the checkout area"},{time:"10:00 AM",task:"Greet customers, process purchases, and handle questions"},{time:"12:00 PM",task:"Handle a return while keeping the line moving"},{time:"2:00 PM",task:"Help a customer find a product"},{time:"4:00 PM",task:"Balance the register"},{time:"5:00 PM",task:"Restock shelves and prep for tomorrow"}],
-    pathway:[{icon:"🏫",level:"Elementary School",steps:"Practice good manners and patience. Learn to count money and make change. Notice how businesses treat their customers."},{icon:"🏫",level:"Middle School",steps:"Volunteer in service roles. Learn to communicate clearly with all kinds of people. Study business and money management."},{icon:"🏫",level:"High School",steps:"Get a part-time job in retail or food service. Take business or marketing classes."},{icon:"🎓",level:"After High School",steps:"Many customer service roles hire high school graduates. Advancement to management typically requires demonstrated leadership and may benefit from a business degree."}],
-    colleges:"Retail management pathways through community college business programs, or 4-year retail management degrees at schools like Michigan State, Ball State, and LIM College." }
-};
+const CAREERS = CareerExplorerData.careers.grades35;
 
 const SCORE_MAP_REF = { yes:3, kinda:2, 'not-really':1, nope:0 };
 let currentQ=0, scores={R:0,I:0,A:0,S:0,E:0,C:0}, counts={R:0,I:0,A:0,S:0,E:0,C:0};
@@ -725,20 +613,23 @@ function renderQuestion(){
   document.getElementById('progress-fill').style.width=pct+'%';
   document.getElementById('progress-label').textContent='Question '+(currentQ+1)+' of '+total;
   document.getElementById('progress-pct').textContent=pct+'%';
-  document.getElementById('progress-area').setAttribute('aria-valuenow', currentQ);
+  const nativeProgress=document.getElementById('progress-native');
+  nativeProgress.value=currentQ;
+  nativeProgress.textContent=currentQ+' of '+total+' questions complete';
+  nativeProgress.setAttribute('aria-valuetext',currentQ+' of '+total+' questions complete');
   const card=document.createElement('div');
   card.className='question-card';
   card.innerHTML=`
     <span class="q-emoji" aria-hidden="true">${q.emoji}</span>
     <h2 class="q-text" id="question-text">${q.text}</h2>
     <div class="answers" role="radiogroup" aria-labelledby="question-text">
-      <button class="answer-btn yes" onclick="selectAnswer('yes',this)" aria-pressed="false" aria-label="Yes, that describes me">✅ Yes, that's me</button>
-      <button class="answer-btn kinda" onclick="selectAnswer('kinda',this)" aria-pressed="false" aria-label="Kind of describes me">🤔 Kind of</button>
-      <button class="answer-btn not-really" onclick="selectAnswer('not-really',this)" aria-pressed="false" aria-label="Not really like me">😐 Not really</button>
-      <button class="answer-btn nope" onclick="selectAnswer('nope',this)" aria-pressed="false" aria-label="No, not like me at all">❌ Not at all</button>
+      <button type="button" class="answer-btn yes" onclick="selectAnswer('yes',this)" aria-pressed="false" aria-label="Yes, that describes me">✅ Yes, that's me</button>
+      <button type="button" class="answer-btn kinda" onclick="selectAnswer('kinda',this)" aria-pressed="false" aria-label="Kind of describes me">🤔 Kind of</button>
+      <button type="button" class="answer-btn not-really" onclick="selectAnswer('not-really',this)" aria-pressed="false" aria-label="Not really like me">😐 Not really</button>
+      <button type="button" class="answer-btn nope" onclick="selectAnswer('nope',this)" aria-pressed="false" aria-label="No, not like me at all">❌ Not at all</button>
     </div>
     <div class="next-wrap">
-      <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+      <button type="button" class="next-btn" id="next-btn" onclick="nextQuestion()">
         ${currentQ<QUESTIONS.length-1?'NEXT QUESTION →':'VIEW MY RESULTS →'}
       </button>
     </div>
@@ -754,6 +645,10 @@ function renderQuestion(){
 function selectAnswer(value,btn){
   btn.closest('.answers').querySelectorAll('.answer-btn').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});
   btn.classList.add('selected'); btn.setAttribute('aria-pressed','true'); answered[currentQ]=value;
+  const nativeProgress=document.getElementById('progress-native');
+  nativeProgress.value=currentQ+1;
+  nativeProgress.textContent=(currentQ+1)+' of '+QUESTIONS.length+' questions complete';
+  nativeProgress.setAttribute('aria-valuetext',(currentQ+1)+' of '+QUESTIONS.length+' questions complete');
   document.getElementById('next-btn').classList.add('show');
 }
 
@@ -791,7 +686,7 @@ function showResults(){
       <div class="rc-match">Your answer score: ${Math.round(result.percentage)}%</div>
       <div class="rc-jobs">${info.jobs.map(jobId=>{
         const job=CAREERS[jobId];
-        return '<button class="job-link-btn" onclick="showCareer(\''+jobId+'\')">'+job.label+'</button>';
+        return '<button type="button" class="job-link-btn" onclick="showCareer(\''+jobId+'\')">'+job.label+'</button>';
       }).join('')}</div>
     `;
     container.appendChild(card);
@@ -818,6 +713,7 @@ function showCareer(jobId){
   document.getElementById('career-pathway-wrap').style.display='block';
   document.getElementById('career-colleges').textContent=c.colleges;
   document.getElementById('career-colleges-wrap').style.display='block';
+  document.getElementById('career-source').innerHTML=`Reviewed ${c.source.reviewed}. For current national pay and training data, see the <a href="${c.source.url}" target="_blank" rel="noopener">U.S. Bureau of Labor Statistics Occupational Outlook Handbook</a> (${c.source.wageDataYear} median-pay data).`;
   const panel=document.getElementById('career-panel');
   panel.classList.add('show');
   panel.scrollIntoView({behavior:'smooth',block:'start'});
@@ -907,8 +803,8 @@ function devSkipToResults() {
 <div class="dev-badge" id="dev-badge">⚙ DEV MODE</div>
 <div class="dev-panel" id="dev-panel">
   <h4>⚙ Developer Tools</h4>
-  <button class="dev-btn" onclick="devSkipToResults()">⚡ Skip to Results</button>
-  <button class="dev-btn" onclick="devMode=false;document.getElementById('dev-badge').classList.remove('show');document.getElementById('dev-panel').classList.remove('show');">✕ Close Dev Mode</button>
+  <button type="button" class="dev-btn" onclick="devSkipToResults()">⚡ Skip to Results</button>
+  <button type="button" class="dev-btn" onclick="devMode=false;document.getElementById('dev-badge').classList.remove('show');document.getElementById('dev-panel').classList.remove('show');">✕ Close Dev Mode</button>
 </div>
 <!-- Browse all careers button — visible on intro screen -->
 <a class="browse-fab" id="browse-fab" href="careers.html" aria-label="Browse all careers without taking the quiz">
